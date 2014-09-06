@@ -1,0 +1,390 @@
+\PassOptionsToPackage{usenames}{color}
+\documentclass[11pt]{article}
+
+\usepackage{relsize} % relative font sizes (e.g. \smaller). must precede ACL style
+\usepackage{acl2014}
+\usepackage[linkcolor=blue]{hyperref}
+\usepackage{natbib}
+\newcommand{\citeposs}[1]{\citeauthor{#1}'s (\citeyear{#1})}
+
+%\usepackage{times}
+%\usepackage{latexsym}
+
+
+\usepackage[boxed]{algorithm2e}
+\renewcommand\AlCapFnt{\small}
+\usepackage[small,bf,skip=5pt]{caption}
+\usepackage{sidecap} % side captions
+\usepackage{rotating}	% sideways
+
+% Italicize subparagraph headings
+\usepackage{titlesec}
+\titleformat*{\subparagraph}{\itshape}
+\titlespacing{\subparagraph}{%
+  1em}{%              left margin
+  0pt}{% space before (vertical)
+  1em}%               space after (horizontal)
+
+% Numbered Examples and lists
+\usepackage{lingmacros}
+
+\usepackage{enumitem} % customizable lists
+\setitemize{noitemsep,topsep=0em,leftmargin=*}
+\setenumerate{noitemsep,leftmargin=0em,itemindent=13pt,topsep=0em}
+
+
+\usepackage{textcomp}
+% \usepackage{arabtex} % must go after xparse, if xparse is used!
+%\usepackage{utf8}
+% \setcode{utf8} % use UTF-8 Arabic
+% \newcommand{\Ar}[1]{\RL{\novocalize #1}} % Arabic text
+
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\itshape,
+  xleftmargin=3em,
+  aboveskip=0pt,
+  belowskip=-3pt, %-.5\baselineskip, % correct for extra paragraph break inserted after listing
+  literate={->}{$\rightarrow$}{2}
+           {α}{$\alpha$}{1}
+           {δ}{$\delta$}{1}
+           {(}{$($}{1}
+           {)}{$)$}{1}
+           {[}{$[$}{1}
+           {]}{$]$}{1}
+           {|}{$|$}{1}
+           {+}{\ensuremath{^+}}{1}
+           {*}{\ensuremath{^*}}{1}
+}
+
+\usepackage{amssymb}	%amsfonts,eucal,amsbsy,amsthm,amsopn
+\usepackage{amsmath}
+
+\usepackage{mathptmx}	% txfonts
+\usepackage[scaled=.8]{beramono}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{MnSymbol}	% must be after mathptmx
+
+\usepackage{latexsym}
+
+
+
+
+
+% Tables
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{booktabs} % pretty tables
+\usepackage{multicol}
+\usepackage{footnote}
+
+
+\usepackage{url}
+\usepackage[usenames]{color}
+\usepackage{xcolor}
+
+% colored frame box
+\newcommand{\cfbox}[2]{%
+    \colorlet{currentcolor}{.}%
+    {\color{#1}%
+    \fbox{\color{currentcolor}#2}}%
+}
+
+\usepackage[normalem]{ulem} % \uline
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{subcaption}
+%\usepackage{tikz-dependency}
+%\usepackage{tikz}
+%\usepackage{tree-dvips}
+%\usetikzlibrary{arrows,positioning,calc} 
+\usepackage{xytree}
+
+\usepackage{xspace} % \xspace command for macros (inserts a space unless followed by punctuation)
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\setlength\titlebox{6.5cm}    % Expanding the titlebox
+
+
+
+% Author comments
+\usepackage{color}
+\newcommand\bmmax{0} % magic to avoid 'too many math alphabets' error
+\usepackage{bm}
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{mdgreen}{rgb}{0,0.6,0}
+\definecolor{mdblue}{rgb}{0,0,0.7}
+\definecolor{dkblue}{rgb}{0,0,0.5}
+\definecolor{dkgray}{rgb}{0.3,0.3,0.3}
+\definecolor{slate}{rgb}{0.25,0.25,0.4}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{ltgray}{rgb}{0.7,0.7,0.7}
+\definecolor{purple}{rgb}{0.7,0,1.0}
+\definecolor{lavender}{rgb}{0.65,0.55,1.0}
+
+% Settings for algorithm listings
+% \lstset{
+%   language=Python,
+%   upquote=true,
+%   showstringspaces=false,
+%   formfeed=\newpage,
+%   tabsize=1,
+%   commentstyle=\itshape\color{lavender},
+%   basicstyle=\small\smaller\ttfamily,
+%   morekeywords={lambda},
+%   emph={upward,downward,tc},
+%   emphstyle=\underbar,
+%   aboveskip=0cm,
+%   belowskip=-.5cm
+% }
+%\renewcommand{\lstlistingname}{Algorithm}
+
+
+\newcommand{\ensuretext}[1]{#1}
+\newcommand{\cjdmarker}{\ensuretext{\textcolor{green}{\ensuremath{^{\textsc{CJ}}_{\textsc{D}}}}}}
+\newcommand{\nssmarker}{\ensuretext{\textcolor{magenta}{\ensuremath{^{\textsc{NS}}_{\textsc{S}}}}}}
+\newcommand{\nasmarker}{\ensuretext{\textcolor{red}{\ensuremath{^{\textsc{NA}}_{\textsc{S}}}}}}
+\newcommand{\lkmarker}{\ensuretext{\textcolor{blue}{\ensuremath{^{\textsc{L}}_{\textsc{K}}}}}}
+\newcommand{\swswmarker}{\ensuretext{\textcolor{orange}{\ensuremath{^{\textsc{S}}_{\textsc{S}}}}}}
+\newcommand{\abmarker}{\ensuretext{\textcolor{purple}{\ensuremath{^{\textsc{A}}_{\textsc{B}}}}}}
+\newcommand{\arkcomment}[3]{\ensuretext{\textcolor{#3}{[#1 #2]}}}
+%\newcommand{\arkcomment}[3]{}
+\newcommand{\nss}[1]{\arkcomment{\nssmarker}{#1}{magenta}}
+\newcommand{\aj}[1]{\arkcomment{\cjdmarker}{#1}{green}}
+\newcommand{\dirk}[1]{\arkcomment{\nasmarker}{#1}{red}}
+\newcommand{\lk}[1]{\arkcomment{\lkmarker}{#1}{blue}}
+\newcommand{\swsw}[1]{\arkcomment{\swswmarker}{#1}{orange}}
+\newcommand{\ab}[1]{\arkcomment{\abmarker}{#1}{purple}}
+\newcommand{\wts}{\mathbf{w}}
+\newcommand{\g}{\mathbf{g}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu} % \bar is too narrow in math
+\newcommand{\cost}{c}
+
+\newcommand{\Sref}[1]{\S\ref{#1}}
+\newcommand{\fref}[1]{figure~\ref{#1}}
+\newcommand{\ffref}[2]{figures~\ref{#1} and~\ref{#2}}
+\newcommand{\Fref}[1]{Figure~\ref{#1}}
+\newcommand{\FFref}[2]{Figures~\ref{#1} and~\ref{#2}}
+\newcommand{\tref}[1]{table~\ref{#1}}
+\newcommand{\ttref}[2]{tables~\ref{#1} and~\ref{#2}}
+\newcommand{\Tref}[1]{Table~\ref{#1}}
+\newcommand{\aref}[1]{algorithm~\ref{#1}}
+\newcommand{\Aref}[1]{Algorithm~\ref{#1}}
+\newcommand{\fnref}[1]{footnote~\ref{#1}}
+\newcommand{\eref}[1]{eq.~\eqref{#1}}
+\newcommand{\Eref}[1]{Eq.~\eqref{#1}}
+\newcommand{\exref}[1]{(\ref{#1})} % numbered example
+
+% Space savers
+% From http://www.eng.cam.ac.uk/help/tpl/textprocessing/squeeze.html
+% \addtolength{\dbltextfloatsep}{-.5cm} % space between last top float or first bottom float and the text.
+% \addtolength{\intextsep}{-.5cm} % space left on top and bottom of an in-text float.
+% \addtolength{\abovedisplayskip}{-.5cm} % space before maths
+% \addtolength{\belowdisplayskip}{-.5cm} % space after maths
+% %\addtolength{\topsep}{-.5cm} %space between first item and preceding paragraph
+% \setlength{\belowcaptionskip}{-.25cm}
+
+
+% customize \paragraph spacing
+% \makeatletter
+% \renewcommand{\paragraph}{%
+%   \@startsection{paragraph}{4}%
+%   {\z@}{.2ex \@plus 1ex \@minus .2ex}{-1em}%
+%   {\normalfont\normalsize\bfseries}%
+% }
+% \makeatother
+
+
+% Special macros
+\newcommand{\tg}[1]{\texttt{#1}}	% supersense tag name
+\newcommand{\gfl}[1]{%\renewcommand\texttildelow{{\lower.74ex\hbox{\texttt{\char`\~}}}} % http://latex.knobs-dials.com/
+\mbox{\textsmaller{\texttt{#1}}}}	% supersense tag symbol
+\newcommand{\lex}[1]{\textsmaller{\textsf{\textcolor{slate}{\textbf{#1}}}}}	% example lexical item 
+\newcommand{\tagdef}[1]{#1\hfill} % tag definition
+\newcommand{\tagt}[2]{\ensuremath{\underset{\textrm{\textlarger{\tg{#2}}}\strut}{\w{#1}\rule[-.3\baselineskip]{0pt}{0pt}}}} % tag text (a word or phrase) with an SST. (second arg is the tag)
+\newcommand{\glosst}[2]{\ensuremath{\underset{\textrm{#2}}{\textrm{#1}}}} % gloss text (a word or phrase) (second arg is the gloss)
+\newcommand{\AnnA}[0]{\mbox{\textbf{Ann-A}}} % annotator A
+\newcommand{\AnnB}[0]{\mbox{\textbf{Ann-B}}} % annotator B
+\newcommand{\sys}[1]{\mbox{\textbf{#1}}}   % name of a system (one of our experimental conditions)
+\newcommand{\dataset}[1]{\mbox{\textsc{#1}}}	% one of the datasets in our experiments
+\newcommand{\datasplit}[1]{\mbox{\textbf{#1}}}	% portion one of the datasets in our experiments
+
+\newcommand{\w}[1]{\textit{#1}}	% word
+\newcommand{\tweet}[1]{\textsf{#1}}	% tweet
+\newcommand{\twbank}[0]{\textsc{Tweebank}\xspace}
+\newcommand{\foster}[0]{\textsc{Foster}\xspace}
+\newcommand{\twparser}[0]{\textsc{Tweeboparser}\xspace}
+\newcommand{\tat}[0]{\textasciitilde}
+
+%\newcommand{\finalversion}[1]{#1}
+\newcommand{\finalversion}[1]{}
+\newcommand{\shortversion}[1]{#1}
+\newcommand{\considercutting}[1]{#1}
+\newcommand{\longversion}[1]{} % ...if only there were more space...
+
+\hyphenation{WordNet}
+\hyphenation{WordNets}
+\hyphenation{VerbNet}
+\hyphenation{FrameNet}
+\hyphenation{SemCor}
+\hyphenation{PennConverter}
+\hyphenation{TurboParser}
+\hyphenation{Tweebo-parser}
+\hyphenation{Twee-bank}
+\hyphenation{an-aly-sis}
+\hyphenation{an-aly-ses}
+\hyphenation{news-text}
+\hyphenation{base-line}
+\hyphenation{de-ve-lop-ed}
+\hyphenation{comb-over}
+
+\title{Joint Tagging of Multiword Expressions and Supersenses}
+
+% Lingpeng Kong, Nathan Schneider, Swabha Swayamdipta, Archna Bhatia, Chris Dyer, and Noah A. Smith 
+\author{
+Nathan Schneider \\
+		School of Informatics\\
+	   	University of Edinburgh\\
+	    Edinburgh, EH8 9AB, UK\\
+	    {\tt emailtba@inf.ed.ac.uk} \And
+Dirk Hovy \quad Anders Johannsen\\
+Center for Language Technology\\
+University of Cophenhagen\\
+Njalsgade 140, 2300 Copenhagen, Denmark\\
+{\tt dirk@cst.dk}, {\tt ajohannsen@hum.ku.dk}}
+
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+We propose that the CoNLL~2015 Shared Task 
+consist of analyzing the lexical semantics of sentences 
+in a broad-coverage fashion. 
+The task formulation consists of two steps which can be performed jointly:
+(a)~chunking tokens within sentences into \textbf{multiword expressions} (MWEs), and 
+(b)~assigning coarse \textbf{supersense} labels to all noun and verb expressions. 
+The evaluation will build upon existing annotated datasets in two social web genres.
+We expect that the task formulation will foster engagement across 
+multiple subcommunities of computational semantics, 
+and facilitate empirical comparison of methodologically diverse systems.
+
+\nss{Note: this document uses natbib rather than the standard ACL bib macros: 
+According to \citet{baldwin-10}, statistical association measures 
+are one technique for extracting MWE types \citep[cf.][\emph{inter alia}]{pecina-10}.}
+\end{abstract}
+
+\section{Introduction}
+
+\nss{motivation: lexical semantic analysis of MWEs and supersenses in English. 
+semantics is a hot topic.
+highlights: (a) broad-coverage---not too far from NER; hopefully avoid some of the limitations of traditional WSD. 
+(b) robust to domain---in fact, evaluation consists of 2 social web domains.
+(c) potential to benefit from many different NLP techniques, including sequence tagging/chunking, 
+parsing, distributional word representations, language models, 
+use of language resources such as WordNet, (other buzzwords?)}
+
+\nss{foster cross-pollination between different subcommunities}
+
+\nss{encourage creativity of solutions}
+
+\nss{related work: these representations build on ones that have been explored, 
+but go a step beyond. (want to convince reader that there will be interest in the task based on previous results, 
+but also that it is somewhat novel.)}
+
+\nss{the proposed task will be limited to English. 
+this reflects what is realistic given existing resources and the organizers' ability to annotate new data. 
+if the task is successful, we would advocate a second, multilingual incarnation 
+(note other languages that have seen MWE/supersense evaluations---Italian, Arabic, etc.)}
+
+\section{Representation}
+
+\nss{given a sentence, what should be predicted. extra examples in appendices are encouraged}
+
+\nss{file format with example. UTF-8}
+
+\section{Data}
+
+\nss{synopsis of annotated datasets. how they were sampled. splits. what new (or revised) annotations are needed? 
+(CPH should have resources to annotate a new Twitter test set with supersenses. possibly MWEs as well)
+(Nathan's SST data is unreleased, but same sentences as CMWE corpus. 
+so participants should be banned from using the CMWE data lest they train on the test set.)
+(is it OK if, e.g., supersense tagging conventions are different in different datasets?)
+be as specific as possible about timeline}
+
+\nss{issue to resolve: licensing of Web Treebank source text}
+
+\section{Evaluation}
+
+\subsection{System Submission Process}
+
+On May~5,~2015, participants will be furnished with the test data (minus the gold labels). 
+They will have until May~10 to submit up to 3~system predictions for evaluation. 
+The test data will include sentences from both evaluation domains, 
+in a random order: to encourage robust systems, 
+the domain of each sentence will not be marked at test time, 
+and the proportion of sentences from each domain is not guaranteed to be 
+the same in the trial, train, dev, and test sets.\nss{is this crazy?}
+
+\subsection{Inputs}
+
+\nss{open, closed track. if a team submits systems to the closed track and fewer than 3 systems to the open track, 
+they will be encouraged to submit the closed track results to the open track as well.}
+
+\nss{systems must respect the input tokenization}
+
+\nss{domain label at training time, but not test time. no other metadata}
+
+\nss{we'll allow WordNet and provide (auto?) POS, Brown clusters for closed track?}
+
+\nss{semi-open track: we provide a large unlabeled corpus, in addition to closed track resources?}
+
+\nss{unsupervised track (no token-level MWE or SST labels may be used)??}
+
+\subsection{Measures}
+
+\nss{several possibilities---I think we should use the bolded ones:
+\begin{enumerate}
+\item \textbf{MWE: link-based P, R, $F_1$ with strength averaging}
+\item \textbf{SST first-tag supersense accuracy}
+\item full tagging accuracy (with, without O)
+\item MWE+SST chance-corrected: Kripp's unitizing $\alpha$ with MWE ID as one of the ``categories'', and chance levels determined by the gold annotations
+\item \textbf{joint MWE+SST: link-based F1 with matching links count as 1 if the supersense agrees, .5 if it agrees in POS (noun/verb/aux/other), and .25 otherwise}
+\end{enumerate}
+}
+
+\subsection{Conditions}
+
+All measures will be reported separately for each of the two evaluation domains, 
+and in a combined figure with the two domains weighted equally. 
+
+Competitive rankings will be determined from the joint MWE+SST measure in the combination of the domains. 
+There will be two such rankings: one in the closed track, and one in the open track.
+\nss{At the discretion of the organizers, honorable mention awards may go to systems that place well on 
+any of the measures, or that were especially creative in their approach?}
+
+\subsection{Baselines}
+
+\nss{we already have systems to serve as baselines, each customized to one domain}
+
+\section{Conclusion}
+
+\nss{TODO}
+
+\bibliographystyle{aclnat}
+% you bib file should really go here
+\setlength{\bibsep}{10pt}
+{\fontsize{10}{12.25}\selectfont
+\bibliography{proposal}}
+
+
+
+\end{document}
