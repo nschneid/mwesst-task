@@ -295,13 +295,17 @@
 Nathan Schneider \\
 		School of Informatics\\
 	   	University of Edinburgh\\
-	    Edinburgh, EH8 9AB, UK\\
-	    {\tt emailtba@inf.ed.ac.uk} \And
+	    Edinburgh, UK\\
+	    {\tt nschneid@inf.ed.ac.uk} \And
 Dirk Hovy \quad Anders Johannsen\\
 Center for Language Technology\\
 University of Cophenhagen\\
-Njalsgade 140, 2300 Copenhagen, Denmark\\
-{\tt dirk@cst.dk}, {\tt ajohannsen@hum.ku.dk}}
+Copenhagen, Denmark\\
+{\tt dirk@cst.dk}\\ {\tt ajohannsen@hum.ku.dk} \And
+Marine Carpuat\\
+National Research Council\\
+Ottawa, Ontario, Canada\\
+{\tt marine.carpuat@nrc.gc.ca}}
 
 
 \date{}
@@ -315,7 +319,7 @@ in a broad-coverage fashion.
 The task formulation consists of two steps which can be performed jointly:
 (a)~chunking tokens within sentences into \textbf{multiword expressions} (MWEs), and 
 (b)~assigning coarse \textbf{supersense} labels to all noun and verb expressions. 
-The evaluation will build upon existing annotated datasets in two social web genres.
+The evaluation will build upon recently annotated datasets in two social web genres.
 We expect that the task formulation will foster engagement across 
 multiple subcommunities of computational semantics, 
 and facilitate empirical comparison of methodologically diverse systems.
@@ -386,11 +390,16 @@ they will be encouraged to submit the closed track results to the open track as 
 
 \nss{domain label at training time, but not test time. no other metadata}
 
-\nss{we'll allow WordNet and provide (auto?) POS, Brown clusters for closed track?}
-
-\nss{semi-open track: we provide a large unlabeled corpus, in addition to closed track resources?}
-
-\nss{unsupervised track (no token-level MWE or SST labels may be used)??}
+\nss{a few possibilities for tracks---
+\begin{description}
+\item[closed track] provided training data; we'll allow WordNet and provide (auto?)~POS, Brown clusters as well? 
+no other resources allowed
+\item[semi-open track] we provide a large unlabeled corpus, in addition to closed track resources
+\item[unsupervised track] no token-level MWE or SST labels may be used
+\item[open track] any data/resources (except the CMWE corpus, if that includes the test set) may be used
+\end{description}
+I feel like there are pluses and minuses to all 4 of these tracks. maybe we should just mention the possibilities 
+and survey teams to ensure we only evaluate tracks that generate sufficient interest}
 
 \subsection{Measures}
 
@@ -419,17 +428,33 @@ any of the measures, or that were especially creative in their approach?}
 \nss{we already have systems to serve as baselines, each customized to one domain. 
 we can even show results with current versions of data! \cref{tbl:baselines}}
 
+Two open source supersense tagging systems are maintained by authors of this proposal; 
+these can serve as reference implementations for the task and baselines for the evaluation. 
+\textbf{AMALGrAM}\footnote{\uline{A} \uline{M}achine \uline{A}nalyzer of \uline{L}exical \uline{Gr}oupings \uline{A}nd \uline{M}eanings}
+extends the discriminative MWE identification model of \citet{schneider-14}\footnote{Code and MWE-only model/training data at \url{http://www.ark.cs.cmu.edu/LexSem/}} 
+to also label supersenses. 
+It is trained on the \textsc{Reviews} data: this learning is fully supervised 
+(though the model includes unsupervised word cluster features). 
+\textbf{Copenhagen} \nss{\ldots}.
+
+\Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
+using the measures described above (precision and recall are omitted for brevity).
+\nss{discussion? presumably: we see that the domain gap is huge---neither system is robust to the two domains.
+this in one of the challenges that systems in our task will have to face.}
+
 \begin{table*}\centering\small
 \begin{tabular}{lccccccc}
            &  & \multicolumn{3}{c}{\textsc{Reviews}} & \multicolumn{3}{c}{\textsc{Tweets}} \\
            \cmidrule(r){3-5}\cmidrule(l){6-8}
 \bfseries System     & \bfseries Train Domain & \bfseries MWE & \bfseries SST & \bfseries Full
-                                              & \bfseries MWE & \bfseries SST & \bfseries Full \\
+                                              & \bfseries ``MWE'' & \bfseries SST & \bfseries Full \\
 \midrule
-Schneider (supervised 1st-order discriminative with gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
+AMALGrAM (supervised 1st-order discriminative with gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
 Copenhagen (\nss{semi-supervised 2nd-order discriminative?}) & \textsc{Tweets} & \# & \# & \#  & \# & \# & \# \\
 \end{tabular}
-\caption{Evaluation of baseline systems.}
+\caption{Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes 
+because we have not yet systematically annotated the data for MWEs, so this preliminary evaluation 
+is against supersense annotators' chunking decisions for noun and verb expressions.}
 \label{tbl:baselines}
 \end{table*}
 
