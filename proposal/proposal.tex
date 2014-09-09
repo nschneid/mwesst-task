@@ -167,20 +167,63 @@
 \newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu} % \bar is too narrow in math
 \newcommand{\cost}{c}
 
-\newcommand{\Sref}[1]{\S\ref{#1}}
-\newcommand{\fref}[1]{figure~\ref{#1}}
-\newcommand{\ffref}[2]{figures~\ref{#1} and~\ref{#2}}
-\newcommand{\Fref}[1]{Figure~\ref{#1}}
-\newcommand{\FFref}[2]{Figures~\ref{#1} and~\ref{#2}}
-\newcommand{\tref}[1]{table~\ref{#1}}
-\newcommand{\ttref}[2]{tables~\ref{#1} and~\ref{#2}}
-\newcommand{\Tref}[1]{Table~\ref{#1}}
-\newcommand{\aref}[1]{algorithm~\ref{#1}}
-\newcommand{\Aref}[1]{Algorithm~\ref{#1}}
-\newcommand{\fnref}[1]{footnote~\ref{#1}}
-\newcommand{\eref}[1]{eq.~\eqref{#1}}
-\newcommand{\Eref}[1]{Eq.~\eqref{#1}}
-\newcommand{\exref}[1]{(\ref{#1})} % numbered example
+\usepackage{nameref}
+\usepackage{cleveref}
+
+% use \S for all references to all kinds of sections, and \P to paragraphs
+% (sadly, we cannot use the simpler \crefname{} macro because it would insert a space after the symbol)
+\crefformat{part}{\S#2#1#3}
+\crefformat{chapter}{\S#2#1#3}
+\crefformat{section}{\S#2#1#3}
+\crefformat{subsection}{\S#2#1#3}
+\crefformat{subsubsection}{\S#2#1#3}
+\crefformat{paragraph}{\P#2#1#3}
+\crefformat{subparagraph}{\P#2#1#3}
+%\crefmultiformat{part}{\S#2#1#3}{ and~\S#2#1#3}{, \S#2#1#3}{, and~\S#2#1#3}
+%\crefmultiformat{chapter}{\S#2#1#3}{ and~\S#2#1#3}{, \S#2#1#3}{, and~\S#2#1#3}
+\crefmultiformat{section}{\S#2#1#3}{ and~\S#2#1#3}{, \S#2#1#3}{, and~\S#2#1#3}
+\crefmultiformat{subsection}{\S#2#1#3}{ and~\S#2#1#3}{, \S#2#1#3}{, and~\S#2#1#3}
+\crefmultiformat{subsubsection}{\S#2#1#3}{ and~\S#2#1#3}{, \S#2#1#3}{, and~\S#2#1#3}
+\crefmultiformat{paragraph}{\P\P#2#1#3}{ and~#2#1#3}{, #2#1#3}{, and~#2#1#3}
+\crefmultiformat{subparagraph}{\P\P#2#1#3}{ and~#2#1#3}{, #2#1#3}{, and~#2#1#3}
+%\crefrangeformat{part}{\mbox{\S\S#3#1#4--#5#2#6}}
+%\crefrangeformat{chapter}{\mbox{\S\S#3#1#4--#5#2#6}}
+\crefrangeformat{section}{\mbox{\S\S#3#1#4--#5#2#6}}
+\crefrangeformat{subsection}{\mbox{\S\S#3#1#4--#5#2#6}}
+\crefrangeformat{subsubsection}{\mbox{\S\S#3#1#4--#5#2#6}}
+\crefrangeformat{paragraph}{\mbox{\P\P#3#1#4--#5#2#6}}
+\crefrangeformat{subparagraph}{\mbox{\P\P#3#1#4--#5#2#6}}
+% for \label[appsec]{...}
+\crefname{part}{Part}{Parts}
+\Crefname{part}{Part}{Parts}
+\crefname{chapter}{ch.}{ch.}
+\Crefname{chapter}{Ch.}{Ch.}
+\crefname{figure}{figure}{figures}
+\crefname{appsec}{appendix}{appendices}
+\Crefname{appsec}{Appendix}{Appendices}
+\crefname{algocf}{algorithm}{algorithms}
+\Crefname{algocf}{Algorithm}{Algorithms}
+\crefname{enums,enumsi}{example}{examples}
+\Crefname{enums,enumsi}{Example}{Examples}
+\crefname{}{example}{examples} % lingmacros \toplabel has no internal name for the kind of label
+\Crefname{}{Example}{Examples}
+\crefformat{enums}{(#2#1#3)}
+\crefformat{enumsi}{(#2#1#3)}
+\crefformat{}{(#2#1#3)}
+\crefrangeformat{enums}{\mbox{(#3#1#4--#5#2#6)}}
+\crefrangeformat{enumsi}{\mbox{(#3#1#4--#5#2#6)}}
+
+\ifx\creflastconjunction\undefined%
+\newcommand{\creflastconjunction}{, and\nobreakspace} % Oxford comma for lists
+\else%
+\renewcommand{\creflastconjunction}{, and\nobreakspace} % Oxford comma for lists
+\fi%
+
+\newcommand*{\Fullref}[1]{\hyperref[{#1}]{\Cref*{#1}: \nameref*{#1}}}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\cref*{#1}: \nameref{#1}}}
+\newcommand{\fnref}[1]{footnote~\ref{#1}} % don't use \cref{} due to bug in (now out-of-date) cleveref package w.r.t. footnotes
+\newcommand{\Fnref}[1]{Footnote~\ref{#1}}
+
 
 % Space savers
 % From http://www.eng.cam.ac.uk/help/tpl/textprocessing/squeeze.html
@@ -326,7 +369,7 @@ be as specific as possible about timeline}
 
 \subsection{System Submission Process}
 
-On May~5,~2015, participants will be furnished with the test data (minus the gold labels). 
+On May~5,~2015, teams will be furnished with the test data (minus the gold labels). 
 They will have until May~10 to submit up to 3~system predictions for evaluation. 
 The test data will include sentences from both evaluation domains, 
 in a random order: to encourage robust systems, 
@@ -373,7 +416,22 @@ any of the measures, or that were especially creative in their approach?}
 
 \subsection{Baselines}
 
-\nss{we already have systems to serve as baselines, each customized to one domain}
+\nss{we already have systems to serve as baselines, each customized to one domain. 
+we can even show results with current versions of data! \cref{tbl:baselines}}
+
+\begin{table*}\centering\small
+\begin{tabular}{lccccccc}
+           &  & \multicolumn{3}{c}{\textsc{Reviews}} & \multicolumn{3}{c}{\textsc{Tweets}} \\
+           \cmidrule(r){3-5}\cmidrule(l){6-8}
+\bfseries System     & \bfseries Train Domain & \bfseries MWE & \bfseries SST & \bfseries Full
+                                              & \bfseries MWE & \bfseries SST & \bfseries Full \\
+\midrule
+Schneider (supervised 1st-order discriminative with gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
+Copenhagen (\nss{semi-supervised 2nd-order discriminative?}) & \textsc{Tweets} & \# & \# & \#  & \# & \# & \# \\
+\end{tabular}
+\caption{Evaluation of baseline systems.}
+\label{tbl:baselines}
+\end{table*}
 
 \section{Conclusion}
 
