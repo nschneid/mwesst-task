@@ -80,7 +80,7 @@
 \usepackage{booktabs} % pretty tables
 \usepackage{multicol}
 \usepackage{footnote}
-
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}} % hidden column
 
 \usepackage{url}
 \usepackage[usenames]{color}
@@ -246,10 +246,11 @@
 
 
 % Special macros
-\newcommand{\tg}[1]{\texttt{#1}}	% supersense tag name
+\newcommand{\tg}[1]{\texttt{#1}}	% tag name
+\newcommand{\sst}[1]{\textsc{#1}} % supersense category
 \newcommand{\gfl}[1]{%\renewcommand\texttildelow{{\lower.74ex\hbox{\texttt{\char`\~}}}} % http://latex.knobs-dials.com/
 \mbox{\textsmaller{\texttt{#1}}}}	% supersense tag symbol
-\newcommand{\lex}[1]{\textsmaller{\textsf{\textcolor{slate}{\textbf{#1}}}}}	% example lexical item 
+%\newcommand{\lex}[1]{\textsmaller{\textsf{\textcolor{slate}{\textbf{#1}}}}}	% example lexical item 
 \newcommand{\tagdef}[1]{#1\hfill} % tag definition
 \newcommand{\tagt}[2]{\ensuremath{\underset{\textrm{\textlarger{\tg{#2}}}\strut}{\w{#1}\rule[-.3\baselineskip]{0pt}{0pt}}}} % tag text (a word or phrase) with an SST. (second arg is the tag)
 \newcommand{\glosst}[2]{\ensuremath{\underset{\textrm{#2}}{\textrm{#1}}}} % gloss text (a word or phrase) (second arg is the gloss)
@@ -260,11 +261,13 @@
 \newcommand{\datasplit}[1]{\mbox{\textbf{#1}}}	% portion one of the datasets in our experiments
 
 \newcommand{\w}[1]{\textit{#1}}	% word
+\newcommand{\lex}[1]{\textit{#1}} % lexical item
 \newcommand{\tweet}[1]{\textsf{#1}}	% tweet
 \newcommand{\twbank}[0]{\textsc{Tweebank}\xspace}
 \newcommand{\foster}[0]{\textsc{Foster}\xspace}
 \newcommand{\twparser}[0]{\textsc{Tweeboparser}\xspace}
 \newcommand{\tat}[0]{\textasciitilde}
+\newcommand{\backtick}[0]{\textasciigrave}
 
 %\newcommand{\finalversion}[1]{#1}
 \newcommand{\finalversion}[1]{}
@@ -360,12 +363,74 @@ if the task is successful, we would advocate a second, multilingual incarnation
 
 \section{Data}
 
-\nss{synopsis of annotated datasets. how they were sampled. splits. what new (or revised) annotations are needed? 
+The task will use two existing datasets for both training and evaluation. 
+These capture two genres of social web text:
+\begin{itemize}
+\item \textsc{Reviews}: This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
+contains online user reviews for services such as restaurants and beauticians.\footnote{Each review is a separate document; 
+no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
+syntactic parse of each sentence.}
+It was recently manually annotated in full, first for MWEs \citep[released as the CMWE Corpus\footnote{\url{http://www.ark.cs.cmu.edu/LexSem/}}]{schneider-14-corpus}, 
+and then---building on the MWE annotations---for noun and verb supersenses (as yet unreleased; for nouns, the conventions of \citealp{schneider-12} were followed). 
+\nss{example. number of MWEs (SST label: none, noun, verb) and total lexical expressions. strong vs. weak distinction?}
+\nss{\cref{tbl:nvsst}}
+\nss{\#} of the reviews were held out as a test set, leaving \nss{\#} for training\slash development.
+\item \textsc{Tweets}: Two samples of Twitter messages were recently annotated with supersenses \citep{johannsen-14}: 
+\nss{ritter (size), and an in-house sample (size)}. Annotators were shown pre-annotations from a heuristic supersense tagging system 
+and asked to correct the boundaries and supersense labels. There was no explicit MWE annotation phase, 
+though many of the multiword chunks tagged with a noun or verb supersense would be considered MWEs. 
+\nss{example. number of single-word, multiword SSTs grouped by noun, verb.}
+\nss{splits.}
+\end{itemize}
+
+\nss{what new (or revised) annotations are needed? 
 (CPH should have resources to annotate a new Twitter test set with supersenses. possibly MWEs as well)
-(Nathan's SST data is unreleased, but same sentences as CMWE corpus. 
-so participants should be banned from using the CMWE data lest they train on the test set.)
+(participants should be banned from using the CMWE data lest they train on the test set.)
 (is it OK if, e.g., supersense tagging conventions are different in different datasets?)
 be as specific as possible about timeline}
+
+\begin{table*}\small\centering
+\begin{tabular}{@{}l@{~~}r@{~~}c@{~~}>{\smaller}Hl@{~~}r@{~~}c@{~~}>{\smaller}H@{}}
+\multicolumn{4}{c}{\textbf{Noun}} & \multicolumn{4}{c}{\textbf{Verb}} \\
+\cmidrule(r){1-4}\cmidrule(l){5-8}
+
+\sst{group} & 1469 & \lex{place} & 6 &         \sst{stative} & 2922 & \lex{is} & 1 \\
+\sst{person} & 1202 & \lex{people} & 1 &        \sst{cognition} & 1093 & \lex{know} & 4 \\
+\sst{artifact} & 971 & \lex{car} & 2 &      \sst{communication} & 974 & \lex{recommend} & 2 \\
+\sst{cognition} & 771 & \lex{way} & 4 &    \sst{social} & 944 & \lex{use} & 5 \\
+\sst{food} & 766 & \lex{food} & 21 &         \sst{motion} & 602 & \lex{go} & 6 \\
+\sst{act} & 700 & \lex{service} & 3 &          \sst{possession} & 309 & \lex{pay} & 7 \\
+\sst{location} & 638 & \lex{area} & 8 &     \sst{change} & 274 & \lex{fix} & 3 \\
+\sst{time} & 530 & \lex{day} & 9 &         \sst{emotion} & 249 & \lex{love} & 11 \\
+\sst{event} & 431 & \lex{experience} & 14 &       \sst{perception} & 143 & \lex{see} & 9 \\
+\sst{communication} & 417 & \lex{review} & 5 &   \sst{consumption} & 93 & \lex{have} & 12 \\
+\sst{possession} & 339 & \lex{price} & 16 &   \sst{body} & 82 & \lex{get\ldots done} & 13 \\
+\sst{attribute} & 205 & \lex{quality} & 7 &     \sst{creation} & 64 & \lex{cook} & 10 \\
+\sst{quantity} & 102 & \lex{amount} & 13 &      \sst{contact} & 46 & \lex{put} & 8 \\
+\sst{animal} & 88 & \lex{dog} & 18 &         \sst{competition} & 11 & \lex{win} & 14 \\
+\sst{body} & 87 & \lex{hair} & 11 &          \sst{weather} & 0 & --- & 15 \\
+\cline{5-8}
+\sst{state} & 56 & \lex{pain}            & 10 & \textbf{\smaller[.5] all 15 VSSTs} & \textbf{7806} & \\
+\sst{natural object} & 54 & \lex{flower} & 15 & \textsmaller[.5]{auxiliary verbs} & 1191 & \lex{have} &  \\
+\sst{relation} & 35 & \lex{portion} & 19 &  \\
+\sst{substance} & 34 & \lex{oil} & 12     &  \\
+\sst{feeling} & 34 & \lex{discomfort} & 20 &  \\
+\sst{process} & 28 & \lex{process} & 22 &     \\
+\sst{motive} & 25 & \lex{reason} & 25 & \\
+\sst{phenomenon} & 23 & \lex{result} & 17 & \\
+\sst{shape} & 6 & \lex{square} & 24 & \\
+\sst{plant} & 5 & \lex{tree} & 23 & \\
+\sst{other} & 2 & \lex{stuff} & 26 & \\
+\cline{1-4}
+\textbf{\smaller[.5] all 26 NSSTs} & \textbf{9018} 
+\end{tabular}
+
+\caption{Top MWE patterns\nss{TODO} along with frequency-ranked noun and verb supersense tagsets from the \textsc{Reviews} corpus. 
+Each entry shows the label, the count, and the most frequent lexical item with that label. 
+%and the frequency rank in the \dataset{SemCor} corpus.
+}
+\label{tbl:nvsst}
+\end{table*}
 
 \nss{issue to resolve: licensing of Web Treebank source text}
 
