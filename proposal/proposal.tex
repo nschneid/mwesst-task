@@ -390,44 +390,81 @@ though many of the multiword chunks tagged with a noun or verb supersense would 
 be as specific as possible about timeline}
 
 \begin{table*}\small\centering
-\begin{tabular}{@{}l@{~~}r@{~~}c@{~~}>{\smaller}Hl@{~~}r@{~~}c@{~~}>{\smaller}H@{}}
-\multicolumn{4}{c}{\textbf{Noun}} & \multicolumn{4}{c}{\textbf{Verb}} \\
-\cmidrule(r){1-4}\cmidrule(l){5-8}
+\begin{tabular}{@{}>{\textsc\bgroup}l<{\egroup}@{~~}r@{~~}r@{~~}c@{~~}|l@{~~}r@{~~}c@{~~}>{\smaller}Hl@{~~}r@{~~}c@{~~}>{\smaller}H@{}}
+\multicolumn{4}{c}{\textbf{MWE}} & \multicolumn{4}{c}{\textbf{Noun}} & \multicolumn{4}{c}{\textbf{Verb}} \\
+\cmidrule(r){1-4}\cmidrule(lr){5-8}\cmidrule(l){9-12}
 
-\sst{group} & 1469 & \lex{place} & 6 &         \sst{stative} & 2922 & \lex{is} & 1 \\
-\sst{person} & 1202 & \lex{people} & 1 &        \sst{cognition} & 1093 & \lex{know} & 4 \\
-\sst{artifact} & 971 & \lex{car} & 2 &      \sst{communication} & 974 & \lex{recommend} & 2 \\
-\sst{cognition} & 771 & \lex{way} & 4 &    \sst{social} & 944 & \lex{use} & 5 \\
-\sst{food} & 766 & \lex{food} & 21 &         \sst{motion} & 602 & \lex{go} & 6 \\
-\sst{act} & 700 & \lex{service} & 3 &          \sst{possession} & 309 & \lex{pay} & 7 \\
-\sst{location} & 638 & \lex{area} & 8 &     \sst{change} & 274 & \lex{fix} & 3 \\
-\sst{time} & 530 & \lex{day} & 9 &         \sst{emotion} & 249 & \lex{love} & 11 \\
-\sst{event} & 431 & \lex{experience} & 14 &       \sst{perception} & 143 & \lex{see} & 9 \\
-\sst{communication} & 417 & \lex{review} & 5 &   \sst{consumption} & 93 & \lex{have} & 12 \\
-\sst{possession} & 339 & \lex{price} & 16 &   \sst{body} & 82 & \lex{get\ldots done} & 13 \\
-\sst{attribute} & 205 & \lex{quality} & 7 &     \sst{creation} & 64 & \lex{cook} & 10 \\
-\sst{quantity} & 102 & \lex{amount} & 13 &      \sst{contact} & 46 & \lex{put} & 8 \\
-\sst{animal} & 88 & \lex{dog} & 18 &         \sst{competition} & 11 & \lex{win} & 14 \\
-\sst{body} & 87 & \lex{hair} & 11 &          \sst{weather} & 0 & --- & 15 \\
-\cline{5-8}
-\sst{state} & 56 & \lex{pain}            & 10 & \textbf{\smaller[.5] all 15 VSSTs} & \textbf{7806} & \\
-\sst{natural object} & 54 & \lex{flower} & 15 & \textsmaller[.5]{auxiliary verbs} & 1191 & \lex{have} &  \\
-\sst{relation} & 35 & \lex{portion} & 19 &  \\
-\sst{substance} & 34 & \lex{oil} & 12     &  \\
-\sst{feeling} & 34 & \lex{discomfort} & 20 &  \\
-\sst{process} & 28 & \lex{process} & 22 &     \\
-\sst{motive} & 25 & \lex{reason} & 25 & \\
-\sst{phenomenon} & 23 & \lex{result} & 17 & \\
-\sst{shape} & 6 & \lex{square} & 24 & \\
-\sst{plant} & 5 & \lex{tree} & 23 & \\
-\sst{other} & 2 & \lex{stuff} & 26 & \\
-\cline{1-4}
-\textbf{\smaller[.5] all 26 NSSTs} & \textbf{9018} 
+% adv\_prep &                       25 &      1 & \lex{even~though}
+%27 & V\_A &                       19 &      6 & \lex{make~sure} \\
+%28 & V\_P\_N &                     14 &      6 & \lex{put~at~ease} \\
+%29 & \#\_N &                       20 &      \phantom{0}& 5~star:~9\quad 2~star:~2\quad 800~number:~1\quad one~bit:~1\quad ten~star:~1\quad 360~restraunt:~1\quad \\
+%30 & N\_A &                       18 &      \phantom{0}& year~old:~9\quad month~old:~3\quad years~old:~2\quad cost~effective:~1\quad lightning~fast:~1\quad \\
+
+
+n\_n &                      331 &      1 & \lex{customer~service}
+	& \sst{group} & 1469 & \lex{place} & 6 &         \sst{stative} & 2922 & \lex{is} & 1 \\
+pn\_pn &                      325 &      1 & \lex{santa~fe} 
+	& \sst{person} & 1202 & \lex{people} & 1 &        \sst{cognition} & 1093 & \lex{know} & 4 \\
+v\_prep &                      217 &     44 & \lex{work~with}
+	& \sst{artifact} & 971 & \lex{car} & 2 &      \sst{communication} & 974 & \lex{recommend} & 2 \\
+v\_part &                      149 &     42 & \lex{pick~up} 
+	& \sst{cognition} & 771 & \lex{way} & 4 &    \sst{social} & 944 & \lex{use} & 5 \\
+v\_n &                       31 &    107 & \lex{take~time}
+	& \sst{food} & 766 & \lex{food} & 21 &         \sst{motion} & 602 & \lex{go} & 6 \\
+adj\_n &                      133 &      3 & \lex{front~desk}
+	& \sst{act} & 700 & \lex{service} & 3 &          \sst{possession} & 309 & \lex{pay} & 7 \\
+v\_adv &                      103 &     30 & \lex{come~in}
+	& \sst{location} & 638 & \lex{area} & 8 &     \sst{change} & 274 & \lex{fix} & 3 \\
+det\_n &                       83 &      1 & \lex{a~lot}
+	& \sst{time} & 530 & \lex{day} & 9 &         \sst{emotion} & 249 & \lex{love} & 11 \\
+prep\_n &                       67 &      8 & \lex{on~time}
+	& \sst{event} & 431 & \lex{experience} & 14 &       \sst{perception} & 143 & \lex{see} & 9 \\
+adv\_adv &                       72 &      1 & \lex{at~least}
+	& \sst{communication} & 417 & \lex{review} & 5 &   \sst{consumption} & 93 & \lex{have} & 12 \\
+v\_det\_n &                     46 &     21 & \lex{take~the~time}
+	& \sst{possession} & 339 & \lex{price} & 16 &   \sst{body} & 82 & \lex{get\ldots done} & 13 \\
+v\tat n &           7 &     56 & \lex{do~job}
+	& \sst{attribute} & 205 & \lex{quality} & 7 &     \sst{creation} & 64 & \lex{cook} & 10 \\
+pn\_pn\_pn &             63 &     \phantom{0}& \lex{home~delivery~service}
+	& \sst{quantity} & 102 & \lex{amount} & 13 &      \sst{contact} & 46 & \lex{put} & 8 \\
+adv\tat v &                     49 &      \phantom{0}& \it \lex{highly~recommend}
+	& \sst{animal} & 88 & \lex{dog} & 18 &         \sst{competition} & 11 & \lex{win} & 14 \\
+prep\_det\_n &                     33 &      6 & \lex{over~the~phone}
+	& \sst{body} & 87 & \lex{hair} & 11 &          \sst{weather} & 0 & --- & 15 \\
+\cline{9-12}
+adj\_prep &                       39 &      \phantom{0}& \lex{pleased~with}
+	& \sst{state} & 56 & \lex{pain}            & 10 & \textbf{\smaller[.5] all 15 VSSTs} & \textbf{7806} & \\
+prep\_prep &                       39 &      \phantom{0}& \lex{out~of}
+	& \sst{natural object} & 54 & \lex{flower} & 15 & \textsmaller[.5]{auxiliary verbs} & 1191 & \lex{have} &  \\
+v\_pron &                       38 &      \phantom{0}& \lex{thank~you}
+	& \sst{relation} & 35 & \lex{portion} & 19 &  \\
+v\_v &                        8 &     30 & \lex{get~do}
+	& \sst{substance} & 34 & \lex{oil} & 12     &  \\
+n\tat n &                    34 &      1 & \lex{channel~guide}
+	& \sst{feeling} & 34 & \lex{discomfort} & 20 &  \\
+adj\tat n &                    31 &      \phantom{0}& \lex{hidden~gem}
+	& \sst{process} & 28 & \lex{process} & 22 &     \\
+v\_n\_prep &                     16 &     15 & \lex{take~care~of}
+	& \sst{motive} & 25 & \lex{reason} & 25 & \\
+n\_v &                       18 &     10 & \lex{mind~blow}
+	& \sst{phenomenon} & 23 & \lex{result} & 17 & \\
+pn\_poss &                       28 &      \phantom{0}& \lex{bj~s}
+	& \sst{shape} & 6 & \lex{square} & 24 & \\
+det\_adj &                       28 &      \phantom{0}& \lex{a~few}
+	 & \sst{plant} & 5 & \lex{tree} & 23 & \\
+\multicolumn{4}{c|}{\textsmaller{\ldots~435 additional patterns~\ldots}} % 460-25
+	& \sst{other} & 2 & \lex{stuff} & 26 & \\
+\cline{1-4}\cline{5-8}
+\multicolumn{1}{@{}l}{\textbf{\smaller[.5] all MWEs}} & \textbf{2948} & \textbf{535} & \textbf{= 3483 total instances}
+ & \textbf{\smaller[.5] all 26 NSSTs} & \textbf{9018} 
 \end{tabular}
 
-\caption{Top MWE patterns\nss{TODO} along with frequency-ranked noun and verb supersense tagsets from the \textsc{Reviews} corpus. 
-Each entry shows the label, the count, and the most frequent lexical item with that label. 
-%and the frequency rank in the \dataset{SemCor} corpus.
+\caption{Top MWE patterns along with frequency-ranked noun and verb supersense tagsets from the \textsc{Reviews} corpus. 
+The last column of each entry shows the most frequent lexical item (lemma sequence) of the class.
+MWE patterns are strong (\_) or weak (\tat) sequences of coarse parts of speech. (\textsc{pn} stands for ``proper noun.'')
+Contiguous and gappy MWE counts are distinguished: e.g.,~78\% of instances of the \textsc{v\_n} pattern 
+contain a gap (with one or more intervening words).
+Supersense counts do not distinguish single-word vs.~multiword expressions.
 }
 \label{tbl:nvsst}
 \end{table*}
