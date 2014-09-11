@@ -367,14 +367,14 @@ The task will use two existing datasets for both training and evaluation.
 These capture two genres of social web text:
 \begin{itemize}
 \item \textsc{Reviews}: This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
-contains online user reviews for services such as restaurants and beauticians.\footnote{Each review is a separate document; 
+consists of 723~online user reviews for services such as restaurants and beauticians.\footnote{Each review is a separate document; 
 no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
 syntactic parse of each sentence.}
-It was recently manually annotated in full, first for MWEs \citep[released as the CMWE Corpus\footnote{\url{http://www.ark.cs.cmu.edu/LexSem/}}]{schneider-14-corpus}, 
+It was recently manually annotated in full, first for heterogeneous MWEs \citep[released as the CMWE Corpus\footnote{\url{http://www.ark.cs.cmu.edu/LexSem/}}]{schneider-14-corpus}, 
 and then---building on the MWE annotations---for noun and verb supersenses (as yet unreleased; for nouns, the conventions of \citealp{schneider-12} were followed). 
-\nss{example. number of MWEs (SST label: none, noun, verb) and total lexical expressions. strong vs. weak distinction?}
-\nss{\cref{tbl:nvsst}}
-\nss{\#} of the reviews were held out as a test set, leaving \nss{\#} for training\slash development.
+The annotations consist of approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs; 
+see \cref{tbl:reviews} for a breakdown.
+\nss{example. strong vs. weak distinction?}
 \item \textsc{Tweets}: Two samples of Twitter messages were recently annotated with supersenses \citep{johannsen-14}: 
 \nss{ritter (size), and an in-house sample (size)}. Annotators were shown pre-annotations from a heuristic supersense tagging system 
 and asked to correct the boundaries and supersense labels. There was no explicit MWE annotation phase, 
@@ -466,7 +466,7 @@ Contiguous and gappy MWE counts are distinguished: e.g.,~78\% of instances of th
 contain a gap (with one or more intervening words).
 Supersense counts do not distinguish single-word vs.~multiword expressions.
 }
-\label{tbl:nvsst}
+\label{tbl:reviews}
 \end{table*}
 
 \nss{issue to resolve: licensing of Web Treebank source text}
@@ -482,6 +482,14 @@ in a random order: to encourage robust systems,
 the domain of each sentence will not be marked at test time, 
 and the proportion of sentences from each domain is not guaranteed to be 
 the same in the trial, train, dev, and test sets.\nss{is this crazy?}
+
+\subsection{Splits}
+
+We adopt \citeposs{schneider-14} splits of the \textsc{Reviews} data: 
+101~documents (500~sentences, 7,171~words) are held out as a test set, 
+leaving 3,312~sentences\slash 48,408~words for training\slash development.
+
+
 
 \subsection{Inputs}
 
