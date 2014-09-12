@@ -347,7 +347,31 @@ highlights: (a) broad-coverage---not too far from NER; hopefully avoid some of t
 parsing, distributional word representations, language models, 
 use of language resources such as WordNet, (other buzzwords?)}
 
-\nss{foster cross-pollination between different subcommunities}
+For the most part, contemporary approaches to English syntactic parsing 
+treat space-separated words as the basic units of structure. 
+%It has even been suggested that dependency syntax, for example, 
+%offers a good approximation of semantic structure.
+But for sentences with noncompositional or idiosyncratic expressions, this fails to reflect 
+the basic units of \emph{meaning}. For example, consider:
+\enumsentence{The staff leaves a lot to be desired .}
+\enumsentence{I googled restaurants in the area and Fuji Sushi came up and reviews were great so I made a carry out order of : L 17 .}
+In these sentences, \lex{a lot}, \lex{leaves\ldots to be desired}, 
+\lex{Fuji Sushi}, \lex{came up}, \lex{made\ldots order}, and \lex{carry out}
+are all \textbf{multiword expressions} (MWEs) 
+in that their combined meanings can be thought of as ``prepackaged'' 
+in a single lexical expression that happens to be written with spaces.\footnote{This is not to say that MWEs cannot have ``normal'' 
+syntactic structure; some are more fixed in their form while others are quite flexible. 
+For instance, \lex{make\ldots order} can be passivized just canonical verb--direct object combinations.}
+MWEs such as these (and many other flavors) have attracted a great deal of attention 
+within computational semantics; see \citet{baldwin-10} for a review.
+\nss{identification}
+
+\nss{supersenses}
+
+To date, many of the analysis problems in computational lexical semantics are niche topics. 
+By integrating broad-coverage MWE identification together with supersense tagging 
+as a single analysis task, we hope to encourage the comparison of systems on benchmark datasets 
+and to foster cross-pollination between different subcommunities. 
 
 \nss{encourage creativity of solutions}
 
@@ -393,6 +417,8 @@ must not receive separate supersenses.}
 % ewtb.r.389298.4 I highly~recommend_ Garage_Pros _to my friends .  
 %"labels": {"8": ["friends", "GROUP"], "3": ["recommend", "communication"], "4": ["Garage", "GROUP"]}, "_": [[3, 6], [4, 5]], "words": [["I", "PRP"], ["highly", "RB"], ["recommend", "VBP"], ["Garage", "NNP"], ["Pros", "NNPS"], ["to", "IN"], ["my", "PRP$"], ["friends", "NNS"], [".", "."]], "~": [[2, 3, 6]]}
 % ewtb.r.329991.1 I googled restaurants in the area and Fuji_Sushi came_up and reviews were great so I made_ a carry_out _order of : L 17 .       {"labels": {"2": ["googled", "communication"], "3": ["restaurants", "GROUP"], "6": ["area", "LOCATION"], "8": ["Fuji", "GROUP"], "10": ["came", "communication"], "13": ["reviews", "COMMUNICATION"], "14": ["were", "stative"], "18": ["made", "communication"], "20": ["carry", "possession"]}, "_": [[8, 9], [10, 11], [18, 22], [20, 21]], "words": [["I", "PRP"], ["googled", "VBD"], ["restaurants", "NNS"], ["in", "IN"], ["the", "DT"], ["area", "NN"], ["and", "CC"], ["Fuji", "NNP"], ["Sushi", "NNP"], ["came", "VBD"], ["up", "RB"], ["and", "CC"], ["reviews", "NNS"], ["were", "VBD"], ["great", "JJ"], ["so", "RB"], ["I", "PRP"], ["made", "VBD"], ["a", "DT"], ["carry", "VB"], ["out", "RP"], ["order", "NN"], ["of", "IN"], [":", ":"], ["L", "$"], ["17", "CD"], [".", "."]], "~": []}
+
+
 
 \begin{figure*}\centering %\small
 % {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
