@@ -420,39 +420,6 @@ must not receive separate supersenses.}
 
 
 
-\begin{figure*}\centering %\small
-% {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
-\begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
- \node[inner sep=0cm] (n1) {\tagtt{he}{O}{O}\tagtt{was}{O}{O}\tagtt{willing}{O}{O}\tagtt{to}{O}{O}};
- \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtt{budge}{\color{red}B}{O}};
- \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagtt{a}{\color{blue}b}{B}};
- \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtt{little}{\color{blue}ī}{Ī}};
- \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtt{on}{\color{red}Ī}{O}};
- \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtt{the}{O}{O}\tagtt{price}{O}{O}};
- \path[-,thick,red, bend left=45] (n2.north) edge (n5.north);
- \path[-,thick,blue, bend left=45] (n3.north) edge (n4.north);
-\path[-,thick, bend right=45] (n3.south) edge (n4.south);
- \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtt{which}{O}{O}};
- \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagtt{means}{B}{O}};
- \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagtt{a}{\color{orange}Ĩ}{B}};
- \node[inner sep=0cm,above right=0pt of n9.south east] (n10) {\tagtt{lot}{\color{orange}Ī}{Ĩ}};
-  \path[-,thick,orange, bend left=45] (n9.north) edge (n10.north);
-\path[-,thick,dotted, bend right=45] (n9.south) edge (n10.south);
- \node[inner sep=0cm,above right=0pt of n10.south east] (n11) {\tagtt{to}{Ĩ}{o}};
- \node[inner sep=0cm,above right=0pt of n11.south east] (n12) {\tagtt{me}{Ĩ}{Ĩ}};
-  \path[-,thick,dotted, bend left=45] (n8.north) edge (n9.north); 
-\path[-,thick,dotted, bend right=45] (n10.south) edge (n12.south); 
-  \path[-,thick,dotted, bend left=45] (n10.north) edge (n11.north);
-  \path[-,thick,dotted, bend left=45] (n11.north) edge (n12.north);
- \node[inner sep=0cm,above right=0pt of n12.south east] (n13) {\tagtt{.}{O}{O}};
-\end{tikzpicture}
-\caption{A \textsc{Reviews} sentence with two hypothetical MWE annotations. 
-Strong links are depicted with solid arcs, and weak links with dotted arcs.\nss{relationship to tags format} 
-Precision of the top annotation relative to the bottom one is $1/3$ with weak links removed 
-and $3/6$ with weak links strengthened to strong links. The respective recall values are $1/1$ and $3/3$. 
-Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{3}{6}\cdot \tfrac{3}{3}/(\tfrac{3}{6}+\tfrac{3}{3}) = 0.58$.}
-\label{fig:tagschemes}
-\end{figure*}
 
 \nss{given a sentence, what should be predicted. extra examples in appendices are encouraged}
 
@@ -610,15 +577,83 @@ and survey teams to ensure we only evaluate tracks that generate sufficient inte
 
 \subsection{Measures}
 
-\nss{several possibilities---I think we should use the bolded ones:
-\begin{enumerate}
-\item \textbf{MWE: link-based P, R, $F_1$ with strength averaging}
-\item \textbf{SST first-tag supersense accuracy}
-\item full tagging accuracy (with, without O)
-\item MWE+SST chance-corrected: Kripp's unitizing $\alpha$ with MWE ID as one of the ``categories'', and chance levels determined by the gold annotations
-\item \textbf{joint MWE+SST: link-based F1 with matching links count as 1 if the supersense agrees, .5 if it agrees in POS (noun/verb/aux/other), and .25 otherwise}
-\end{enumerate}
-}
+ 
+We have written scripts that compute three kinds of scores: 
+these compare a system's predictions against the gold standard 
+with respect to MWEs, supersenses, and their combination.
+
+
+\begin{figure*}\centering %\small
+% {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
+\begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
+ \node[inner sep=0cm] (n1) {\tagtt{he}{O}{O}\tagtt{was}{O}{O}\tagtt{willing}{O}{O}\tagtt{to}{O}{O}};
+ \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtt{budge}{\color{red}B}{O}};
+ \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagtt{a}{\color{blue}b}{B}};
+ \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtt{little}{\color{blue}ī}{Ī}};
+ \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtt{on}{\color{red}Ī}{O}};
+ \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtt{the}{O}{O}\tagtt{price}{O}{O}};
+ \path[-,thick,red, bend left=45] (n2.north) edge (n5.north);
+ \path[-,thick,blue, bend left=45] (n3.north) edge (n4.north);
+\path[-,thick, bend right=45] (n3.south) edge (n4.south);
+ \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtt{which}{O}{O}};
+ \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagtt{means}{B}{O}};
+ \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagtt{a}{\color{orange}Ĩ}{B}};
+ \node[inner sep=0cm,above right=0pt of n9.south east] (n10) {\tagtt{lot}{\color{orange}Ī}{Ĩ}};
+  \path[-,thick,orange, bend left=45] (n9.north) edge (n10.north);
+\path[-,thick,dotted, bend right=45] (n9.south) edge (n10.south);
+ \node[inner sep=0cm,above right=0pt of n10.south east] (n11) {\tagtt{to}{Ĩ}{o}};
+ \node[inner sep=0cm,above right=0pt of n11.south east] (n12) {\tagtt{me}{Ĩ}{Ĩ}};
+  \path[-,thick,dotted, bend left=45] (n8.north) edge (n9.north); 
+\path[-,thick,dotted, bend right=45] (n10.south) edge (n12.south); 
+  \path[-,thick,dotted, bend left=45] (n10.north) edge (n11.north);
+  \path[-,thick,dotted, bend left=45] (n11.north) edge (n12.north);
+ \node[inner sep=0cm,above right=0pt of n12.south east] (n13) {\tagtt{.}{O}{O}};
+\end{tikzpicture}
+\caption{A \textsc{Reviews} sentence with two hypothetical MWE annotations. 
+Strong links are depicted with solid arcs, and weak links with dotted arcs.\nss{relationship to tags format} 
+Precision of the top annotation relative to the bottom one is $1/3$ with weak links removed 
+and $2/6$ with weak links strengthened to strong links (note that a link between words $w_1$ and $w_2$ is ``matched'' 
+if, in the other annotation, there is a path between $w_1$ and $w_2$). 
+The respective recall values are $1/1$ and $3/3$. 
+Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.}
+\label{fig:linkmeasure}
+\end{figure*}
+
+The \textbf{MWE} measure looks at precision, recall, and $F_1$ 
+of the identified MWEs. Tokens not involved in a predicted or gold MWE
+do not factor into this measure. 
+To award partial credit for cases of partial overlap between a predicted MWE 
+and a gold MWE, these scores are computed based on \emph{links} between 
+consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.
+\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
+of a sentence. The precision is the proportion of predicted links whose words 
+both belong to the same expression in the gold standard. 
+Recall is the same as precision, but swapping the predicted and gold annotations.\footnote{This computation on the basis of links 
+is a slight simplification of the MUC coreference measure \citep{vilain-95}.}
+A weak link is treated as intermediate between a strong link and no link at all: 
+precision, recall, and $F_1$ computed on strong links only are averaged 
+with the respective calculations computed on all links without regard to strength. 
+These calculations are demonstrated in the caption of \cref{fig:linkmeasure} for the example.
+
+To isolate the \textbf{supersense} classification performance, 
+we simply compute accuracy of the supersense part of the full tag.\nss{for all tags, or all non-strong-I tags, or just ones with actual supersenses?} 
+Because the supersense of a strong MWE is marked on its first word, 
+this will have the effect of penalizing errors on the left boundary of an MWE, 
+but it is less sensitive to the MWE analysis than the link-based measure. 
+
+The third measure is a hybrid of the first two: it computes \textbf{overall} performance 
+in terms of link-based $F_1$, where for each supersense label, 
+a self-link encoding that label is added to the first word of the expression.
+Credit is only given for a self-link if in the other analysis, 
+a corresponding self-link occurs with the same supersense.
+
+All of these measures are microaverages, computed globally over tokens in the corpus 
+(rather than normalized within each sentence and averaged across sentences).
+
+\nss{other possibilities that we should probably not mention in the interest of simplicity: 
+weight MWE links according to supersense match;
+full tag accuracy; 
+giving less credit for supersense mismatches that disagree on POS}
 
 \subsection{Conditions}
 
