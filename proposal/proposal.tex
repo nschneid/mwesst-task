@@ -256,6 +256,7 @@
 \newcommand{\tagdef}[1]{#1\hfill} % tag definition
 \newcommand{\tagt}[2]{\ensuremath{\underset{\textrm{\textlarger{\tg{#2}}}\strut}{\w{#1}\rule[-.3\baselineskip]{0pt}{0pt}}}} % tag text (a word or phrase) with an SST. (second arg is the tag)
 \newcommand{\tagtt}[3]{\begin{tabular}{@{\hspace{2pt}}c@{\hspace{2pt}}} \texttt{#2}\\ #1 \\ \texttt{#3}\end{tabular}}
+\newcommand{\tagts}[3]{\begin{tabular}{@{\hspace{2pt}}c@{\hspace{2pt}}} \texttt{#2\vphantom{\textlarger{Ĩ}}}\\ #1 \\ \sst{#3}\end{tabular}}
 \newcommand{\tgt}[2]{\ensuremath{\underset{\text{\textlarger{#2}\strut}}{\text{#1\rule[-.3\baselineskip]{0pt}{\baselineskip}}}}} % tag text (a word or phrase, not underlined) with a label. (second arg is the label)
 \newcommand{\glosst}[2]{\ensuremath{\underset{\textrm{#2}}{\textrm{#1}}}} % gloss text (a word or phrase) (second arg is the gloss)
 \newcommand{\AnnA}[0]{\mbox{\textbf{Ann-A}}} % annotator A
@@ -361,7 +362,32 @@ if the task is successful, we would advocate a second, multilingual incarnation
 
 \section{Representation}
 
-
+\begin{figure}\centering\small
+%I highly~recommend_ Garage_Pros _to my friends .  
+%"labels": {"8": ["friends", "GROUP"], "3": ["recommend", "communication"], "4": ["Garage", "GROUP"]}, "_": [[3, 6], [4, 5]], "words": [["I", "PRP"], ["highly", "RB"], ["recommend", "VBP"], ["Garage", "NNP"], ["Pros", "NNPS"], ["to", "IN"], ["my", "PRP$"], ["friends", "NNS"], [".", "."]], "~": [[2, 3, 6]]}
+\begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
+ \node[inner sep=0cm]                                  (n1) {\tagts{I}{O}{}};
+ \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagts{highly}{B}{}};
+ \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagts{recommend}{\color{red}Ĩ}{\color{red}\textsc{v:comm.}}};
+ \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagts{Garage}{\color{blue}b}{\color{blue}\textsc{n:group}}};
+ \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagts{Pros}{\color{blue}ī}{}};
+ \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagts{to}{\color{red}Ī}{}};
+\path[-,thick,dotted, bend left=45] (n2.north) edge (n3.north); 
+\path[-,thick,red, bend left=45] (n3.north) edge (n6.north);
+ \path[-,thick,blue, bend left=45] (n4.north) edge (n5.north);
+ \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagts{my}{O}{}};
+ \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagts{friends}{O}{\textsc{n:group}}};
+ \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagts{.}{O}{}};
+\end{tikzpicture}
+\caption{Illustration of the target representation: MWE positional tags are shown above the sentence 
+and noun and verb supersenses are shown below the sentence. 
+Links illustrate the behavior of the MWE tags: 
+solid links for strong MWEs and dotted links for weak MWEs. 
+The supersense labeling must respect the strong MWEs; thus, \sst{v:comm(unication)} 
+and the first \sst{n:group} each apply to two-word units---\emph{to} and \emph{Pros} 
+must not receive separate supersenses.}
+\label{fig:ex1}
+\end{figure}
 
 % ewtb.r.055976.1 The staff leaves_ a_lot _to_be_desired .
 % ewtb.r.389298.4 I highly~recommend_ Garage_Pros _to my friends .  
