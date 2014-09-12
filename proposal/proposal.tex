@@ -70,7 +70,9 @@
 
 \usepackage{latexsym}
 
-
+% Graphics
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning,calc} 
 
 
 
@@ -253,6 +255,8 @@
 %\newcommand{\lex}[1]{\textsmaller{\textsf{\textcolor{slate}{\textbf{#1}}}}}	% example lexical item 
 \newcommand{\tagdef}[1]{#1\hfill} % tag definition
 \newcommand{\tagt}[2]{\ensuremath{\underset{\textrm{\textlarger{\tg{#2}}}\strut}{\w{#1}\rule[-.3\baselineskip]{0pt}{0pt}}}} % tag text (a word or phrase) with an SST. (second arg is the tag)
+\newcommand{\tagtt}[3]{\begin{tabular}{@{\hspace{2pt}}c@{\hspace{2pt}}} \texttt{#2}\\ #1 \\ \texttt{#3}\end{tabular}}
+\newcommand{\tgt}[2]{\ensuremath{\underset{\text{\textlarger{#2}\strut}}{\text{#1\rule[-.3\baselineskip]{0pt}{\baselineskip}}}}} % tag text (a word or phrase, not underlined) with a label. (second arg is the label)
 \newcommand{\glosst}[2]{\ensuremath{\underset{\textrm{#2}}{\textrm{#1}}}} % gloss text (a word or phrase) (second arg is the gloss)
 \newcommand{\AnnA}[0]{\mbox{\textbf{Ann-A}}} % annotator A
 \newcommand{\AnnB}[0]{\mbox{\textbf{Ann-B}}} % annotator B
@@ -356,6 +360,47 @@ if the task is successful, we would advocate a second, multilingual incarnation
 (note other languages that have seen MWE/supersense evaluations---Italian, Arabic, etc.)}
 
 \section{Representation}
+
+
+
+% ewtb.r.055976.1 The staff leaves_ a_lot _to_be_desired .
+% ewtb.r.389298.4 I highly~recommend_ Garage_Pros _to my friends .  
+%"labels": {"8": ["friends", "GROUP"], "3": ["recommend", "communication"], "4": ["Garage", "GROUP"]}, "_": [[3, 6], [4, 5]], "words": [["I", "PRP"], ["highly", "RB"], ["recommend", "VBP"], ["Garage", "NNP"], ["Pros", "NNPS"], ["to", "IN"], ["my", "PRP$"], ["friends", "NNS"], [".", "."]], "~": [[2, 3, 6]]}
+% ewtb.r.329991.1 I googled restaurants in the area and Fuji_Sushi came_up and reviews were great so I made_ a carry_out _order of : L 17 .       {"labels": {"2": ["googled", "communication"], "3": ["restaurants", "GROUP"], "6": ["area", "LOCATION"], "8": ["Fuji", "GROUP"], "10": ["came", "communication"], "13": ["reviews", "COMMUNICATION"], "14": ["were", "stative"], "18": ["made", "communication"], "20": ["carry", "possession"]}, "_": [[8, 9], [10, 11], [18, 22], [20, 21]], "words": [["I", "PRP"], ["googled", "VBD"], ["restaurants", "NNS"], ["in", "IN"], ["the", "DT"], ["area", "NN"], ["and", "CC"], ["Fuji", "NNP"], ["Sushi", "NNP"], ["came", "VBD"], ["up", "RB"], ["and", "CC"], ["reviews", "NNS"], ["were", "VBD"], ["great", "JJ"], ["so", "RB"], ["I", "PRP"], ["made", "VBD"], ["a", "DT"], ["carry", "VB"], ["out", "RP"], ["order", "NN"], ["of", "IN"], [":", ":"], ["L", "$"], ["17", "CD"], [".", "."]], "~": []}
+
+\begin{figure*}\centering %\small
+% {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
+\begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
+ \node[inner sep=0cm] (n1) {\tagtt{he}{O}{O}\tagtt{was}{O}{O}\tagtt{willing}{O}{O}\tagtt{to}{O}{O}};
+ \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtt{budge}{\color{red}B}{O}};
+ \node[inner sep=0cm,above right=0pt of n2.south east] (n3) {\tagtt{a}{\color{blue}b}{B}};
+ \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtt{little}{\color{blue}ī}{Ī}};
+ \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtt{on}{\color{red}Ī}{O}};
+ \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtt{the}{O}{O}\tagtt{price}{O}{O}};
+ \path[-,thick,red, bend left=45] (n2.north) edge (n5.north);
+ \path[-,thick,blue, bend left=45] (n3.north) edge (n4.north);
+\path[-,thick, bend right=45] (n3.south) edge (n4.south);
+ \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtt{which}{O}{O}};
+ \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagtt{means}{B}{O}};
+ \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagtt{a}{\color{orange}Ĩ}{B}};
+ \node[inner sep=0cm,above right=0pt of n9.south east] (n10) {\tagtt{lot}{\color{orange}Ī}{Ĩ}};
+  \path[-,thick,orange, bend left=45] (n9.north) edge (n10.north);
+\path[-,thick,dotted, bend right=45] (n9.south) edge (n10.south);
+ \node[inner sep=0cm,above right=0pt of n10.south east] (n11) {\tagtt{to}{Ĩ}{o}};
+ \node[inner sep=0cm,above right=0pt of n11.south east] (n12) {\tagtt{me}{Ĩ}{Ĩ}};
+  \path[-,thick,dotted, bend left=45] (n8.north) edge (n9.north); 
+\path[-,thick,dotted, bend right=45] (n10.south) edge (n12.south); 
+  \path[-,thick,dotted, bend left=45] (n10.north) edge (n11.north);
+  \path[-,thick,dotted, bend left=45] (n11.north) edge (n12.north);
+ \node[inner sep=0cm,above right=0pt of n12.south east] (n13) {\tagtt{.}{O}{O}};
+\end{tikzpicture}
+\caption{A \textsc{Reviews} sentence with two hypothetical MWE annotations. 
+Strong links are depicted with solid arcs, and weak links with dotted arcs.\nss{relationship to tags format} 
+Precision of the top annotation relative to the bottom one is $1/3$ with weak links removed 
+and $3/6$ with weak links strengthened to strong links. The respective recall values are $1/1$ and $3/3$. 
+Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{3}{6}\cdot \tfrac{3}{3}/(\tfrac{3}{6}+\tfrac{3}{3}) = 0.58$.}
+\label{fig:tagschemes}
+\end{figure*}
 
 \nss{given a sentence, what should be predicted. extra examples in appendices are encouraged}
 
@@ -489,7 +534,7 @@ We adopt \citeposs{schneider-14} splits of the \textsc{Reviews} data:
 101~documents (500~sentences, 7,171~words) are held out as a test set, 
 leaving 3,312~sentences\slash 48,408~words for training\slash development.
 
-
+\nss{Tweets}
 
 \subsection{Inputs}
 
