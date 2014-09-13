@@ -757,14 +757,17 @@ extends the discriminative MWE identification model of \citet{schneider-14}\foot
 to also label supersenses. 
 It is trained on the \textsc{Reviews} data: this learning is fully supervised 
 (though the model includes unsupervised word cluster features). 
-\textbf{Copenhagen} \nss{\ldots}.
+
+\textbf{COASTAL}\footnote{}
+The paper introducing the SST data sets also featured several models to tag unseen data, with various levels of supervision. The models can be accessed via \url{https://github.com/coastalcph/supersense-data-twitter}. The most performant model is a supervised sequential model trained with {\sc Searn} \cite{Daume:ea:09}.
 
 \Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
 using the measures described above (precision and recall are omitted for brevity).
 \nss{discussion? presumably: we see that the domain gap is huge---neither system is robust to the two domains.
 this in one of the challenges that systems in our task will have to face.}
 
-\begin{table*}\centering\small
+\begin{table*}
+\centering\small
 \begin{tabular}{lccccccc}
            &  & \multicolumn{3}{c}{\textsc{Reviews}} & \multicolumn{3}{c}{\textsc{Tweets}} \\
            \cmidrule(r){3-5}\cmidrule(l){6-8}
@@ -772,8 +775,9 @@ this in one of the challenges that systems in our task will have to face.}
                                               & \bfseries ``MWE'' & \bfseries SST & \bfseries Full \\
 \midrule
 AMALGrAM (supervised 1st-order discriminative with gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
-Copenhagen (\nss{semi-supervised 2nd-order discriminative?}) & \textsc{Tweets} & \# & \# & \#  & \# & \# & \# \\
+Copenhagen (supervised 1st-order discriminative) & \textsc{Tweets} & \# & \# & \#  & \# & \# & \# \\
 \end{tabular}
+
 \caption{Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes 
 because we have not yet systematically annotated the data for MWEs, so this preliminary evaluation 
 is against supersense annotators' chunking decisions for noun and verb expressions.}
