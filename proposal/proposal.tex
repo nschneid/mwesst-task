@@ -393,12 +393,23 @@ within computational semantics; see \citet{baldwin-10} for a review.
 \nss{identification}
 
 \paragraph{Supersenses.}
+\dirk{stab at it...}
+The fundamental problem with any sort of semantic analysis of text its the granularity of the chosen representation. Ideally, one would like to have both broad word coverage \emph{and} sufficient distinction. A representation represents good coverage if it provides labels for most word classes. It offers sufficient distinction if it allows to group words into clusters, in order to make generalizations about semantic classes. The latter is typically anti-correlated with the number of available labels.
+
+Popular representations are named-entity tags and WordNet \cite{fellbaum-90} word senses. However, both present a problem in one of the desired aspects. Named entity tags have a reasonable distinction, and are thus frequently used to find entities of a certain type. However, as the name already suggests, this representation is limited to (proper) nouns, and has thus poor coverage. 
+Word senses, on the other hand, cover all content word classes. However, they are lemma-specific (i.e., sense number two of \emph{house} and \emph{building} are not the same), and do not allow for generalization to larger groups.
+\dirk{Mention work on other languages?}
+
+Supersenses are also based off of WordNet, but represent a higher level in the taxonomy. They originated from a higher-level clustering of nouns and verbs into groups, and thus have good coverage.\footnote{Supersenses for adjectives and adverbs exist, but are based on morpho-syntactic rather than semantic properties. There is, however, recent work on developing a taxonomy for adjective senses, see \cite{tsvetkov-14}.}
+Since they group individual word senses into larger groups, they allow for distinction beyond the lemma level, i.e., they assign the same supersense to words with different word senses.
+
 To date, many of the analysis problems in computational lexical semantics are niche topics. 
 By integrating broad-coverage MWE identification together with supersense tagging 
 as a single analysis task, we hope to encourage the comparison of systems on benchmark datasets 
 and to foster cross-pollination between different subcommunities. 
 
 \nss{encourage creativity of solutions}
+Semantic analysis is a powerful and promising topic, but it has been largely confined to newswire, i.e., standardized text written mostly in English. By including a relatively new and heterogeneous domain like Twitter in the data, we want to encourage creative approaches that go beyond the tried and true newswire-trained approach, and open the community to wider applications. 
 
 \nss{related work: these representations build on ones that have been explored, 
 but go a step beyond. (want to convince reader that there will be interest in the task based on previous results, 
@@ -456,6 +467,31 @@ must not receive separate supersenses.}
 
 \section{Data}
 
+\begin{table}[ht]
+\begin{center}
+\resizebox{ \columnwidth }{!}{
+\begin{tabular}{lll}
+n.Tops	&	n.object	&	v.cognition\\
+n.act	&	n.person	&	v.communication\\
+n.animal	&	n.phenomenon	&	v.competition\\
+n.artifact	&	n.plant	&	v.consumption\\
+n.attribute	&	n.possession	&	v.contact\\
+n.body	&	n.process	&	v.creation\\
+n.cognition	&	n.quantity	&	v.emotion\\
+n.communication	&	n.relation	&	v.motion\\
+n.event	&	n.shape	&	v.perception\\
+n.feeling	&	n.state	&	v.possession\\
+n.food	&	n.substance	&	v.social\\
+n.group	&	n.time	&	v.stative\\
+n.location	&	v.body	&	v.weather\\
+n.motive	&	v.change	&	
+\end{tabular}
+}% resize
+\end{center}
+\captionof{table}{The 41 noun and verb supersenses in WordNet\label{tab:supersenses}}
+\end{table}%
+
+
 The task will use two existing datasets for both training and evaluation. 
 These capture two genres of social web text:
 \begin{itemize}
@@ -469,9 +505,18 @@ The annotations consist of approximately 3,500~MWEs, 9,000~noun expressions, 8,0
 see \cref{tbl:reviews} for a breakdown.
 \nss{example. strong vs. weak distinction?}
 \item \textsc{Tweets}: Two samples of Twitter messages were recently annotated with supersenses \citep{johannsen-14}: 
-\nss{ritter (size), and an in-house sample (size)}. Annotators were shown pre-annotations from a heuristic supersense tagging system 
-and asked to correct the boundaries and supersense labels. There was no explicit MWE annotation phase, 
+(a) supersense annotations for the POS+NER-annotated data set described in \citep{Ritter:ea:11}, which we use for training, development and evaluation, using the splits proposed in \citep{Derczynski:ea:13}, and (b) supersense annotations for a sample of 200 tweets, which we use for additional, out-of-sample evaluation. %We call these data sets {\sc Ritter}-$\{${\sc Train,Dev,Eval}$\}$ and {\sc In-House-Eval}, respectively. 
+The latter was downloaded in 2013 and was previously used (with part-of-speech annotation) in \citep{Plank:ea:14}.
+
+For both data sets,  annotators were shown pre-annotations from a heuristic supersense tagging system (based on the most frequent sense of each word)
+and asked to correct the boundaries and supersense labels. The supersenses are annotated with spans defined by the BIO (Begin-Inside-Other) notation, there was no explicit MWE annotation phase, 
 though many of the multiword chunks tagged with a noun or verb supersense would be considered MWEs. 
+
+The average raw agreement on the data from Ritter was 0.86 (Cohen's $\kappa$ 0.77). The majority of tokens received the \emph{O} label by all annotators; this happended in 515 out of 841 cases. Excluding these instances to evaluate the performance on the more difficult content words, raw agreement dropped to 0.69 and Cohen's $\kappa$ to 0.69.
+The second data had an average raw agreement of 0.65 and their Cohen's $\kappa$ 0.62. 
+%For this data set, we also compute $F_1$, defined as usual as the harmonic mean of recall and precision. To compute this, we set one of the annotators as gold data and the other as predicted data. However, since $F_{1}$ is symmetrical, the order does not matter. The annotation $F_{1}$ gives us another estimate of annotation difficulty. We present the figures in Table \ref{table:properties-of-dataset}.
+
+
 \nss{example. number of single-word, multiword SSTs grouped by noun, verb.}
 \nss{splits.}
 \end{itemize}
@@ -588,8 +633,12 @@ leaving 3,312~sentences\slash 48,408~words for training\slash development.
 
 \nss{open, closed track. if a team submits systems to the closed track and fewer than 3 systems to the open track, 
 they will be encouraged to submit the closed track results to the open track as well.}
+The main goal of the task is to find new creative ways to improve the performance of semantic annotation on various domains. Participants are thus encouraged to make wide use of available resources, and the use of external resources for distant or direct supervision is explicitly allowed. Theses entries will be judged in an \emph{open} track.
+
+However, we also offer a \emph{closed} track, whose participants can only use the provided resources. We envision this track for teams that are more interested in the algorithmic problem of the task, and who do not want to spend too much time on the development and incorporation of other data sources. In order not to disadvantage these groups, they will be judged separately.
 
 \nss{systems must respect the input tokenization}
+Due to the nature of the task, which tries to capture MWEs, participants of both tracks are required to respect the input tokenization of the train, development, and test data.
 
 \nss{domain label at training time, but not test time. no other metadata}
 
