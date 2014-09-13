@@ -151,6 +151,7 @@
 \newcommand{\cjdmarker}{\ensuretext{\textcolor{green}{\ensuremath{^{\textsc{CJ}}_{\textsc{D}}}}}}
 \newcommand{\nssmarker}{\ensuretext{\textcolor{magenta}{\ensuremath{^{\textsc{NS}}_{\textsc{S}}}}}}
 \newcommand{\nasmarker}{\ensuretext{\textcolor{red}{\ensuremath{^{\textsc{NA}}_{\textsc{S}}}}}}
+\newcommand{\dhmarker}{\ensuretext{\textcolor{red}{\ensuremath{^{\textsc{D}}_{\textsc{H}}}}}}
 \newcommand{\lkmarker}{\ensuretext{\textcolor{blue}{\ensuremath{^{\textsc{L}}_{\textsc{K}}}}}}
 \newcommand{\swswmarker}{\ensuretext{\textcolor{orange}{\ensuremath{^{\textsc{S}}_{\textsc{S}}}}}}
 \newcommand{\abmarker}{\ensuretext{\textcolor{purple}{\ensuremath{^{\textsc{A}}_{\textsc{B}}}}}}
@@ -158,7 +159,7 @@
 %\newcommand{\arkcomment}[3]{}
 \newcommand{\nss}[1]{\arkcomment{\nssmarker}{#1}{magenta}}
 \newcommand{\aj}[1]{\arkcomment{\cjdmarker}{#1}{green}}
-\newcommand{\dirk}[1]{\arkcomment{\nasmarker}{#1}{red}}
+\newcommand{\dirk}[1]{\arkcomment{\dhmarker}{#1}{red}}
 \newcommand{\lk}[1]{\arkcomment{\lkmarker}{#1}{blue}}
 \newcommand{\swsw}[1]{\arkcomment{\swswmarker}{#1}{orange}}
 \newcommand{\ab}[1]{\arkcomment{\abmarker}{#1}{purple}}
@@ -647,9 +648,9 @@ Due to the nature of the task, which tries to capture MWEs, participants of both
 \nss{a few possibilities for tracks---
 \begin{description}
 \item[closed track] provided training data; we'll allow WordNet and provide (auto?)~POS, Brown clusters as well? 
-no other resources allowed
-\item[semi-open track] we provide a large unlabeled corpus, in addition to closed track resources
-\item[unsupervised track] no token-level MWE or SST labels may be used
+no other resources allowed \dirk{yes: this will give people an ``out-of-the-box'' task opportunity}
+\item[semi-open track] we provide a large unlabeled corpus, in addition to closed track resources \dirk{would nix that: people should choose their own unlabeled data}
+\item[unsupervised track] no token-level MWE or SST labels may be used \dirk{maybe for future iterations of the task?}
 \item[open track] any data/resources (except the CMWE corpus, if that includes the test set) may be used
 \end{description}
 I feel like there are pluses and minuses to all 4 of these tracks. maybe we should just mention the possibilities 
@@ -716,7 +717,7 @@ with the respective calculations computed on all links without regard to strengt
 These calculations are demonstrated in the caption of \cref{fig:linkmeasure} for the example.
 
 To isolate the \textbf{supersense} classification performance, 
-we simply compute accuracy of the supersense part of the full tag.\nss{for all tags, or all non-strong-I tags, or just ones with actual supersenses?} 
+we  compute F1 of the supersense part of the full tag.\nss{for all tags, or all non-strong-I tags, or just ones with actual supersenses?} \dirk{We use F1, since the label distribution is so biased (predicting 'O' would get you really good accuracy), and we should compute it for all}
 Because the supersense of a strong MWE is marked on its first word, 
 this will have the effect of penalizing errors on the left boundary of an MWE, 
 but it is less sensitive to the MWE analysis than the link-based measure. 
@@ -727,8 +728,8 @@ a self-link encoding that label is added to the first word of the expression.
 Credit is only given for a self-link if in the other analysis, 
 a corresponding self-link occurs with the same supersense.
 
-All of these measures are microaverages, computed globally over tokens in the corpus 
-(rather than normalized within each sentence and averaged across sentences).
+All of these measures are micro-averages, computed globally over tokens in the corpus 
+(rather than normalized within each sentence and averaged across sentences, aka a macro-average).
 
 \nss{other possibilities that we should probably not mention in the interest of simplicity: 
 weight MWE links according to supersense match;
@@ -758,7 +759,7 @@ to also label supersenses.
 It is trained on the \textsc{Reviews} data: this learning is fully supervised 
 (though the model includes unsupervised word cluster features). 
 
-\textbf{COASTAL}\footnote{}
+\textbf{COASTAL}\footnote{COpenhagen Applied STAtistical Learning}
 The paper introducing the SST data sets also featured several models to tag unseen data, with various levels of supervision. The models can be accessed via \url{https://github.com/coastalcph/supersense-data-twitter}. The most performant model is a supervised sequential model trained with {\sc Searn} \cite{Daume:ea:09}.
 
 \Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
@@ -768,16 +769,17 @@ this in one of the challenges that systems in our task will have to face.}
 
 \begin{table*}
 \centering\small
+\resizebox{ \textwidth }{!}{
 \begin{tabular}{lccccccc}
            &  & \multicolumn{3}{c}{\textsc{Reviews}} & \multicolumn{3}{c}{\textsc{Tweets}} \\
            \cmidrule(r){3-5}\cmidrule(l){6-8}
 \bfseries System     & \bfseries Train Domain & \bfseries MWE & \bfseries SST & \bfseries Full
                                               & \bfseries ``MWE'' & \bfseries SST & \bfseries Full \\
 \midrule
-AMALGrAM (supervised 1st-order discriminative with gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
-Copenhagen (supervised 1st-order discriminative) & \textsc{Tweets} & \# & \# & \#  & \# & \# & \# \\
+AMALGrAM (superv. 1st-order discr. w/ gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
+COASTAL (superv. 1st-order disc.) & \textsc{Tweets} & \# & \# & \#  & \# & 54.09 & \# \\
 \end{tabular}
-
+}
 \caption{Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes 
 because we have not yet systematically annotated the data for MWEs, so this preliminary evaluation 
 is against supersense annotators' chunking decisions for noun and verb expressions.}
@@ -785,6 +787,9 @@ is against supersense annotators' chunking decisions for noun and verb expressio
 \end{table*}
 
 \section{Conclusion}
+We propose a task to solve both MWE identification and supersense tagging. In order to prevent domain bias, we provide data sets from two different domains, namely reviews and tweets. While the task is designed for English, we plan to extend it to other languages as well in future editions.
+
+Our hope is that this will lead to further advances in the field of semantic analysis.
 
 \nss{TODO}
 
