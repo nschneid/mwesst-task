@@ -339,6 +339,30 @@ are one technique for extracting MWE types \citep[cf.][\emph{inter alia}]{pecina
 
 \section{Introduction}
 
+Broad-coverage NLP techniques have, thanks in part to previous CoNLL shared tasks, 
+become mainstream for several aspects of language---including morphology, syntax, 
+and some areas of semantics (notably, named entity recognition \nss{2002/2003}, semantic role labeling \nss{2004/2005/2008/2009}, 
+and coreference resolution \nss{2011/2012}).
+Explicit analysis of lexical semantics, by contrast, has been more difficult to scale 
+to broad coverage.\nss{need to say something about purely unsupervised distributional approaches?} 
+This might be attributable to the dominant paradigm of word sense disambiguation 
+with lexical resources such as WordNet \citep{wordnet}.
+The fine-grained sense inventories in these resources 
+are difficult to annotate in corpora, result in considerable data sparseness, 
+and do not readily generalize to out-of-vocabulary words.
+The main corpus that is annotated with WordNet senses, 
+SemCor \citep{semcor}, reflects several genres of edited text; 
+unfortunately, expanding the annotations to new genres, such as social web text 
+or transcribed speech, would be quite expensive.
+This limits the applicability of SemCor-based NLP tools 
+and restricts opportunities for linguistic studies of lexical semantics in corpora.
+
+Here we propose a linguistic representation, annotated data, and evaluation measures 
+aimed at establishing a broad-coverage paradigm for lexical semantic analysis, 
+one which we believe is suitable for a CoNLL shared task. 
+We motivate the two components of the lexical representation---multiword expressions 
+and supersenses---before delving into the data and evaluation.
+
 \nss{motivation: lexical semantic analysis of MWEs and supersenses in English. 
 semantics is a hot topic.
 highlights: (a) broad-coverage---not too far from NER; hopefully avoid some of the limitations of traditional WSD. 
@@ -347,12 +371,13 @@ highlights: (a) broad-coverage---not too far from NER; hopefully avoid some of t
 parsing, distributional word representations, language models, 
 use of language resources such as WordNet, (other buzzwords?)}
 
-For the most part, contemporary approaches to English syntactic parsing 
+\paragraph{Multiword expressions.} 
+For the most part, contemporary approaches to English syntactic and semantic analysis
 treat space-separated words as the basic units of structure. 
 %It has even been suggested that dependency syntax, for example, 
 %offers a good approximation of semantic structure.
 But for sentences with noncompositional or idiosyncratic expressions, this fails to reflect 
-the basic units of \emph{meaning}. For example, consider:
+the basic units of meaning. For example, consider:
 \enumsentence{The staff leaves a lot to be desired .}
 \enumsentence{I googled restaurants in the area and Fuji Sushi came up and reviews were great so I made a carry out order of : L 17 .}
 In these sentences, \lex{a lot}, \lex{leaves\ldots to be desired}, 
@@ -361,13 +386,12 @@ are all \textbf{multiword expressions} (MWEs)
 in that their combined meanings can be thought of as ``prepackaged'' 
 in a single lexical expression that happens to be written with spaces.\footnote{This is not to say that MWEs cannot have ``normal'' 
 syntactic structure; some are more fixed in their form while others are quite flexible. 
-For instance, \lex{make\ldots order} can be passivized just like canonical verb--direct object combinations.}
+For instance, \lex{make\ldots order} can be passivized just like canonical transitive verb phrases.}
 MWEs such as these (and many other flavors) have attracted a great deal of attention 
 within computational semantics; see \citet{baldwin-10} for a review.
 \nss{identification}
 
-\nss{supersenses}
-
+\paragraph{Supersenses.}
 To date, many of the analysis problems in computational lexical semantics are niche topics. 
 By integrating broad-coverage MWE identification together with supersense tagging 
 as a single analysis task, we hope to encourage the comparison of systems on benchmark datasets 
@@ -379,10 +403,14 @@ and to foster cross-pollination between different subcommunities.
 but go a step beyond. (want to convince reader that there will be interest in the task based on previous results, 
 but also that it is somewhat novel.)}
 
-\nss{the proposed task will be limited to English. 
-this reflects what is realistic given existing resources and the organizers' ability to annotate new data. 
-if the task is successful, we would advocate a second, multilingual incarnation 
-(note other languages that have seen MWE/supersense evaluations---Italian, Arabic, etc.)}
+\nss{relevance to study of human language learning}
+
+The proposed task will be limited to English. 
+This reflects what we belive is realistic given existing resources 
+and the organizers' ability to annotate new data. 
+If the task is successful, we would advocate a second incarnation 
+adding evaluations in other languages\footnote{These might extend existing supersense datasets in other languages 
+to encode MWEs. We are aware of supersense annotations in Italian, Arabic, and Chinese \nss{cites}.} and/or child-directed speech.
 
 \section{Representation}
 
