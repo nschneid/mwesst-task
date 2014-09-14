@@ -605,9 +605,8 @@ no metadata about the reviews is available. EWTB provides sentence segmentation,
 syntactic parse of each sentence.}}
 It was recently manually annotated in full, first for heterogeneous MWEs \citep[released as the CMWE Corpus]{schneider-14-corpus}, 
 then for noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses.\footnote{Stand-off annotations 
-will be publicly released at \url{http://www.ark.cs.cmu.edu/LexSem/} in time for the task. 
-We will make an effort to obtain permission from LDC to redistribute the source text, 
-which is from the EWTB.} 
+will be publicly released at \url{http://www.ark.cs.cmu.edu/LexSem/}. 
+We will seek permission from LDC to redistribute the source text from the EWTB.} 
 Annotation was done by linguists, who took pains to establish conventions and resolve disagreements.\footnote{Each 
 sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation.} 
 Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
@@ -622,15 +621,15 @@ where \textbf{strong} expressions are those deemed somewhat noncompositional (in
 were recently annotated with supersenses \citep{johannsen-14}\longversion{: 
 (a)~the POS+NER-annotated data set of \citet{Ritter:ea:11}, 
 and %which we use for training, development, and evaluation, and 
-(b)~\citeposs{Plank:ea:14} sample of 200~tweets}.
+(b)~\citeposs{Plank:ea:14} sample of 200~tweets}.\footnote{The supersense-annotated tweets 
+are available at \url{https://github.com/coastalcph/supersense-data-twitter}.}
 %, which we use for additional, out-of-sample evaluation. 
 %We call these data sets {\sc Ritter}-$\{${\sc Train,Dev,Eval}$\}$ and {\sc In-House-Eval}, respectively. 
 %The latter was downloaded in 2013 and was previously used (with part-of-speech annotation) in \citep{Plank:ea:14}.
 %For both data sets, 
 Annotators were shown pre-annotations from a heuristic supersense chunking\slash tagging system 
 (based on the most frequent sense of each word)
-and asked to correct the boundaries and supersense labels.\footnote{The supersense-annotated tweets 
-are available at \url{https://github.com/coastalcph/supersense-data-twitter}.} 
+and asked to correct the boundaries and supersense labels. 
 %The supersenses are annotated with spans defined by the BIO (Begin-Inside-Outside) notation. 
 There was no explicit MWE annotation phase, 
 though many of the multiword chunks tagged with a noun or verb supersense would be considered MWEs. 
