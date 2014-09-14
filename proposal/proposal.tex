@@ -236,7 +236,7 @@
 % \addtolength{\abovedisplayskip}{-.5cm} % space before maths
 % \addtolength{\belowdisplayskip}{-.5cm} % space after maths
 % %\addtolength{\topsep}{-.5cm} %space between first item and preceding paragraph
-% \setlength{\belowcaptionskip}{-.25cm}
+\setlength{\belowcaptionskip}{-.5cm}
 
 
 % customize \paragraph spacing
@@ -520,8 +520,7 @@ The proposed task will be limited to English.
 This reflects what we belive is realistic given existing resources 
 and the organizers' ability to annotate new data. 
 If the task is successful, we would advocate a second incarnation 
-adding evaluations in other languages\footnote{These might extend existing supersense datasets in other languages 
-to encode MWEs. We are aware of supersense annotations in Italian, Arabic, and Chinese \nss{cites}.} and/or child-directed speech.
+adding evaluations in other languages and/or child-directed speech.
 
 \section{Representation}
 
@@ -570,7 +569,7 @@ The MWE portion consists of a BIO-style \citep{ramshaw-95}
 positional marker. Specifically, we use the 8-tag scheme of \citet{schneider-14}, 
 which uses case to allow gaps in an MWE (lowercase tag variants mark 
 tokens within a gap) and adds to \texttt{I} tags 
-diacritics that encode the strength of the MWE being continued (a bar for strong or a tilde for weak).
+diacritics that encode the strength of the MWE being continued (a bar for strong or a tilde for weak; see~\cref{sec:data}).
 The positions are thus \texttt{O}, \texttt{o}, \texttt{B}, \texttt{b},
 \texttt{Ī}, \texttt{ī}, \texttt{Ĩ}, and \texttt{ĩ}.
 Systems are expected to ensure that the full tag sequence for a sentence is valid: 
@@ -587,43 +586,36 @@ Of course, the supersenses in this task only cover noun and verb expressions,
 so plain \texttt{O} will be frequent, as will plain \texttt{B} and \texttt{Ī} for (e.g.) PP idioms.
 
 The main \textbf{file format} for this task will be the \texttt{.tags} format, 
-which consists of one line per token, each line having 9~tab-delimited columns: 1.~token offset (1-based); 2.~word token; 3.~lowercased lemma; 
-4.~POS tag; 5.~\textbf{joint MWE+supersense tag}---\emph{this is the main system output}; 6.~offset of nearest previous token 
-in the same MWE, or \texttt{0} if not continuing an MWE; 7.~MWE attachment strength: \texttt{\_} (strong) or \texttt{\tat} (weak), 
-or blank if not continuing an MWE;
-8.~supersense label, if any; 9.~sentence ID, including (at training time) the domain of the corpus from which it was drawn.\footnote{Columns 6--8 are deterministic given column 5, 
-but including them separately helps simplify evaluation\slash analysis.}
+which consists of one line per token, each line having 9~tab-delimited columns, 
+as explained in \cref{fig:tagsformat} in the annex.
 Adjacent sentences are separated by a blank line.
 
 Scripts to convert to and from the \texttt{.mwe} format, which displays one sentence per line 
 and contains annotations in a JSON data structure, will also be provided.
 All file formats are UTF-8 encoded.
 
-\section{Data}
-
-
-
+\section{Data}\label{sec:data}
 
 The task will use two existing datasets for both training and evaluation. 
 These capture two genres of social web text:
 
-\paragraph{\textsc{Reviews}.} This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
-consists of 723~online user reviews for services such as restaurants and beauticians.\footnote{Each review is a separate document; 
+\textbf{\textsc{Reviews}.} This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
+consists of 723~online user reviews for services such as restaurants and beauticians.\longversion{\footnote{Each review is a separate document; 
 no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
-syntactic parse of each sentence.}
+syntactic parse of each sentence.}}
 It was recently manually annotated in full, first for heterogeneous MWEs \citep[released as the CMWE Corpus\footnote{\url{http://www.ark.cs.cmu.edu/LexSem/}}]{schneider-14-corpus}, 
 then for noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses. 
-Annotation was done by linguists, who took pains to establish conventions and resolve disagreements.\footnote{Every 
-sentence was annotated independently by at least two annotators, and disagreements were resolved through negotiation.} 
+Annotation was done by linguists, who took pains to establish conventions and resolve disagreements.\footnote{Each 
+sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation.} 
 Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
-(\Cref{tbl:reviews} in the appendix offers a more detailed breakdown.)
+(\Cref{tbl:reviews} in the annex offers a more detailed breakdown.)
 15\% of MWEs contain a gap, e.g.~the light verb construction \lex{make\ldots order} in
 \emph{\textbf{made} a carry out \textbf{order}}.
 MWEs are further subdivided into \emph{strong} vs.~\emph{weak}, 
 where \textbf{strong} expressions are those deemed somewhat noncompositional (including proper names, idioms, etc.)~and 
 \textbf{weak} expressions are those considered to be compositional but statistically idiomatic (e.g., \lex{highly recommend(ed)}).
 
-\paragraph{\textsc{Tweets}.} Two samples of Twitter messages were recently annotated with supersenses \citep{johannsen-14}: 
+\textbf{\textsc{Tweets}.} Two samples of Twitter messages were recently annotated with supersenses \citep{johannsen-14}: 
 (a)~the POS+NER-annotated data set of \citet{Ritter:ea:11}, 
 and %which we use for training, development, and evaluation, and 
 (b)~\citeposs{Plank:ea:14} sample of 200~tweets.
@@ -758,7 +750,7 @@ we follow \citeposs{johannsen-14} splits:
 The data from Ritter is used as follows: 551 tweets (10,652 tokens) serve as training data, 118 (2242 tokens) as dev and another 118 (2291 tokens) as test set. Additionally, there is a second test set, drawn from a different sample of 200 tweets (3064 tokens).
 }
 
-\subsection{Inputs}
+\textbf{Inputs.}
 % \nss{open, closed track. if a team submits systems to the closed track and fewer than 3 systems to the open track, 
 % they will be encouraged to submit the closed track results to the open track as well.}
 The main goal of the task is to find new creative ways to improve the performance of lexical semantic annotation on various domains. 
@@ -777,8 +769,8 @@ Systems will also be allowed access to the English WordNet lexicon.
 (If the task proves popular, in a future incarnation we might consider additional tracks, 
 such as an unsupervised track.)
 
-The sentences provided for this task are tokenized. 
-For evaluation to be possible, system predictions must respect the input tokenization.
+\longversion{The sentences provided for this task are tokenized. 
+For evaluation to be possible, system predictions must respect the input tokenization.}
 
 No sentence-level metadata will be provided at test time. 
 The training data will mark the domain from which the sentence was drawn 
@@ -797,12 +789,8 @@ so long as it is not required as part of the input at test time.
 % I feel like there are pluses and minuses to all 4 of these tracks. maybe we should just mention the possibilities 
 % and survey teams to ensure we only evaluate tracks that generate sufficient interest}
 
-\subsection{Measures}
-
- 
-We have written scripts that compute three kinds of scores: 
-these compare a system's predictions against the gold standard 
-with respect to MWEs, supersenses, and their combination.
+\textbf{Measures.}
+The evaluation script will compute three kinds of scores.
 
 
 \begin{figure*}\centering %\small
@@ -844,21 +832,23 @@ Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3}
 The \textbf{MWE} measure looks at precision, recall, and $F_1$ 
 of the identified MWEs. Tokens not involved in a predicted or gold MWE
 do not factor into this measure. 
-To award partial credit for cases of partial overlap between a predicted MWE 
+To award partial credit for partial overlap between a predicted MWE 
 and a gold MWE, these scores are computed based on \emph{links} between 
 consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.
-\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
-of a sentence. The precision is the proportion of predicted links whose words 
+%\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
+%of a sentence. 
+The precision is the proportion of predicted links whose words 
 both belong to the same expression in the gold standard. 
-Recall is the same as precision, but swapping the predicted and gold annotations.\footnote{This computation on the basis of links 
-is a slight simplification of the MUC coreference measure \citep{vilain-95}.}
+Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
+is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
 A weak link is treated as intermediate between a strong link and no link at all: 
 precision, recall, and $F_1$ computed on strong links only are averaged 
 with the respective calculations computed on all links without regard to strength. 
-These calculations are demonstrated in the caption of \cref{fig:linkmeasure} for the example.
+\Cref{fig:linkmeasure} in the annex offers an example sentence and two annotations 
+to illustrate these calculations.
 
 To isolate the \textbf{supersense} classification performance, 
-we compute $F_1$ of the supersense part of the joint tag.
+we compute $F_1$ of the supersense part of the joint tag.\longversion{
 Because the supersense of a strong MWE is marked on its first word, 
 this will have the effect of penalizing errors on the left boundary of an MWE, 
 but it is less sensitive to the MWE analysis than the link-based measure. 
@@ -867,8 +857,10 @@ The third measure is a hybrid of the first two: it computes \textbf{overall} per
 in terms of link-based $F_1$, where for each supersense label, 
 a self-link encoding that label is added to the first word of the expression.
 Credit is only given for a self-link if in the other analysis, 
-a corresponding self-link occurs with the same supersense.
-This is the measure that will be used for competitive ranking of systems.
+a corresponding self-link occurs with the same supersense.\nss{short:}}
+Finally, a \textbf{combined} measure combines the MWE and supersense measures 
+to compute an overall precision, recall, and $F_1$
+for competitive ranking of systems.
 
 All of these measures are micro-averages, computed globally over tokens in the corpus 
 (rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
@@ -883,11 +875,13 @@ and in a combined figure with the two domains weighted equally.
 % \nss{At the discretion of the organizers, honorable mention awards may go to systems that place well on 
 % any of the measures, or that were especially creative in their approach?}
 
-\subsection{Baselines}
-
+\textbf{Baselines.}
+%
 Two open source supersense tagging systems are maintained by authors of this proposal; 
 these can serve as reference implementations for the task and baselines for the evaluation. 
-Both implement supervised discriminative first-order sequence models.
+Both implement supervised discriminative first-order sequence models, one designed for the 
+\textsc{Reviews} domain \citep{schneider-14} and the other for the \textsc{Tweets} domain \citep{johannsen-14}.
+\longversion{
 \textbf{AMALGrAM}\footnote{\uline{A} \uline{M}achine \uline{A}nalyzer of \uline{L}exical \uline{Gr}oupings \uline{A}nd \uline{M}eanings}
 extends the discriminative MWE identification model of \citet{schneider-14}\footnote{Code and MWE-only model/training data at \url{http://www.ark.cs.cmu.edu/LexSem/}} 
 to also label supersenses. 
@@ -902,6 +896,9 @@ What additional resources are needed for features that we would want to allow fo
 using the measures described above (precision and recall are omitted for brevity).
 \nss{discussion? presumably: we see that the domain gap is huge---neither system is robust to the two domains.
 this in one of the challenges that systems in our task will have to face.}\nss{numbers far from 100\%; plenty of room to grow}
+}
+The respective evaluations show that there is substantial room for improvement 
+on the task.
 
 \begin{table*}
 \centering\small
@@ -930,6 +927,13 @@ Our hope is that this will lead to further advances in the field of semantic ana
 \nss{TODO}
 
 \begin{figure*}\small
+\emph{Columns:} 1.~token offset (1-based); 2.~word token; 3.~lowercased lemma; 
+4.~POS tag; 5.~\textbf{joint MWE+supersense tag}---\emph{this is the main system output}; 6.~offset of nearest previous token 
+in the same MWE, or \texttt{0} if not continuing an MWE; 7.~MWE attachment strength: \texttt{\_} (strong) or \texttt{\tat} (weak), 
+or blank if not continuing an MWE;
+8.~supersense label, if any; 9.~sentence ID, including (at training time) the domain of the corpus from which it was drawn.
+(Columns 6--8 are deterministic given column 5, 
+but including them separately helps simplify evaluation\slash analysis.)
 \begin{verbatim}
 1       Got          get         VBD     O-possession    0               possession      ewtb.r.017345.2
 2       some         some        DT      O               0                               ewtb.r.017345.2
@@ -986,9 +990,10 @@ Our hope is that this will lead to further advances in the field of semantic ana
 26      17           17          CD      O               0                               ewtb.r.329991.1
 27      .            .           .       O               0                               ewtb.r.329991.1
 \end{verbatim}
-\caption{Example annotations in the 9-column \texttt{.tags} format.
+\caption{Column schema and example annotations in the 9-column \texttt{.tags} format.
 Lowercase supersense labels are for verbs and uppercase labels are for nouns.
 In the sentence IDs, \texttt{ewtb.r} stands for the \textsc{Reviews} section of the English Web Treebank.}
+\label{fig:tagsformat}
 \end{figure*}
 
 \bibliographystyle{aclnat}
