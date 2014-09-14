@@ -365,13 +365,13 @@ one which we believe is suitable for a CoNLL shared task.
 We motivate the two components of the lexical representation---multiword expressions 
 and supersenses---before delving into the data and evaluation.
 
-\nss{motivation: lexical semantic analysis of MWEs and supersenses in English. 
-semantics is a hot topic.
-highlights: (a) broad-coverage---not too far from NER; hopefully avoid some of the limitations of traditional WSD. 
-(b) robust to domain---in fact, evaluation consists of 2 social web domains.
-(c) potential to benefit from many different NLP techniques, including sequence tagging/chunking, 
-parsing, distributional word representations, language models, 
-use of language resources such as WordNet, (other buzzwords?)}
+% \nss{motivation: lexical semantic analysis of MWEs and supersenses in English. 
+% semantics is a hot topic.
+% highlights: (a) broad-coverage---not too far from NER; hopefully avoid some of the limitations of traditional WSD. 
+% (b) robust to domain---in fact, evaluation consists of 2 social web domains.
+% (c) potential to benefit from many different NLP techniques, including sequence tagging/chunking, 
+% parsing, distributional word representations, language models, 
+% use of language resources such as WordNet, (other buzzwords?)}
 
 \paragraph{Multiword expressions.} 
 For the most part, contemporary approaches to English syntactic and semantic analysis
@@ -407,7 +407,7 @@ A good meaning representation should also group together related meanings from d
 %is typically anti-correlated with the number of available labels.
 These ideals are sometimes at odds:  \nss{\ldots}
 
-Popular representations are named-entity tags and WordNet \citep{fellbaum-90} word senses. 
+Popular representations are named-entity tags and WordNet \citep{wordnet} word senses. 
 However, both present a problem in one of the desired aspects. 
 Named entity tags have a reasonable distinction, and are thus frequently used to find entities of a certain type. 
 However, as the name already suggests, this representation is limited to (proper) nouns, and has thus poor coverage. 
@@ -451,23 +451,28 @@ There is, however, recent work on developing a taxonomy for English adjective su
 Since they group individual word senses into larger groups, they allow for distinction beyond the lemma level, 
 i.e., they assign the same supersense to words with different word senses.
 
+\paragraph{Opportunities.} 
 To date, many of the analysis problems in computational lexical semantics are niche topics. 
 By integrating broad-coverage MWE identification together with supersense tagging 
 as a single analysis task, we hope to encourage the comparison of systems on benchmark datasets 
-and to foster cross-pollination between different subcommunities. 
+in nontraditional domains and to foster cross-pollination between different subcommunities. 
 
-\nss{encourage creativity of solutions}
-Semantic analysis is a powerful and promising topic, but it has been largely confined to news text, 
-i.e., standardized text written mostly in English. 
-By including a relatively new and heterogeneous domain like Twitter in the data, 
-we want to encourage creative approaches that go beyond the tried and true newswire-trained approach, 
-and open the community to wider applications. 
+% \nss{encourage creativity of solutions}
+% Semantic analysis is a powerful and promising topic, but it has been largely confined to news text, 
+% i.e., standardized text written mostly in English. 
+% By including a relatively new and heterogeneous domain like Twitter in the data, 
+% we want to encourage creative approaches that go beyond the tried and true newswire-trained approach, 
+% and open the community to wider applications. 
 
-\nss{related work: these representations build on ones that have been explored, 
-but go a step beyond. (want to convince reader that there will be interest in the task based on previous results, 
-but also that it is somewhat novel.)}
+This task would be timely given recent enthusiasm for NLP approaches to semantics.
+It should provide a testbed for a wide variety of technical approaches---these could include 
+linguistic feature engineering; comparing sequence models to hierarchical parsing models, or their combination 
+with joint decoding \citep{le_roux-14}; and in the open track, domain adaptation \citep{johannsen-14}, 
+type supervision, word clustering\slash representation learning \citep{grave-13}, 
+collocation extraction \citep{pecina-10,ramisch-12}, 
+language modeling, or other methods that exploit additional resources.
 
-\nss{relevance to study of human language learning}
+\nss{relevance to study of language learning, and to NLP applications}
 
 The proposed task will be limited to English. 
 This reflects what we belive is realistic given existing resources 
@@ -686,6 +691,8 @@ In addition to a training set of semantically annotated sentences in both evalua
 we will provide PTB-style part-of-speech tags at train and test time, 
 as well as a set of Brown clusters \citep{brown-92} computed from a large corpus.
 Systems will also be allowed access to the English WordNet lexicon.
+(If the task proves popular, in a future incarnation we might consider additional tracks, 
+such as an unsupervised track.)
 
 The sentences provided for this task are tokenized. 
 For evaluation to be possible, system predictions must respect the input tokenization.
@@ -808,6 +815,9 @@ to also label supersenses.
 It is trained on the \textsc{Reviews} data with the structured perceptron \citep{collins-02}. 
 The best performing model of \citet{johannsen-14}, which we label \textbf{COASTAL},\footnote{after the \uline{Co}penhagen \uline{A}pplied \uline{Sta}tistical \uline{L}earning group}
 is a supervised sequential model trained on \textsc{Tweets} via \textsc{Searn} \citep{Daume:ea:09}.\footnote{The models can be accessed via \url{https://github.com/coastalcph/supersense-data-twitter}.}
+\nss{to clarify: role of domain adaptation. I think there can be two COASTAL baselines, 
+one for the closed track and one for the open track (using SemCor)? 
+What additional resources are needed for features that we would want to allow for the closed track?}
 
 \Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
 using the measures described above (precision and recall are omitted for brevity).
