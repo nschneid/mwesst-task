@@ -435,7 +435,7 @@ The inventory, \cref{tbl:supersenses}, originates with the top-level organizatio
 but can be applied directly to annotate new data---including out-of-vocabulary words 
 in English or other languages \citep{schneider-12,johannsen-14}.
 Following the lead of NER, techniques for supersense tagging have generally used statistical sequence models 
-and have been evaluated in English, Chinese, and Arabic.\footnote{Specific resources:
+and have been evaluated in English, Chinese, and Arabic.\footnote{Evaluations used 
 English SemCor \citep{ciaramita-06,paas-09}, 
 English-Italian MultiSemCor \citep{picca-08,picca-09,attardi-10}, 
 the Italian Syntactic-Semantic Treebank and Italian Wikipedia \citep{attardi-10,rossi-13}, 
@@ -565,8 +565,8 @@ a sequence of joint MWE+supersense tags. \Cref{fig:ex1} illustrates
 the MWE part above the sentence and the supersense part below the sentence; 
 in practice, these will be hyphenated into a single tag per token.
 
-The MWE portion consists of a BIO-style \citep{ramshaw-95} 
-positional marker. Specifically, we use the 8-tag scheme of \citet{schneider-14}, 
+The MWE portion is a BIO-style \citep{ramshaw-95} 
+positional marker. We adopt the 8-tag scheme of \citet{schneider-14}, 
 which uses case to allow gaps in an MWE (lowercase tag variants mark 
 tokens within a gap) and adds to \texttt{I} tags 
 diacritics that encode the strength of the MWE being continued (a bar for strong or a tilde for weak; see~\cref{sec:data}).
@@ -582,8 +582,8 @@ Because strong MWEs receive a supersense as a unit (if at all),
 \texttt{Ī} and \texttt{ī} are never conjoined with a supersense label.
 \texttt{O} or \texttt{o} indicates that the token is not part of any MWE, 
 but many such tokens do bear a noun or verb supersense.
-Of course, the supersenses in this task only cover noun and verb expressions, 
-so plain \texttt{O} will be frequent, as will plain \texttt{B} and \texttt{Ī} for (e.g.) PP idioms.
+\longversion{Of course, the supersenses in this task only cover noun and verb expressions, 
+so plain \texttt{O} will be frequent, as will plain \texttt{B} and \texttt{Ī} for (e.g.) PP idioms.}
 
 The main \textbf{file format} for this task will be the \texttt{.tags} format, 
 which consists of one line per token, each line having 9~tab-delimited columns, 
@@ -718,7 +718,7 @@ of the identified MWEs. Tokens not involved in a predicted or gold MWE
 do not factor into this measure. 
 To award partial credit for partial overlap between a predicted MWE 
 and a gold MWE, these scores are computed based on \emph{links} between 
-consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.
+consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.\footnote{%
 %\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
 %of a sentence. 
 The precision is the proportion of predicted links whose words 
@@ -727,7 +727,7 @@ Recall is the same as precision, but swapping the predicted and gold annotations
 is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
 A weak link is treated as intermediate between a strong link and no link at all: 
 precision, recall, and $F_1$ computed on strong links only are averaged 
-with the respective calculations computed on all links without regard to strength. 
+with the respective calculations computed on all links without regard to strength.} 
 \Cref{fig:linkmeasure} in the annex offers an example sentence and two annotations 
 to illustrate these calculations.
 
