@@ -643,6 +643,177 @@ though many of the multiword chunks tagged with a noun or verb supersense would 
 % (is it OK if, e.g., supersense tagging conventions are different in different datasets?)
 % be as specific as possible about timeline}
 
+
+\nss{issue to resolve: licensing of Web Treebank source text}
+
+\section{Evaluation}
+\longversion{
+\subsection{System Submission Process}
+
+On May~5,~2015, teams will be furnished with the test data (minus the gold labels). 
+They will have until May~10 to submit up to 3~system predictions for evaluation. 
+The test data will include sentences from both evaluation domains, 
+in a random order: to encourage robust systems, 
+the domain of each sentence will not be marked at test time, 
+and the proportion of sentences from each domain is not guaranteed to be 
+the same in the trial, train, dev, and test sets.\nss{is this crazy?}
+
+\subsection{Splits}
+
+We adopt \citeposs{schneider-14} splits of the \textsc{Reviews} data: 
+101~documents (500~sentences, 7,171~words) are held out as a test set, 
+leaving 3,312~sentences\slash 48,408~words for training\slash development.
+
+For \textsc{Tweets}, 
+%splits proposed in \citep{Derczynski:ea:13}
+we follow \citeposs{johannsen-14} splits: 
+\nss{sizes of splits}.
+The data from Ritter is used as follows: 551 tweets (10,652 tokens) serve as training data, 118 (2242 tokens) as dev and another 118 (2291 tokens) as test set. Additionally, there is a second test set, drawn from a different sample of 200 tweets (3064 tokens).
+}
+
+\textbf{Inputs.}
+% \nss{open, closed track. if a team submits systems to the closed track and fewer than 3 systems to the open track, 
+% they will be encouraged to submit the closed track results to the open track as well.}
+The main goal of the task is to find new creative ways to improve the performance of lexical semantic annotation on various domains. 
+In keeping with conventions of past shared tasks at CoNLL and other venues, 
+we will invite systems in two data conditions.
+The tracks will be judged separately, and teams are welcome to submit systems under either or both.
+The \textbf{open} track will encourage participants to make 
+wide use of any and all available resources, including for 
+distant or direct supervision. 
+The \textbf{closed} track will encourage controlled comparisons of algorithms 
+by limiting their training to the provided resources. 
+In addition to a training set of semantically annotated sentences in both evaluation domains, 
+we will provide PTB-style part-of-speech tags at train and test time, 
+as well as a set of Brown clusters \citep{brown-92} computed from a large corpus.
+Systems will also be allowed access to the English WordNet lexicon.
+(If the task proves popular, in a future incarnation we might consider additional tracks, 
+such as an unsupervised track.)
+
+\longversion{The sentences provided for this task are tokenized. 
+For evaluation to be possible, system predictions must respect the input tokenization.}
+
+No sentence-level metadata will be provided at test time. 
+The training data will mark the domain from which the sentence was drawn 
+(\textsc{Reviews} or \textsc{Tweets}); systems can make use of this information as they wish, 
+so long as it is not required as part of the input at test time.
+
+
+% \nss{a few possibilities for tracks---
+% \begin{description}
+% \item[closed track] provided training data; we'll allow WordNet and provide (auto?)~POS, Brown clusters as well? 
+% no other resources allowed \dirk{yes: this will give people an ``out-of-the-box'' task opportunity}
+% \item[semi-open track] we provide a large unlabeled corpus, in addition to closed track resources \dirk{would nix that: people should choose their own unlabeled data}
+% \item[unsupervised track] no token-level MWE or SST labels may be used \dirk{maybe for future iterations of the task?}
+% \item[open track] any data/resources (except the CMWE corpus, if that includes the test set) may be used
+% \end{description}
+% I feel like there are pluses and minuses to all 4 of these tracks. maybe we should just mention the possibilities 
+% and survey teams to ensure we only evaluate tracks that generate sufficient interest}
+
+\textbf{Measures.}
+The evaluation script will compute three kinds of scores.
+
+The \textbf{MWE} measure looks at precision, recall, and $F_1$ 
+of the identified MWEs. Tokens not involved in a predicted or gold MWE
+do not factor into this measure. 
+To award partial credit for partial overlap between a predicted MWE 
+and a gold MWE, these scores are computed based on \emph{links} between 
+consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.
+%\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
+%of a sentence. 
+The precision is the proportion of predicted links whose words 
+both belong to the same expression in the gold standard. 
+Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
+is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
+A weak link is treated as intermediate between a strong link and no link at all: 
+precision, recall, and $F_1$ computed on strong links only are averaged 
+with the respective calculations computed on all links without regard to strength. 
+\Cref{fig:linkmeasure} in the annex offers an example sentence and two annotations 
+to illustrate these calculations.
+
+To isolate the \textbf{supersense} classification performance, 
+we compute $F_1$ of the supersense part of the joint tag.\longversion{
+Because the supersense of a strong MWE is marked on its first word, 
+this will have the effect of penalizing errors on the left boundary of an MWE, 
+but it is less sensitive to the MWE analysis than the link-based measure. 
+
+The third measure is a hybrid of the first two: it computes \textbf{overall} performance 
+in terms of link-based $F_1$, where for each supersense label, 
+a self-link encoding that label is added to the first word of the expression.
+Credit is only given for a self-link if in the other analysis, 
+a corresponding self-link occurs with the same supersense.\nss{short:}}
+Finally, a \textbf{combined} measure combines the MWE and supersense measures 
+to compute an overall precision, recall, and $F_1$
+for competitive ranking of systems.
+
+All of these measures are micro-averages, computed globally over tokens in the corpus 
+(rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
+All measures will be reported separately for each of the two evaluation domains, 
+and in a combined figure with the two domains weighted equally. 
+
+% \nss{other possibilities that we should probably not mention in the interest of simplicity: 
+% weight MWE links according to supersense match;
+% full tag accuracy; 
+% giving less credit for supersense mismatches that disagree on POS}
+
+% \nss{At the discretion of the organizers, honorable mention awards may go to systems that place well on 
+% any of the measures, or that were especially creative in their approach?}
+
+\textbf{Baselines.}
+%
+Two open source supersense tagging systems are maintained by authors of this proposal; 
+these can serve as reference implementations for the task and baselines for the evaluation. 
+Both implement supervised discriminative first-order sequence models, one designed for the 
+\textsc{Reviews} domain \citep{schneider-14} and the other for the \textsc{Tweets} domain \citep{johannsen-14}.
+\longversion{
+\textbf{AMALGrAM}\footnote{\uline{A} \uline{M}achine \uline{A}nalyzer of \uline{L}exical \uline{Gr}oupings \uline{A}nd \uline{M}eanings}
+extends the discriminative MWE identification model of \citet{schneider-14}\footnote{Code and MWE-only model/training data at \url{http://www.ark.cs.cmu.edu/LexSem/}} 
+to also label supersenses. 
+It is trained on the \textsc{Reviews} data with the structured perceptron \citep{collins-02}. 
+The best performing model of \citet{johannsen-14}, which we label \textbf{COASTAL},\footnote{after the \uline{Co}penhagen \uline{A}pplied \uline{Sta}tistical \uline{L}earning group}
+is a supervised sequential model trained on \textsc{Tweets} via \textsc{Searn} \citep{Daume:ea:09}.\footnote{The models can be accessed via \url{https://github.com/coastalcph/supersense-data-twitter}.}
+\nss{to clarify: role of domain adaptation. I think there can be two COASTAL baselines, 
+one for the closed track and one for the open track (using SemCor)? 
+What additional resources are needed for features that we would want to allow for the closed track?}
+
+\Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
+using the measures described above (precision and recall are omitted for brevity).
+\nss{discussion? presumably: we see that the domain gap is huge---neither system is robust to the two domains.
+this in one of the challenges that systems in our task will have to face.}\nss{numbers far from 100\%; plenty of room to grow}
+}
+The respective evaluations show that there is substantial room for improvement 
+on the task.
+
+\longversion{
+\begin{table*}
+\centering\small
+\resizebox{ \textwidth }{!}{
+\begin{tabular}{lccccccc}
+           &  & \multicolumn{3}{c}{\textsc{Reviews}} & \multicolumn{3}{c}{\textsc{Tweets}} \\
+           \cmidrule(r){3-5}\cmidrule(l){6-8}
+\bfseries System     & \bfseries Train Domain & \bfseries MWE & \bfseries SST & \bfseries Full
+                                              & \bfseries ``MWE'' & \bfseries SST & \bfseries Full \\
+\midrule
+AMALGrAM (superv. 1st-order discr. w/ gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
+COASTAL (superv. 1st-order disc.) & \textsc{Tweets} & \# & \# & \#  & \# & 54.09 & \# \\
+\end{tabular}
+}
+\caption{Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes 
+because we have not yet systematically annotated the data for MWEs, so this preliminary evaluation 
+is against supersense annotators' chunking decisions for noun and verb expressions.}
+\label{tbl:baselines}
+\end{table*}
+}
+
+\section{Conclusion}
+We propose a task to solve both MWE identification and supersense tagging. In order to prevent domain bias, we provide data sets from two different domains, namely reviews and tweets. While the task is designed for English, we plan to extend it to other languages as well in future editions.
+
+Our hope is that this will lead to further advances in the field of semantic analysis.
+
+\nss{TODO}
+
+\pagebreak
+
 \begin{table*}[p]\small\centering
 \begin{tabular}{@{}>{\textsc\bgroup}l<{\egroup}@{~~}r@{~~}r@{~~}c@{~~}|l@{~~}r@{~~}c@{~~}>{\smaller}Hl@{~~}r@{~~}c@{~~}>{\smaller}H@{}}
 \multicolumn{4}{c}{\textbf{MWE}} & \multicolumn{4}{c}{\textbf{Noun}} & \multicolumn{4}{c}{\textbf{Verb}} \\
@@ -723,75 +894,6 @@ Supersense counts do not distinguish single-word vs.~multiword expressions.
 \label{tbl:reviews}
 \end{table*}
 
-\nss{issue to resolve: licensing of Web Treebank source text}
-
-\section{Evaluation}
-\longversion{
-\subsection{System Submission Process}
-
-On May~5,~2015, teams will be furnished with the test data (minus the gold labels). 
-They will have until May~10 to submit up to 3~system predictions for evaluation. 
-The test data will include sentences from both evaluation domains, 
-in a random order: to encourage robust systems, 
-the domain of each sentence will not be marked at test time, 
-and the proportion of sentences from each domain is not guaranteed to be 
-the same in the trial, train, dev, and test sets.\nss{is this crazy?}
-
-\subsection{Splits}
-
-We adopt \citeposs{schneider-14} splits of the \textsc{Reviews} data: 
-101~documents (500~sentences, 7,171~words) are held out as a test set, 
-leaving 3,312~sentences\slash 48,408~words for training\slash development.
-
-For \textsc{Tweets}, 
-%splits proposed in \citep{Derczynski:ea:13}
-we follow \citeposs{johannsen-14} splits: 
-\nss{sizes of splits}.
-The data from Ritter is used as follows: 551 tweets (10,652 tokens) serve as training data, 118 (2242 tokens) as dev and another 118 (2291 tokens) as test set. Additionally, there is a second test set, drawn from a different sample of 200 tweets (3064 tokens).
-}
-
-\textbf{Inputs.}
-% \nss{open, closed track. if a team submits systems to the closed track and fewer than 3 systems to the open track, 
-% they will be encouraged to submit the closed track results to the open track as well.}
-The main goal of the task is to find new creative ways to improve the performance of lexical semantic annotation on various domains. 
-In keeping with conventions of past shared tasks at CoNLL and other venues, 
-we will invite systems in two data conditions.
-The tracks will be judged separately, and teams are welcome to submit systems under either or both.
-The \textbf{open} track will encourage participants to make 
-wide use of any and all available resources, including for 
-distant or direct supervision. 
-The \textbf{closed} track will encourage controlled comparisons of algorithms 
-by limiting their training to the provided resources. 
-In addition to a training set of semantically annotated sentences in both evaluation domains, 
-we will provide PTB-style part-of-speech tags at train and test time, 
-as well as a set of Brown clusters \citep{brown-92} computed from a large corpus.
-Systems will also be allowed access to the English WordNet lexicon.
-(If the task proves popular, in a future incarnation we might consider additional tracks, 
-such as an unsupervised track.)
-
-\longversion{The sentences provided for this task are tokenized. 
-For evaluation to be possible, system predictions must respect the input tokenization.}
-
-No sentence-level metadata will be provided at test time. 
-The training data will mark the domain from which the sentence was drawn 
-(\textsc{Reviews} or \textsc{Tweets}); systems can make use of this information as they wish, 
-so long as it is not required as part of the input at test time.
-
-
-% \nss{a few possibilities for tracks---
-% \begin{description}
-% \item[closed track] provided training data; we'll allow WordNet and provide (auto?)~POS, Brown clusters as well? 
-% no other resources allowed \dirk{yes: this will give people an ``out-of-the-box'' task opportunity}
-% \item[semi-open track] we provide a large unlabeled corpus, in addition to closed track resources \dirk{would nix that: people should choose their own unlabeled data}
-% \item[unsupervised track] no token-level MWE or SST labels may be used \dirk{maybe for future iterations of the task?}
-% \item[open track] any data/resources (except the CMWE corpus, if that includes the test set) may be used
-% \end{description}
-% I feel like there are pluses and minuses to all 4 of these tracks. maybe we should just mention the possibilities 
-% and survey teams to ensure we only evaluate tracks that generate sufficient interest}
-
-\textbf{Measures.}
-The evaluation script will compute three kinds of scores.
-
 
 \begin{figure*}\centering %\small
 % {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
@@ -829,102 +931,6 @@ Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3}
 \label{fig:linkmeasure}
 \end{figure*}
 
-The \textbf{MWE} measure looks at precision, recall, and $F_1$ 
-of the identified MWEs. Tokens not involved in a predicted or gold MWE
-do not factor into this measure. 
-To award partial credit for partial overlap between a predicted MWE 
-and a gold MWE, these scores are computed based on \emph{links} between 
-consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.
-%\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
-%of a sentence. 
-The precision is the proportion of predicted links whose words 
-both belong to the same expression in the gold standard. 
-Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
-is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
-A weak link is treated as intermediate between a strong link and no link at all: 
-precision, recall, and $F_1$ computed on strong links only are averaged 
-with the respective calculations computed on all links without regard to strength. 
-\Cref{fig:linkmeasure} in the annex offers an example sentence and two annotations 
-to illustrate these calculations.
-
-To isolate the \textbf{supersense} classification performance, 
-we compute $F_1$ of the supersense part of the joint tag.\longversion{
-Because the supersense of a strong MWE is marked on its first word, 
-this will have the effect of penalizing errors on the left boundary of an MWE, 
-but it is less sensitive to the MWE analysis than the link-based measure. 
-
-The third measure is a hybrid of the first two: it computes \textbf{overall} performance 
-in terms of link-based $F_1$, where for each supersense label, 
-a self-link encoding that label is added to the first word of the expression.
-Credit is only given for a self-link if in the other analysis, 
-a corresponding self-link occurs with the same supersense.\nss{short:}}
-Finally, a \textbf{combined} measure combines the MWE and supersense measures 
-to compute an overall precision, recall, and $F_1$
-for competitive ranking of systems.
-
-All of these measures are micro-averages, computed globally over tokens in the corpus 
-(rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
-All measures will be reported separately for each of the two evaluation domains, 
-and in a combined figure with the two domains weighted equally. 
-
-% \nss{other possibilities that we should probably not mention in the interest of simplicity: 
-% weight MWE links according to supersense match;
-% full tag accuracy; 
-% giving less credit for supersense mismatches that disagree on POS}
-
-% \nss{At the discretion of the organizers, honorable mention awards may go to systems that place well on 
-% any of the measures, or that were especially creative in their approach?}
-
-\textbf{Baselines.}
-%
-Two open source supersense tagging systems are maintained by authors of this proposal; 
-these can serve as reference implementations for the task and baselines for the evaluation. 
-Both implement supervised discriminative first-order sequence models, one designed for the 
-\textsc{Reviews} domain \citep{schneider-14} and the other for the \textsc{Tweets} domain \citep{johannsen-14}.
-\longversion{
-\textbf{AMALGrAM}\footnote{\uline{A} \uline{M}achine \uline{A}nalyzer of \uline{L}exical \uline{Gr}oupings \uline{A}nd \uline{M}eanings}
-extends the discriminative MWE identification model of \citet{schneider-14}\footnote{Code and MWE-only model/training data at \url{http://www.ark.cs.cmu.edu/LexSem/}} 
-to also label supersenses. 
-It is trained on the \textsc{Reviews} data with the structured perceptron \citep{collins-02}. 
-The best performing model of \citet{johannsen-14}, which we label \textbf{COASTAL},\footnote{after the \uline{Co}penhagen \uline{A}pplied \uline{Sta}tistical \uline{L}earning group}
-is a supervised sequential model trained on \textsc{Tweets} via \textsc{Searn} \citep{Daume:ea:09}.\footnote{The models can be accessed via \url{https://github.com/coastalcph/supersense-data-twitter}.}
-\nss{to clarify: role of domain adaptation. I think there can be two COASTAL baselines, 
-one for the closed track and one for the open track (using SemCor)? 
-What additional resources are needed for features that we would want to allow for the closed track?}
-
-\Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
-using the measures described above (precision and recall are omitted for brevity).
-\nss{discussion? presumably: we see that the domain gap is huge---neither system is robust to the two domains.
-this in one of the challenges that systems in our task will have to face.}\nss{numbers far from 100\%; plenty of room to grow}
-}
-The respective evaluations show that there is substantial room for improvement 
-on the task.
-
-\begin{table*}
-\centering\small
-\resizebox{ \textwidth }{!}{
-\begin{tabular}{lccccccc}
-           &  & \multicolumn{3}{c}{\textsc{Reviews}} & \multicolumn{3}{c}{\textsc{Tweets}} \\
-           \cmidrule(r){3-5}\cmidrule(l){6-8}
-\bfseries System     & \bfseries Train Domain & \bfseries MWE & \bfseries SST & \bfseries Full
-                                              & \bfseries ``MWE'' & \bfseries SST & \bfseries Full \\
-\midrule
-AMALGrAM (superv. 1st-order discr. w/ gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
-COASTAL (superv. 1st-order disc.) & \textsc{Tweets} & \# & \# & \#  & \# & 54.09 & \# \\
-\end{tabular}
-}
-\caption{Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes 
-because we have not yet systematically annotated the data for MWEs, so this preliminary evaluation 
-is against supersense annotators' chunking decisions for noun and verb expressions.}
-\label{tbl:baselines}
-\end{table*}
-
-\section{Conclusion}
-We propose a task to solve both MWE identification and supersense tagging. In order to prevent domain bias, we provide data sets from two different domains, namely reviews and tweets. While the task is designed for English, we plan to extend it to other languages as well in future editions.
-
-Our hope is that this will lead to further advances in the field of semantic analysis.
-
-\nss{TODO}
 
 \begin{figure*}\small
 \emph{Columns:} 1.~token offset (1-based); 2.~word token; 3.~lowercased lemma; 
