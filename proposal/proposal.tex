@@ -374,7 +374,7 @@ and supersenses---before delving into the data and evaluation.
 % parsing, distributional word representations, language models, 
 % use of language resources such as WordNet, (other buzzwords?)}
 
-\paragraph{Multiword expressions.} 
+\textbf{Multiword expressions.} 
 For the most part, contemporary approaches to English syntactic and semantic analysis
 treat space-separated words as the basic units of structure. 
 %It has even been suggested that dependency syntax, for example, 
@@ -402,7 +402,7 @@ particular kinds of MWEs, such as English light verb constructions
 or French compounds \citep[recent examples:][]{constant-11,green-12,ramisch-12,vincze-13},
 though the corpus and identification system of \citet{vincze-11} targets several specific kinds of MWEs.}
 
-\paragraph{Supersenses.}
+\textbf{Supersenses.}
 \longversion{
 Ideally, a lexical semantic representation would apply to a large number of word types 
 while being sufficiently fine-grained to disambiguate words with multiple meanings. 
@@ -423,7 +423,6 @@ and do not allow for generalization to larger groups.\nss{not true of WordNet, b
 I think the problems with the WordNet-style approach are (a)~it is hard to agree on/annotate with fine-grained senses, 
 and (b)~it is hard to extend the lexicon to cover OOV words that might occur in new domains (let alone other languages).}
 }
-
 As noted above, relying on a WordNet-like lexicon as an inventory of fine-grained, lexicalized senses 
 creates problems for scalability and extensibility to new domains and languages. 
 Named entity recognition (NER), which is formulated in terms of a (usually small) number of delexicalized coarse-grained classes, 
@@ -494,10 +493,10 @@ reached an $F_1$ score of 80.2, using CRFs and additional features.
 There has been relatively little recent work on supersense tagging, and to the best of our knowledge, all of it has been mostly limited to standard English\footnote{With few exceptions such as \cite{schneider-12,schneider-13}.} ({\sc SemCor} and {\sc SensEval}). We are not aware of any previous work on word sense disambiguation for Twitter. Our hope is that this task makes the problem more attractive to a wider audience to reach more languages and domains.
 }
 
-\paragraph{Opportunities.} 
+\textbf{Opportunities.} 
 To date, many of the analysis problems in computational lexical semantics are niche topics. 
 By integrating broad-coverage MWE identification together with supersense tagging 
-as a single analysis task, we hope to encourage the comparison of systems on benchmark datasets 
+as a single task, we hope to encourage the comparison of systems on benchmark datasets 
 in nontraditional domains and to foster cross-pollination between different subcommunities. 
 
 % \nss{encourage creativity of solutions}
@@ -507,7 +506,7 @@ in nontraditional domains and to foster cross-pollination between different subc
 % we want to encourage creative approaches that go beyond the tried and true newswire-trained approach, 
 % and open the community to wider applications. 
 
-This task would be timely given recent enthusiasm for NLP approaches to semantics.
+This task would capitalize on current enthusiasm for semantics in NLP.
 It should provide a testbed for a wide variety of technical approaches---these could include 
 linguistic feature engineering; comparing sequence models to hierarchical parsing models, or their combination 
 with joint decoding \citep{le_roux-14}; and in the open track, domain adaptation \citep{johannsen-14}, 
