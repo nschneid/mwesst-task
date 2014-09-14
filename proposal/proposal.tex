@@ -518,7 +518,31 @@ must not receive separate supersenses.}
 
 
 
-\nss{given a sentence, what should be predicted. extra examples in appendices are encouraged}
+To facilitate (but not require) joint sequence modeling, 
+the lexical semantic analysis for each sentence will be represented as 
+a sequence of joint MWE+supersense tags. \Cref{fig:ex1} illustrates 
+the MWE part above the sentence and the supersense part below the sentence; 
+in practice, these will be hyphenated into a single tag per token.
+
+The MWE portion consists of a BIO-style \citep{ramshaw-95} 
+positional marker. Specifically, we use the 8-tag scheme of \citet{schneider-14}, 
+which uses case to allow gaps in an MWE (lowercase tag variants mark 
+tokens within a gap) and adds to \texttt{I} tags 
+diacritics that encode the strength of the MWE being continued (a bar for strong or a tilde for weak).
+The positions are thus \texttt{O}, \texttt{o}, \texttt{B}, \texttt{b},
+\texttt{Ī}, \texttt{ī}, \texttt{Ĩ}, and \texttt{ĩ}.
+Systems are expected to ensure that the full tag sequence for a sentence is valid: 
+global validity can be enforced with first-order constraints 
+to prohibit invalid bigrams such as \texttt{O~Ī} and \texttt{b~Ĩ} (see \citealp{schneider-14} for details).
+
+The joint tags may include a supersense label attached with a hyphen, 
+e.g., \texttt{O-communication}, \texttt{b-GROUP}.
+Because strong MWEs receive a supersense as a unit (if at all), 
+\texttt{Ī} and \texttt{ī} are never conjoined with a supersense label.
+\texttt{O} or \texttt{o} indicates that the token is not part of any MWE, 
+but many such tokens do bear a noun or verb supersense.
+Of course, the supersenses in this task only cover noun and verb expressions, 
+so plain \texttt{O} will be frequent, as will plain \texttt{B} and \texttt{Ī} for (e.g.) PP idioms.
 
 The main \textbf{file format} for this task will be the \texttt{.tags} format, 
 which consists of one line per token, each line having 9~tab-delimited columns: 1.~token offset (1-based); 2.~word token; 3.~lowercased lemma; 
@@ -540,19 +564,22 @@ All file formats are UTF-8 encoded.
 
 The task will use two existing datasets for both training and evaluation. 
 These capture two genres of social web text:
-\begin{itemize}
-\item \textsc{Reviews}: This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
+
+\paragraph{\textsc{Reviews}.} This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
 consists of 723~online user reviews for services such as restaurants and beauticians.\footnote{Each review is a separate document; 
 no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
 syntactic parse of each sentence.}
 It was recently manually annotated in full, first for heterogeneous MWEs \citep[released as the CMWE Corpus\footnote{\url{http://www.ark.cs.cmu.edu/LexSem/}}]{schneider-14-corpus}, 
-and then---building on the MWE annotations---for noun and verb supersenses (as yet unreleased; for nouns, the conventions of \citealp{schneider-12} were followed). 
-The annotations consist of approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
+then for noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses. 
+Annotation was done by linguists, who took pains to establish conventions and resolve disagreements.\footnote{Every 
+sentence was annotated independently by at least two annotators, and disagreements were resolved through negotiation.} 
+Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
 (\Cref{tbl:reviews} in the appendix offers a more detailed breakdown.)
-\nss{example. strong vs. weak distinction?}
+MWEs are further subdivided into \emph{strong} vs.~\emph{weak}, 
+where strong expressions are considered to have an element of noncompositionality (including proper names, idioms, etc.)
+and weak expressions are considered to be compositional but statistically idiomatic (e.g., \lex{highly recommend(ed)}).
 
-
-\item \textsc{Tweets}: Two samples of Twitter messages were recently annotated with supersenses \citep{johannsen-14}: 
+\paragraph{\textsc{Tweets}.} Two samples of Twitter messages were recently annotated with supersenses \citep{johannsen-14}: 
 (a)~the POS+NER-annotated data set of \citet{Ritter:ea:11}, 
 and %which we use for training, development, and evaluation, and 
 (b)~\citeposs{Plank:ea:14} sample of 200~tweets.
@@ -572,7 +599,7 @@ though many of the multiword chunks tagged with a noun or verb supersense would 
 % raw agreement dropped to 0.69 and Cohen's $\kappa$ to 0.69.
 % The second data had an average raw agreement of 0.65 and their Cohen's $\kappa$ 0.62. 
 %For this data set, we also compute $F_1$, defined as usual as the harmonic mean of recall and precision. To compute this, we set one of the annotators as gold data and the other as predicted data. However, since $F_{1}$ is symmetrical, the order does not matter. The annotation $F_{1}$ gives us another estimate of annotation difficulty. We present the figures in Table \ref{table:properties-of-dataset}.
-\end{itemize}
+
 
 \nss{what new (or revised) annotations are needed? 
 (CPH should have resources to annotate a new Twitter test set with supersenses. possibly MWEs as well)
