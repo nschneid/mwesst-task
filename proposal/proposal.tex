@@ -321,9 +321,9 @@ Ottawa, Ontario, Canada\\
 \date{}
 
 \begin{document}
-\nss{Note: this document uses natbib rather than the standard ACL bib macros: 
-According to \citet{baldwin-10}, statistical association measures 
-are one technique for extracting MWE types \citep[cf.][\emph{inter alia}]{pecina-10}.}
+% \nss{Note: this document uses natbib rather than the standard ACL bib macros: 
+% According to \citet{baldwin-10}, statistical association measures 
+% are one technique for extracting MWE types \citep[cf.][\emph{inter alia}]{pecina-10}.}
 \maketitle
 
 \begin{abstract}
@@ -403,6 +403,7 @@ or French compounds \citep[recent examples:][]{constant-11,green-12,ramisch-12,v
 though the corpus and identification system of \citet{vincze-11} targets several specific kinds of MWEs.}
 
 \paragraph{Supersenses.}
+\longversion{
 Ideally, a lexical semantic representation would apply to a large number of word types 
 while being sufficiently fine-grained to disambiguate words with multiple meanings. 
 %A representation represents good coverage if it provides labels for most word classes. 
@@ -421,7 +422,30 @@ However, they are lemma-specific (i.e., sense number two of \emph{house} and \em
 and do not allow for generalization to larger groups.\nss{not true of WordNet, because the hierarchy allows generalization. 
 I think the problems with the WordNet-style approach are (a)~it is hard to agree on/annotate with fine-grained senses, 
 and (b)~it is hard to extend the lexicon to cover OOV words that might occur in new domains (let alone other languages).}
-\dirk{Mention work on other languages?}
+}
+
+As noted above, relying on a WordNet-like lexicon as an inventory of fine-grained, lexicalized senses 
+creates problems for scalability and extensibility to new domains and languages. 
+Named entity recognition (NER), which is formulated in terms of a (usually small) number of delexicalized coarse-grained classes, 
+does not suffer from these problems. However, because these classes are only designed to apply to named entities, 
+they provide far from complete coverage of lexical items in a corpus.
+
+Noun and verb \textbf{supersenses} offer a compromise approach: they can be seen as generalizing 
+named entity classes to cover all nouns (with 26~classes) as well as verbs (15~classes). 
+The inventory, \cref{tbl:supersenses}, originates with the top-level organization of Princeton WordNet, 
+but can be applied directly to annotate new data---including out-of-vocabulary words 
+in English or other languages \citep{schneider-12,johannsen-14}.
+Following the lead of NER, techniques for supersense tagging have generally used statistical sequence models 
+and have been evaluated in English, Chinese, and Arabic.\footnote{Specific resources:
+English SemCor \citep{ciaramita-06,paas-09}, 
+English-Italian MultiSemCor \citep{picca-08,picca-09,attardi-10}, 
+the Italian Syntactic-Semantic Treebank and Italian Wikipedia \citep{attardi-10,rossi-13}, 
+Chinese Cilin \citep{qiu-11},  
+and Arabic Wikipedia \citep{schneider-13}.}
+In addition to providing human-interpretable high-level clustering information, 
+features based on supersenses have been exploited in downstream semantics tasks\longversion{ 
+such as preposition sense disambiguation, noun compound interpretation, and metaphor detection} 
+\citep{Ye:Baldwin:2007,Tratz:Hovy:2010,Tsvetkov:ea:2013}. 
 
 \begin{table}\centering\small
 \resizebox{ \columnwidth }{!}{
@@ -447,6 +471,7 @@ n:motive	&	v:change	&
 \label{tbl:supersenses}
 \end{table}
 
+\longversion{
 The \textbf{supersense} categories for nouns and verbs, \cref{tbl:supersenses},
 are also derived from WordNet, but represent a higher level in the taxonomy. 
 They originated from a higher-level clustering of nouns and verbs into groups, 
@@ -454,13 +479,20 @@ and thus have good coverage.\footnote{Supersenses for adjectives and adverbs nom
 but are based on morphosyntactic rather than semantic properties. 
 There is, however, recent work on developing a taxonomy for English adjective supersenses \citep{tsvetkov-14}.}
 Since they group individual word senses into larger groups, they allow for distinction beyond the lemma level, 
-i.e., they assign the same supersense to words with different word senses. Supersenses thus provide human-interpretable high-level clustering information, and have mostly been used as features in other tasks, such as preposition sense disambiguation, noun compound interpretation, and metaphor detection \cite{Ye:Baldwin:2007,Tratz:Hovy:2010,Tsvetkov:ea:2013}. 
+i.e., they assign the same supersense to words with different word senses. Supersenses thus provide 
+human-interpretable high-level clustering information, and have mostly been used as features in other tasks, 
+such as preposition sense disambiguation, noun compound interpretation, and metaphor detection 
+\cite{Ye:Baldwin:2007,Tratz:Hovy:2010,Tsvetkov:ea:2013}. 
 
-The task of supersense tagging was first introduced by \cite{Ciaramita:Altun:2006EMNLP}, who used 5-fold cross validation on {\sc SemCor} to evaluate their model (structured 1st order discriminative). Their evaluation also included a held-out development set on each fold that was used to estimate the number of epochs and additional training data containing only verbs. Their overall $F_1$ score on {\sc SemCor} was 77.1.
-Reichartz and Paa\ss{} \cite{Reichartz:Paass:2008ECMLPKDD,Paass:Reichartz:2009SIAM} reached an $F_1$ score of 80.2, using CRFs and additional features.
+The task of supersense tagging was first introduced by \citep{Ciaramita:Altun:2006EMNLP}, 
+who used 5-fold cross validation on {\sc SemCor} to evaluate their model (structured 1st order discriminative). 
+Their evaluation also included a held-out development set on each fold that was used to estimate the number of epochs 
+and additional training data containing only verbs. Their overall $F_1$ score on {\sc SemCor} was 77.1.
+Reichartz and Paa\ss{} \citep{Reichartz:Paass:2008ECMLPKDD,Paass:Reichartz:2009SIAM} 
+reached an $F_1$ score of 80.2, using CRFs and additional features.
 
 There has been relatively little recent work on supersense tagging, and to the best of our knowledge, all of it has been mostly limited to standard English\footnote{With few exceptions such as \cite{schneider-12,schneider-13}.} ({\sc SemCor} and {\sc SensEval}). We are not aware of any previous work on word sense disambiguation for Twitter. Our hope is that this task makes the problem more attractive to a wider audience to reach more languages and domains.
-
+}
 
 \paragraph{Opportunities.} 
 To date, many of the analysis problems in computational lexical semantics are niche topics. 
@@ -703,7 +735,7 @@ Supersense counts do not distinguish single-word vs.~multiword expressions.
 \nss{issue to resolve: licensing of Web Treebank source text}
 
 \section{Evaluation}
-
+\longversion{
 \subsection{System Submission Process}
 
 On May~5,~2015, teams will be furnished with the test data (minus the gold labels). 
@@ -725,28 +757,7 @@ For \textsc{Tweets},
 we follow \citeposs{johannsen-14} splits: 
 \nss{sizes of splits}.
 The data from Ritter is used as follows: 551 tweets (10,652 tokens) serve as training data, 118 (2242 tokens) as dev and another 118 (2291 tokens) as test set. Additionally, there is a second test set, drawn from a different sample of 200 tweets (3064 tokens).
-
-% \subsection{System Submission Process}
-% 
-% On May~5,~2015, teams will be furnished with the test data (minus the gold labels). 
-% They will have until May~10 to submit up to 3~system predictions for evaluation. 
-% The test data will include sentences from both evaluation domains, 
-% in a random order: to encourage robust systems, 
-% the domain of each sentence will not be marked at test time, 
-% and the proportion of sentences from each domain is not guaranteed to be 
-% the same in the trial, train, dev, and test sets.\nss{is this crazy?}
-% 
-% \subsection{Splits}
-% 
-% We adopt \citeposs{schneider-14} splits of the \textsc{Reviews} data: 
-% 101~documents (500~sentences, 7,171~words) are held out as a test set, 
-% leaving 3,312~sentences\slash 48,408~words for training\slash development.
-% 
-% For \textsc{Tweets}, 
-% %splits proposed in \citep{Derczynski:ea:13}
-% we follow \citeposs{johannsen-14} splits: 
-% \nss{sizes of splits}.
-
+}
 
 \subsection{Inputs}
 % \nss{open, closed track. if a team submits systems to the closed track and fewer than 3 systems to the open track, 
