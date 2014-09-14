@@ -110,7 +110,7 @@
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
-\setlength\titlebox{6.5cm}    % Expanding the titlebox
+\setlength\titlebox{4cm}    % Expanding the titlebox
 
 
 
@@ -343,10 +343,11 @@ and facilitate empirical comparison of methodologically diverse systems.
 
 Broad-coverage NLP techniques have, thanks in part to previous CoNLL shared tasks, 
 become mainstream for several aspects of language---including morphology, syntax, 
-and some areas of semantics (notably, named entity recognition \nss{2002/2003}, semantic role labeling \nss{2004/2005/2008/2009}, 
-and coreference resolution \nss{2011/2012}).
+and some areas of semantics (notably, named entity recognition, %\nss{2002/2003}
+semantic role labeling, %\nss{2004/2005/2008/2009} 
+and coreference resolution). %\nss{2011/2012}
 Explicit analysis of lexical semantics, by contrast, has been more difficult to scale 
-to broad coverage.\nss{need to say something about purely unsupervised distributional approaches?} 
+to broad coverage. %\nss{need to say something about purely unsupervised distributional approaches?} 
 This might be attributable to the dominant paradigm of word sense disambiguation 
 with lexical resources such as WordNet \citep{wordnet}.
 The fine-grained sense inventories in these resources 
@@ -380,8 +381,11 @@ treat space-separated words as the basic units of structure.
 %offers a good approximation of semantic structure.
 But for sentences with noncompositional or idiosyncratic expressions, this fails to reflect 
 the basic units of meaning. For example, consider:
-\enumsentence{The staff leaves a lot to be desired .}
-\enumsentence{I googled restaurants in the area and Fuji Sushi came up and reviews were great so I made a carry out order of : L 17 .}
+%\begin{enumerate}[leftmargin=*,labelsep=2em,label=(\arabic*),before=\raggedright]
+\begin{itemize}[labelindent=2em,before=\raggedright]
+\item[(1)] The staff leaves a lot to be desired .
+\item[(2)] I googled restaurants in the area and Fuji Sushi came up and reviews were great so I made a carry out order of : L 17 .
+\end{itemize}
 In these sentences, \lex{a lot}, \lex{leaves\ldots to be desired}, 
 \lex{Fuji Sushi}, \lex{came up}, \lex{made\ldots order}, and \lex{carry out}
 are all \textbf{multiword expressions} (MWEs) 
@@ -391,11 +395,12 @@ syntactic structure; some are more fixed in their form while others are quite fl
 For instance, \lex{make\ldots order} can be passivized just like canonical transitive verb phrases.}
 MWEs such as these (and many other flavors) have attracted a great deal of attention 
 within computational semantics; see \citet{baldwin-10} for a review.
-\Citet{schneider-14-corpus} introduced an English corpus resource for 
-training and evaluating the identification of heterogeneous MWEs in context---most 
+\Citet{schneider-14-corpus} introduced an English corpus resource annotated for heterogenous MWEs, 
+suitable for training and evaluating general-purpose MWE identification systems \citep{schneider-14}.\footnote{Most 
 previous evaluations of MWE identification systems were restricted to 
 particular kinds of MWEs, such as English light verb constructions 
-or French compounds \nss{cites; \citealp{vincze-11} targets several specific kinds of MWEs in a single model}.
+or French compounds \citep[recent examples:][]{constant-11,green-12,ramisch-12,vincze-13},
+though the corpus and identification system of \citet{vincze-11} targets several specific kinds of MWEs.}
 
 \paragraph{Supersenses.}
 Ideally, a lexical semantic representation would apply to a large number of word types 
@@ -815,7 +820,7 @@ with the respective calculations computed on all links without regard to strengt
 These calculations are demonstrated in the caption of \cref{fig:linkmeasure} for the example.
 
 To isolate the \textbf{supersense} classification performance, 
-we  compute F1 of the supersense part of the full tag.\nss{for all tags, or all non-strong-I tags, or just ones with actual supersenses?} \dirk{We use F1, since the label distribution is so biased (predicting 'O' would get you really good accuracy), and we should compute it for all}
+we compute $F_1$ of the supersense part of the joint tag.
 Because the supersense of a strong MWE is marked on its first word, 
 this will have the effect of penalizing errors on the left boundary of an MWE, 
 but it is less sensitive to the MWE analysis than the link-based measure. 
@@ -862,7 +867,7 @@ What additional resources are needed for features that we would want to allow fo
 \Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
 using the measures described above (precision and recall are omitted for brevity).
 \nss{discussion? presumably: we see that the domain gap is huge---neither system is robust to the two domains.
-this in one of the challenges that systems in our task will have to face.}
+this in one of the challenges that systems in our task will have to face.}\nss{numbers far from 100\%; plenty of room to grow}
 
 \begin{table*}
 \centering\small
