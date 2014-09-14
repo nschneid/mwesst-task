@@ -603,8 +603,11 @@ These capture two genres of social web text:
 consists of 723~online user reviews for services such as restaurants and beauticians.\longversion{\footnote{Each review is a separate document; 
 no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
 syntactic parse of each sentence.}}
-It was recently manually annotated in full, first for heterogeneous MWEs \citep[released as the CMWE Corpus\footnote{\url{http://www.ark.cs.cmu.edu/LexSem/}}]{schneider-14-corpus}, 
-then for noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses. 
+It was recently manually annotated in full, first for heterogeneous MWEs \citep[released as the CMWE Corpus]{schneider-14-corpus}, 
+then for noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses.\footnote{Stand-off annotations 
+will be publicly released at \url{http://www.ark.cs.cmu.edu/LexSem/} in time for the task. 
+We will make an effort to obtain permission from LDC to redistribute the source text, 
+which is from the EWTB.} 
 Annotation was done by linguists, who took pains to establish conventions and resolve disagreements.\footnote{Each 
 sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation.} 
 Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
@@ -615,16 +618,19 @@ MWEs are further subdivided into \emph{strong} vs.~\emph{weak},
 where \textbf{strong} expressions are those deemed somewhat noncompositional (including proper names, idioms, etc.)~and 
 \textbf{weak} expressions are those considered to be compositional but statistically idiomatic (e.g., \lex{highly recommend(ed)}).
 
-\textbf{\textsc{Tweets}.} Two samples of Twitter messages were recently annotated with supersenses \citep{johannsen-14}: 
+\textbf{\textsc{Tweets}.} Two samples of Twitter messages (in total, 987, with 18,000 words) 
+were recently annotated with supersenses \citep{johannsen-14}\longversion{: 
 (a)~the POS+NER-annotated data set of \citet{Ritter:ea:11}, 
 and %which we use for training, development, and evaluation, and 
-(b)~\citeposs{Plank:ea:14} sample of 200~tweets.
+(b)~\citeposs{Plank:ea:14} sample of 200~tweets}.
 %, which we use for additional, out-of-sample evaluation. 
 %We call these data sets {\sc Ritter}-$\{${\sc Train,Dev,Eval}$\}$ and {\sc In-House-Eval}, respectively. 
 %The latter was downloaded in 2013 and was previously used (with part-of-speech annotation) in \citep{Plank:ea:14}.
-For both data sets, annotators were shown pre-annotations from a heuristic supersense chunking\slash tagging system 
+%For both data sets, 
+Annotators were shown pre-annotations from a heuristic supersense chunking\slash tagging system 
 (based on the most frequent sense of each word)
-and asked to correct the boundaries and supersense labels. 
+and asked to correct the boundaries and supersense labels.\footnote{The supersense-annotated tweets 
+are available at \url{https://github.com/coastalcph/supersense-data-twitter}.} 
 %The supersenses are annotated with spans defined by the BIO (Begin-Inside-Outside) notation. 
 There was no explicit MWE annotation phase, 
 though many of the multiword chunks tagged with a noun or verb supersense would be considered MWEs. 
@@ -635,16 +641,14 @@ though many of the multiword chunks tagged with a noun or verb supersense would 
 % raw agreement dropped to 0.69 and Cohen's $\kappa$ to 0.69.
 % The second data had an average raw agreement of 0.65 and their Cohen's $\kappa$ 0.62. 
 %For this data set, we also compute $F_1$, defined as usual as the harmonic mean of recall and precision. To compute this, we set one of the annotators as gold data and the other as predicted data. However, since $F_{1}$ is symmetrical, the order does not matter. The annotation $F_{1}$ gives us another estimate of annotation difficulty. We present the figures in Table \ref{table:properties-of-dataset}.
-
-
-\nss{what new (or revised) annotations are needed?} 
+We plan to revise the boundaries in the data with greater attention to MWE criteria 
+in time for the task.
 % (CPH should have resources to annotate a new Twitter test set with supersenses. possibly MWEs as well)
 % (participants should be banned from using the CMWE data lest they train on the test set.)
 % (is it OK if, e.g., supersense tagging conventions are different in different datasets?)
 % be as specific as possible about timeline}
 
 
-\nss{issue to resolve: licensing of Web Treebank source text}
 
 \section{Evaluation}
 \longversion{
