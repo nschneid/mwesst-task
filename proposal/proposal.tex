@@ -415,7 +415,7 @@ These ideals are sometimes at odds:  \nss{\ldots}
 Popular representations are named-entity tags and WordNet \citep{wordnet} word senses. 
 However, both present a problem in one of the desired aspects. 
 Named entity tags have a reasonable distinction, and are thus frequently used to find entities of a certain type. 
-However, as the name already suggests, this representation is limited to (proper) nouns, and has thus poor coverage. 
+However, as the name already suggests, this representation is limited to (proper) nouns, and even though high-coverage gazetteers can be found for named entity recognition, the task has thus inherently poor coverage. 
 Word senses, on the other hand, cover all content word classes. 
 However, they are lemma-specific (i.e., sense number two of \emph{house} and \emph{building} are not the same), 
 and do not allow for generalization to larger groups.\nss{not true of WordNet, because the hierarchy allows generalization. 
@@ -454,7 +454,13 @@ and thus have good coverage.\footnote{Supersenses for adjectives and adverbs nom
 but are based on morphosyntactic rather than semantic properties. 
 There is, however, recent work on developing a taxonomy for English adjective supersenses \citep{tsvetkov-14}.}
 Since they group individual word senses into larger groups, they allow for distinction beyond the lemma level, 
-i.e., they assign the same supersense to words with different word senses.
+i.e., they assign the same supersense to words with different word senses. Supersenses thus provide human-interpretable high-level clustering information, and have mostly been used as features in other tasks, such as preposition sense disambiguation, noun compound interpretation, and metaphor detection \cite{Ye:Baldwin:2007,Tratz:Hovy:2010,Tsvetkov:ea:2013}. 
+
+The task of supersense tagging was first introduced by \cite{Ciaramita:Altun:2006EMNLP}, who used 5-fold cross validation on {\sc SemCor} to evaluate their model (structured 1st order discriminative). Their evaluation also included a held-out development set on each fold that was used to estimate the number of epochs and additional training data containing only verbs. Their overall $F_1$ score on {\sc SemCor} was 77.1.
+Reichartz and Paa\ss{} \cite{Reichartz:Paass:2008ECMLPKDD,Paass:Reichartz:2009SIAM} reached an $F_1$ score of 80.2, using CRFs and additional features.
+
+There has been relatively little recent work on supersense tagging, and to the best of our knowledge, all of it has been mostly limited to standard English\footnote{With few exceptions such as \cite{schneider-12,schneider-13}.} ({\sc SemCor} and {\sc SensEval}). We are not aware of any previous work on word sense disambiguation for Twitter. Our hope is that this task makes the problem more attractive to a wider audience to reach more languages and domains.
+
 
 \paragraph{Opportunities.} 
 To date, many of the analysis problems in computational lexical semantics are niche topics. 
