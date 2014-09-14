@@ -493,9 +493,9 @@ to encode MWEs. We are aware of supersense annotations in Italian, Arabic, and C
  \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagts{Garage}{\color{blue}b}{\color{blue}\textsc{n:group}}};
  \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagts{Pros}{\color{blue}ī}{}};
  \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagts{to}{\color{red}Ī}{}};
-\path[-,thick,dotted, bend left=45] (n2.north) edge (n3.north); 
-\path[-,thick,red, bend left=45] (n3.north) edge (n6.north);
- \path[-,thick,blue, bend left=45] (n4.north) edge (n5.north);
+\path[-,thick,dotted, bend left=30] (n2.north) edge (n3.north); 
+\path[-,thick,red, bend left=20] (n3.north) edge (n6.north);
+ \path[-,thick,blue, bend left=30] (n4.north) edge (n5.north);
  \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagts{my}{O}{}};
  \node[inner sep=0cm,above right=0pt of n7.south east] (n8) {\tagts{friends}{O}{\textsc{n:group}}};
  \node[inner sep=0cm,above right=0pt of n8.south east] (n9) {\tagts{.}{O}{}};
@@ -520,7 +520,18 @@ must not receive separate supersenses.}
 
 \nss{given a sentence, what should be predicted. extra examples in appendices are encouraged}
 
-\nss{file format with example. UTF-8}
+The main \textbf{file format} for this task will be the \texttt{.tags} format, 
+which consists of one line per token, each line having 9~tab-delimited columns: 1.~token offset (1-based); 2.~word token; 3.~lowercased lemma; 
+4.~POS tag; 5.~\textbf{joint MWE+supersense tag}---\emph{this is the main system output}; 6.~offset of nearest previous token 
+in the same MWE, or \texttt{0} if not continuing an MWE; 7.~MWE attachment strength: \texttt{\_} (strong) or \texttt{\tat} (weak), 
+or blank if not continuing an MWE;
+8.~supersense label, if any; 9.~sentence ID, including (at training time) the domain of the corpus from which it was drawn.\footnote{Columns 6--8 are deterministic given column 5, 
+but including them separately helps simplify evaluation\slash analysis.}
+Adjacent sentences are separated by a blank line.
+
+Scripts to convert to and from the \texttt{.mwe} format, which displays one sentence per line 
+and contains annotations in a JSON data structure, will also be provided.
+All file formats are UTF-8 encoded.
 
 \section{Data}
 
@@ -731,7 +742,7 @@ with respect to MWEs, supersenses, and their combination.
  \node[inner sep=0cm,above right=0pt of n3.south east] (n4) {\tagtt{little}{\color{blue}ī}{Ī}};
  \node[inner sep=0cm,above right=0pt of n4.south east] (n5) {\tagtt{on}{\color{red}Ī}{O}};
  \node[inner sep=0cm,above right=0pt of n5.south east] (n6) {\tagtt{the}{O}{O}\tagtt{price}{O}{O}};
- \path[-,thick,red, bend left=45] (n2.north) edge (n5.north);
+ \path[-,thick,red, bend left=30] (n2.north) edge (n5.north);
  \path[-,thick,blue, bend left=45] (n3.north) edge (n4.north);
 \path[-,thick, bend right=45] (n3.south) edge (n4.south);
  \node[inner sep=0cm,above right=0pt of n6.south east] (n7) {\tagtt{which}{O}{O}};
@@ -849,6 +860,69 @@ We propose a task to solve both MWE identification and supersense tagging. In or
 Our hope is that this will lead to further advances in the field of semantic analysis.
 
 \nss{TODO}
+
+\begin{figure*}\small
+\begin{verbatim}
+1       Got          get         VBD     O-possession    0               possession      ewtb.r.017345.2
+2       some         some        DT      O               0                               ewtb.r.017345.2
+3       nice         nice        JJ      O               0                               ewtb.r.017345.2
+4       "            "           ``      O               0                               ewtb.r.017345.2
+5       freshly      freshly     RB      O               0                               ewtb.r.017345.2
+6       baked        bake        VBN     O-creation      0               creation        ewtb.r.017345.2
+7       "            "           ''      O               0                               ewtb.r.017345.2
+8       fruit        fruit       NN      O-FOOD          0               FOOD            ewtb.r.017345.2
+9       squares      square      NNS     O-SHAPE         0               SHAPE           ewtb.r.017345.2
+10      ,            ,           ,       O               0                               ewtb.r.017345.2
+11      a            a           DT      O               0                               ewtb.r.017345.2
+12      personal     personal    JJ      O               0                               ewtb.r.017345.2
+13      favorite     favorite    NN      O-ATTRIBUTE     0               ATTRIBUTE       ewtb.r.017345.2
+14      of           of          IN      O               0                               ewtb.r.017345.2
+15      mine         mine        PRP     O               0                               ewtb.r.017345.2
+16      .            .           .       O               0                               ewtb.r.017345.2
+
+
+1       The          the         DT      O               0                               ewtb.r.055976.1
+2       staff        staff       NN      O-GROUP         0               GROUP           ewtb.r.055976.1
+3       leaves       leave       VBZ     B-cognition     0               cognition       ewtb.r.055976.1
+4       a            a           DT      b               0                               ewtb.r.055976.1
+5       lot          lot         NN      ī               4       _                       ewtb.r.055976.1
+6       to           to          TO      Ī               3       _                       ewtb.r.055976.1
+7       be           be          VB      Ī               6       _                       ewtb.r.055976.1
+8       desired      desire      VBN     Ī               7       _                       ewtb.r.055976.1
+9       .            .           .       O               0                               ewtb.r.055976.1
+
+1       I            i           PRP     O               0                               ewtb.r.329991.1
+2       googled      google      VBD     O-communication 0               communication   ewtb.r.329991.1
+3       restaurants  restaurant  NNS     O-GROUP         0               GROUP           ewtb.r.329991.1
+4       in           in          IN      O               0                               ewtb.r.329991.1
+5       the          the         DT      O               0                               ewtb.r.329991.1
+6       area         area        NN      O-LOCATION      0               LOCATION        ewtb.r.329991.1
+7       and          and         CC      O               0                               ewtb.r.329991.1
+8       Fuji         fuji        NNP     B-GROUP         0               GROUP           ewtb.r.329991.1
+9       Sushi        sushi       NNP     Ī               8       _                       ewtb.r.329991.1
+10      came         come        VBD     B-communication 0               communication   ewtb.r.329991.1
+11      up           up          RB      Ī               10      _                       ewtb.r.329991.1
+12      and          and         CC      O               0                               ewtb.r.329991.1
+13      reviews      review      NNS     O-COMMUNICATION 0               COMMUNICATION   ewtb.r.329991.1
+14      were         be          VBD     O-stative       0               stative         ewtb.r.329991.1
+15      great        great       JJ      O               0                               ewtb.r.329991.1
+16      so           so          RB      O               0                               ewtb.r.329991.1
+17      I            i           PRP     O               0                               ewtb.r.329991.1
+18      made         make        VBD     B-communication 0               communication   ewtb.r.329991.1
+19      a            a           DT      o               0                               ewtb.r.329991.1
+20      carry        carry       VB      b-possession    0               possession      ewtb.r.329991.1
+21      out          out         RP      ī               20      _                       ewtb.r.329991.1
+22      order        order       NN      Ī               18      _                       ewtb.r.329991.1
+23      of           of          IN      O               0                               ewtb.r.329991.1
+24      :            :           :       O               0                               ewtb.r.329991.1
+25      L            l           $       O               0                               ewtb.r.329991.1
+26      17           17          CD      O               0                               ewtb.r.329991.1
+27      .            .           .       O               0                               ewtb.r.329991.1
+\end{verbatim}
+\caption{Example annotations in the 9-column \texttt{.tags} format.
+Lowercase supersense labels are for verbs and uppercase labels are for nouns.
+In the sentence IDs, \texttt{ewtb.r} stands for the \textsc{Reviews} section of the English Web Treebank.}
+\end{figure*}
 
 \bibliographystyle{aclnat}
 % you bib file should really go here
