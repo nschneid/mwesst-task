@@ -155,6 +155,7 @@
 \newcommand{\lkmarker}{\ensuretext{\textcolor{blue}{\ensuremath{^{\textsc{L}}_{\textsc{K}}}}}}
 \newcommand{\swswmarker}{\ensuretext{\textcolor{orange}{\ensuremath{^{\textsc{S}}_{\textsc{S}}}}}}
 \newcommand{\abmarker}{\ensuretext{\textcolor{purple}{\ensuremath{^{\textsc{A}}_{\textsc{B}}}}}}
+\newcommand{\mcmarker}{\ensuretext{\textcolor{dkblue}{\ensuremath{^{\textsc{M}}_{\textsc{C}}}}}}
 \newcommand{\arkcomment}[3]{\ensuretext{\textcolor{#3}{[#1 #2]}}}
 %\newcommand{\arkcomment}[3]{}
 \newcommand{\nss}[1]{\arkcomment{\nssmarker}{#1}{magenta}}
@@ -163,6 +164,7 @@
 \newcommand{\lk}[1]{\arkcomment{\lkmarker}{#1}{blue}}
 \newcommand{\swsw}[1]{\arkcomment{\swswmarker}{#1}{orange}}
 \newcommand{\ab}[1]{\arkcomment{\abmarker}{#1}{purple}}
+\newcommand{\mc}[1]{\arkcomment{\mcmarker}{#1}{dkblue}}
 \newcommand{\wts}{\mathbf{w}}
 \newcommand{\g}{\mathbf{g}}
 \newcommand{\f}{\mathbf{f}}
@@ -516,8 +518,11 @@ language modeling; or other methods that exploit additional resources.
 
 \nss{relevance to study of language learning, and to NLP applications}
 
+\mc{This task provides a promising framework for integrating lexical semantics in NLP applications. Until recently, it was unclear whether Word Sense Disambiguation could fullfil its goal of improving NLP applications \citep{resnik,carpuat-05}. Successful integrating Word Sense Disambiguation predictions in Machine Translation required reformulating the task: translations in a second language replaced abstract word senses, and the single-word disambiguation targets were replaced by the multiword phrases used by translation systems \citep{chan-07,carpuat-07,levefer-10}. The proposed task learns from these lessons by moving away from fine-grained sense inventories and word-based annotation, while defining a more general representation that can be useful for many NLP applications beyond machine translation.}
+
+
 The proposed task will be limited to English. 
-This reflects what we belive is realistic given existing resources 
+This reflects what we believe is realistic given existing resources 
 and the organizers' ability to annotate new data. 
 If the task is successful, we would advocate a second incarnation 
 adding evaluations in other languages and/or child-directed speech.
