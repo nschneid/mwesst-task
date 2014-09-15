@@ -11,7 +11,7 @@
 %\usepackage{times}
 %\usepackage{latexsym}
 
-
+\usepackage{framed}
 \usepackage[boxed]{algorithm2e}
 \renewcommand\AlCapFnt{\small}
 \usepackage[small,bf,skip=5pt]{caption}
@@ -739,18 +739,18 @@ of the identified MWEs. Tokens not involved in a predicted or gold MWE
 do not factor into this measure. 
 To award partial credit for partial overlap between a predicted MWE 
 and a gold MWE, these scores are computed based on \emph{links} between 
-consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.\footnote{%
+consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.
+\Cref{fig:linkmeasure} in the annex defines this measure in detail and illustrates the calculations for an example.
 %\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
 %of a sentence. 
-The precision is the proportion of predicted links whose words 
-both belong to the same expression in the gold standard. 
-Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
-is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
-A weak link is treated as intermediate between a strong link and no link at all: 
-precision, recall, and $F_1$ computed on strong links only are averaged 
-with the respective calculations computed on all links without regard to strength.} 
-\Cref{fig:linkmeasure} in the annex offers an example with two annotations 
-to illustrate these calculations.
+% The precision is the proportion of predicted links whose words 
+% both belong to the same expression in the gold standard. 
+% Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
+% is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
+% A weak link is treated as intermediate between a strong link and no link at all: 
+% precision, recall, and $F_1$ computed on strong links only are averaged 
+% with the respective calculations computed on all links without regard to strength. 
+% \Cref{fig:linkmeasure} in the annex illustrates these calculations with an example.
 
 To isolate the \textbf{supersense} classification performance, 
 we compute $F_1$ of the supersense part of the joint tag.\longversion{
@@ -916,8 +916,17 @@ Supersense counts do not distinguish single-word vs.~multiword expressions.
 \end{table*}
 
 
-\begin{figure*}\centering %\small
+\begin{figure*} %\small
 % {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
+\begin{framed}\small
+\emph{Precision:} The proportion of predicted links whose words 
+both belong to the same expression in the gold standard. \\
+\emph{Recall:} Same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
+is a slight simplification of the MUC coreference measure \citep{vilain-95}.}} \\
+\emph{Strength Averaging:} A weak link is treated as intermediate between a strong link and no link at all: 
+precision, recall, and $F_1$ computed on strong links only are averaged 
+with the respective calculations computed on all links without regard to strength.
+\end{framed}\centering
 \begin{tikzpicture}[baseline={($(current bounding box.center)+(0,-0.5ex)$)}, node distance=0cm, auto,]
  \node[inner sep=0cm] (n1) {\tagtt{he}{O}{O}\tagtt{was}{O}{O}\tagtt{willing}{O}{O}\tagtt{to}{O}{O}};
  \node[inner sep=0cm,above right=0pt of n1.south east] (n2) {\tagtt{budge}{\color{red}B}{O}};
