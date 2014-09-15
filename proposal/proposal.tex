@@ -506,13 +506,13 @@ in nontraditional domains and to foster cross-pollination between different subc
 % we want to encourage creative approaches that go beyond the tried and true newswire-trained approach, 
 % and open the community to wider applications. 
 
-This task would capitalize on current enthusiasm for semantics in NLP.
-It should provide a testbed for a wide variety of technical approaches---these could include 
+This task would capitalize on current enthusiasm for semantics in NLP, 
+providing a testbed for a wide variety of technical approaches---these could include 
 linguistic feature engineering; comparing sequence models to hierarchical parsing models, or their combination 
-with joint decoding \citep{le_roux-14}; and in the open track, domain adaptation \citep{johannsen-14}, 
-type supervision, word clustering\slash representation learning \citep{grave-13}, 
-collocation extraction \citep{pecina-10,ramisch-12}, 
-language modeling, or other methods that exploit additional resources.
+with joint decoding \citep{le_roux-14}; domain adaptation \citep{johannsen-14}; 
+type supervision; word clustering\slash representation learning \citep{grave-13}; 
+collocation extraction \citep{pecina-10,ramisch-12}; 
+language modeling; or other methods that exploit additional resources.
 
 \nss{relevance to study of language learning, and to NLP applications}
 
@@ -559,8 +559,8 @@ must not receive separate supersenses.}
 
 
 
-To facilitate (but not require) joint sequence modeling, 
-the lexical semantic analysis for each sentence will be represented as 
+\longversion{To facilitate (but not require) joint sequence modeling, 
+the}\shortversion{The} lexical semantic analysis for each sentence will be represented as 
 a sequence of joint MWE+supersense tags. \Cref{fig:ex1} illustrates 
 the MWE part above the sentence and the supersense part below the sentence; 
 in practice, these will be hyphenated into a single tag per token.
@@ -576,7 +576,7 @@ Systems are expected to ensure that the full tag sequence for a sentence is vali
 global validity can be enforced with first-order constraints 
 to prohibit invalid bigrams such as \texttt{O~Ī} and \texttt{b~Ĩ} (see \citealp{schneider-14} for details).
 
-The joint tags may include a supersense label attached with a hyphen, 
+Most of the joint tags include a supersense label attached with a hyphen, 
 e.g., \texttt{O-communication}, \texttt{b-GROUP}.
 Because strong MWEs receive a supersense as a unit (if at all), 
 \texttt{Ī} and \texttt{ī} are never conjoined with a supersense label.
@@ -590,7 +590,7 @@ which consists of one line per token, each line having 9~tab-delimited columns,
 as explained in \cref{fig:tagsformat} in the annex.
 Adjacent sentences are separated by a blank line.
 
-Scripts to convert to and from the \texttt{.mwe} format, which displays one sentence per line 
+Scripts to convert to and from the \texttt{.sst} format, which displays one sentence per line 
 and contains annotations in a JSON data structure, will also be provided.
 All file formats are UTF-8 encoded.
 
@@ -679,19 +679,22 @@ The data from Ritter is used as follows: 551 tweets (10,652 tokens) serve as tra
 % they will be encouraged to submit the closed track results to the open track as well.}
 The main goal of the task is to find new creative ways to improve the performance of lexical semantic annotation on various domains. 
 In keeping with conventions of past shared tasks at CoNLL and other venues, 
-we will invite systems in two data conditions.
-The tracks will be judged separately, and teams are welcome to submit systems under either or both.
+we will invite systems in multiple data conditions.
+These tracks will be judged separately, and teams are welcome to submit systems under more than one.
 The \textbf{open} track will encourage participants to make 
 wide use of any and all available resources, including for 
 distant or direct supervision. 
-The \textbf{closed} track will encourage controlled comparisons of algorithms 
-by limiting their training to the provided resources.\footnote{%
-In addition to a training set of semantically annotated sentences in both evaluation domains, 
-we will provide PTB-style part-of-speech tags at train and test time, 
-as well as a set of Brown clusters \citep{brown-92} computed from a large corpus.
-Systems will also be allowed access to the English WordNet lexicon.}
-(If the task proves popular, in a future incarnation we might consider additional tracks, 
-such as an unsupervised track.)
+Two \textbf{closed} tracks will encourage controlled comparisons of algorithms 
+by limiting their training to specific resources: 
+a \textbf{supervised} closed track will have access only to resources distributed for the task, 
+and a \textbf{semi-supervised} closed track will further allow use of a specific unannotated corpus.\footnote{%
+We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset}), 
+which is freely available for research use, as the unlabeled corpus for the semi-supervised closed track.
+All tracks will have access to the data we provide---annotated \textsc{Reviews} and \textsc{Tweets} sentences; 
+\longversion{PTB-style part-of-speech}\shortversion{POS} tags\longversion{ at train and test time}; 
+and a set of Brown clusters \citep{brown-92} computed from a large corpus---as well as the \longversion{English }WordNet lexicon.}
+%(If the task proves popular, in a future incarnation we might consider additional tracks, 
+%such as an unsupervised track.)
 
 \longversion{The sentences provided for this task are tokenized. 
 For evaluation to be possible, system predictions must respect the input tokenization.}
