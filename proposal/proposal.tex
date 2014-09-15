@@ -32,6 +32,15 @@
 \usepackage{enumitem} % customizable lists
 \setitemize{noitemsep,topsep=0em,leftmargin=*}
 \setenumerate{noitemsep,leftmargin=0em,itemindent=13pt,topsep=0em}
+%%reduce space around captions
+\setlength{\abovecaptionskip}{1pt plus 1pt minus 1pt}
+\setlength{\belowcaptionskip}{1pt plus 1pt minus 1pt}
+
+\usepackage{titlesec}
+\titlespacing\section{1pt}{6pt plus 4pt minus 2pt}{4pt plus 2pt minus 2pt}
+\titlespacing\subsection{1pt}{6pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{1pt}{6pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\paragraph{1pt}{6pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 
 
 \usepackage{textcomp}
@@ -398,10 +407,9 @@ MWEs such as these (and many other flavors) have attracted a great deal of atten
 within computational semantics; see \citet{baldwin-10} for a review.
 \Citet{schneider-14-corpus} introduced an English corpus resource annotated for heterogenous MWEs, 
 suitable for training and evaluating general-purpose MWE identification systems \citep{schneider-14}.\footnote{Most 
-previous evaluations of MWE identification systems were restricted to 
-particular kinds of MWEs, such as English light verb constructions 
-or French compounds \citep[recent examples:][]{constant-11,green-12,ramisch-12,vincze-13},
-though the corpus and identification system of \citet{vincze-11} targets several specific kinds of MWEs.}
+previous MWE evaluations assumed 
+particular languages and constructions \citep[recently:][]{constant-11,green-12,ramisch-12,vincze-13},
+though the corpus and identification system of \citet{vincze-11} targets several kinds of MWEs.}
 Importantly, the MWEs in the corpus are not required to be contiguous, 
 but may contain \textbf{gaps} (viz.: \lex{made\ldots order}) 
 and are qualitatively labeled as either \textbf{strong} (somewhat noncompositional---e.g., proper names and idioms) 
@@ -701,10 +709,10 @@ by limiting their training to specific resources:
 a \textbf{supervised} closed track will have access only to resources distributed for the task, 
 and a \textbf{semi-supervised} closed track will further allow use of a specific unannotated corpus.\footnote{%
 We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset}), 
-which is freely available for research use, as the unlabeled corpus for the semi-supervised closed track.
-All tracks will have access to the data we provide---annotated \textsc{Reviews} and \textsc{Tweets} sentences; 
+which is freely available for research use, as unlabeled corpus for the semi-supervised closed track.
+All tracks will have access to the annotated data we provide; 
 \longversion{PTB-style part-of-speech}\shortversion{POS} tags\longversion{ at train and test time}; 
-and a set of Brown clusters \citep{brown-92} computed from a large corpus---as well as the \longversion{English }WordNet lexicon. 
+ a set of Brown clusters \citep{brown-92} computed from a large corpus---as well as the \longversion{English }WordNet lexicon. 
 \shortversion{No sentence-level metadata will be provided at test time, 
 but the domain of the sentence will be marked in the training data.}}
 %(If the task proves popular, in a future incarnation we might consider additional tracks, 
@@ -744,9 +752,9 @@ consecutive (but not necessarily adjacent) tokens in an expression \citep{schnei
 %of a sentence. 
 The precision is the proportion of predicted links whose words 
 both belong to the same expression in the gold standard. 
-Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
+Recall is the same, but swapping predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
 is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
-A weak link is treated as intermediate between a strong link and no link at all: 
+Weak links are treated as intermediate between strong links and no link at all: 
 precision, recall, and $F_1$ computed on strong links only are averaged 
 with the respective calculations computed on all links without regard to strength.} 
 \Cref{fig:linkmeasure} in the annex offers an example with two annotations 
@@ -765,11 +773,11 @@ Credit is only given for a self-link if in the other analysis,
 a corresponding self-link occurs with the same supersense.\nss{short:}}
 Finally, a \textbf{combined} measure combines the MWE and supersense measures 
 to compute an overall precision, recall, and $F_1$
-for competitive ranking of systems.\footnote{All of our measures are micro-averages, 
-computed globally over tokens in the corpus 
+for competitive ranking of systems.\footnote{All measures are micro-averages, 
+computed over all tokens in the corpus 
 (rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
 All measures will be reported separately for each of the two evaluation domains, 
-and in a combined figure with the two domains weighted equally.}
+and combined, with the two domains weighted equally.}
 
 % \nss{other possibilities that we should probably not mention in the interest of simplicity: 
 % weight MWE links according to supersense match;
