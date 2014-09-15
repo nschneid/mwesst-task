@@ -383,9 +383,9 @@ treat space-separated words as the basic units of structure.
 But for sentences with noncompositional or idiosyncratic expressions, this fails to reflect 
 the basic units of meaning. For example, consider:
 %\begin{enumerate}[leftmargin=*,labelsep=2em,label=(\arabic*),before=\raggedright]
-\begin{itemize}[labelindent=2em,before=\raggedright]
+\begin{itemize}[labelindent=2em]
 \item[(1)] The staff leaves a lot to be desired .
-\item[(2)] I googled restaurants in the area and Fuji Sushi came up and reviews were great so I made a carry out order of : L 17 .
+\item[(2)] \raggedright I googled restaurants in the area and Fuji Sushi came up and reviews were great so I made a carry out order of : L 17 .
 \end{itemize}
 In these sentences, \lex{a lot}, \lex{leaves\ldots to be desired}, 
 \lex{Fuji Sushi}, \lex{came up}, \lex{made\ldots order}, and \lex{carry out}
@@ -430,7 +430,7 @@ and (b)~it is hard to extend the lexicon to cover OOV words that might occur in 
 }
 As noted above, relying on a WordNet-like lexicon as an inventory of fine-grained, lexicalized senses 
 creates problems for scalability and extensibility to new domains and languages. 
-Named entity recognition (NER), which is formulated in terms of a (usually small) number of delexicalized coarse-grained classes, 
+Named entity recognition (NER), which is formulated in terms of (a usually small number of) delexicalized coarse-grained classes, 
 does not suffer from these problems. However, because these classes are only designed to apply to named entities, 
 they provide far from complete coverage of lexical items in a corpus.
 
@@ -606,11 +606,9 @@ so plain \texttt{O} will be frequent, as will plain \texttt{B} and \texttt{Ī} f
 The main \textbf{file format} for this task will be the \texttt{.tags} format, 
 which consists of one line per token, each line having 9~tab-delimited columns, 
 as explained in \cref{fig:tagsformat} in the annex.
-Adjacent sentences are separated by a blank line.
-
 Scripts to convert to and from the \texttt{.sst} format, which displays one sentence per line 
 and contains annotations in a JSON data structure, will also be provided.
-All file formats are UTF-8 encoded.
+\longversion{All file formats are UTF-8 encoded.}
 
 \section{Data}\label{sec:data}
 
@@ -627,8 +625,9 @@ will be publicly released at \url{http://www.ark.cs.cmu.edu/LexSem/}.
 We will seek permission from LDC to redistribute the source text from the EWTB.} 
 Annotation was done by linguists, who took pains to establish conventions and resolve disagreements.\footnote{Each 
 sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation.} 
-Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
-(\Cref{tbl:reviews} in the annex offers a more detailed breakdown.)
+\longversion{Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
+(\Cref{tbl:reviews} in the annex offers a more detailed breakdown.)}\shortversion{\Cref{tbl:reviews} in the annex 
+offers a breakdown of the annotations.}
 \longversion{15\% of MWEs contain a gap. \nss{proportion strong/weak}} 
 
 \textbf{\textsc{Tweets}.} Two samples of Twitter messages (in total, 987, with 18,000 words) 
@@ -641,12 +640,12 @@ are available at \url{https://github.com/coastalcph/supersense-data-twitter}.}
 %We call these data sets {\sc Ritter}-$\{${\sc Train,Dev,Eval}$\}$ and {\sc In-House-Eval}, respectively. 
 %The latter was downloaded in 2013 and was previously used (with part-of-speech annotation) in \citep{Plank:ea:14}.
 %For both data sets, 
-Annotators were shown pre-annotations from a heuristic supersense chunking\slash tagging system 
-(based on the most frequent sense of each word)
+Annotators were shown pre-annotations from a heuristic supersense chunking\slash tagging system% 
+\longversion{ (based on the most frequent sense of each word)}
 and asked to correct the boundaries and supersense labels. 
 %The supersenses are annotated with spans defined by the BIO (Begin-Inside-Outside) notation. 
-There was no explicit MWE annotation phase, 
-though many of the multiword chunks tagged with a noun or verb supersense would be considered MWEs. 
+Though there was no explicit MWE annotation phase, 
+many of the multiword chunks tagged with a \longversion{noun or verb }supersense would be considered MWEs. 
 %\nss{commented out agreement numbers---I don't think they're necessary for this proposal, given that the datasets are already published}
 % The average raw agreement on the data from Ritter was 0.86 (Cohen's $\kappa$ 0.77). 
 % The majority of tokens received the \emph{O} label by all annotators; this happended in 515 out of 841 cases. 
@@ -654,8 +653,7 @@ though many of the multiword chunks tagged with a noun or verb supersense would 
 % raw agreement dropped to 0.69 and Cohen's $\kappa$ to 0.69.
 % The second data had an average raw agreement of 0.65 and their Cohen's $\kappa$ 0.62. 
 %For this data set, we also compute $F_1$, defined as usual as the harmonic mean of recall and precision. To compute this, we set one of the annotators as gold data and the other as predicted data. However, since $F_{1}$ is symmetrical, the order does not matter. The annotation $F_{1}$ gives us another estimate of annotation difficulty. We present the figures in Table \ref{table:properties-of-dataset}.
-We plan to revise the boundaries in the data with greater attention to MWE criteria 
-in time for the task.
+For the task we plan to revise the boundaries in the data with greater attention to MWE criteria.
 % (CPH should have resources to annotate a new Twitter test set with supersenses. possibly MWEs as well)
 % (participants should be banned from using the CMWE data lest they train on the test set.)
 % (is it OK if, e.g., supersense tagging conventions are different in different datasets?)
@@ -748,7 +746,7 @@ is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
 A weak link is treated as intermediate between a strong link and no link at all: 
 precision, recall, and $F_1$ computed on strong links only are averaged 
 with the respective calculations computed on all links without regard to strength.} 
-\Cref{fig:linkmeasure} in the annex offers an example sentence and two annotations 
+\Cref{fig:linkmeasure} in the annex offers an example with two annotations 
 to illustrate these calculations.
 
 To isolate the \textbf{supersense} classification performance, 
@@ -764,12 +762,11 @@ Credit is only given for a self-link if in the other analysis,
 a corresponding self-link occurs with the same supersense.\nss{short:}}
 Finally, a \textbf{combined} measure combines the MWE and supersense measures 
 to compute an overall precision, recall, and $F_1$
-for competitive ranking of systems.
-
-All of these measures are micro-averages, computed globally over tokens in the corpus 
+for competitive ranking of systems.\footnote{All of our measures are micro-averages, 
+computed globally over tokens in the corpus 
 (rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
 All measures will be reported separately for each of the two evaluation domains, 
-and in a combined figure with the two domains weighted equally. 
+and in a combined figure with the two domains weighted equally.}
 
 % \nss{other possibilities that we should probably not mention in the interest of simplicity: 
 % weight MWE links according to supersense match;
@@ -781,8 +778,8 @@ and in a combined figure with the two domains weighted equally.
 
 \textbf{Baselines.}
 %
-Two open source supersense tagging systems are maintained by authors of this proposal; 
-these can serve as reference implementations for the task and baselines for the evaluation. 
+The open source supersense tagging systems maintained by authors of this proposal 
+can serve as reference implementations for the task and baselines for the evaluation. 
 Both implement supervised discriminative first-order sequence models, one designed for the 
 \textsc{Reviews} domain \citep{schneider-14} and the other for the \textsc{Tweets} domain \citep{johannsen-14}.
 \longversion{
@@ -1018,6 +1015,7 @@ but including them separately helps simplify evaluation\slash analysis.)
 27      .            .           .       O               0                               ewtb.r.329991.1
 \end{verbatim}
 \caption{Column schema and example annotations in the 9-column \texttt{.tags} format.
+There is one token per line; adjacent sentences are separated by a blank line.
 Lowercase supersense labels are for verbs and uppercase labels are for nouns.
 In the sentence IDs, \texttt{ewtb.r} stands for the \textsc{Reviews} section of the English Web Treebank.}
 \label{fig:tagsformat}
