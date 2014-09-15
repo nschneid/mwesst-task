@@ -516,9 +516,19 @@ type supervision; word clustering\slash representation learning \citep{grave-13}
 collocation extraction \citep{pecina-10,ramisch-12}; 
 language modeling; or other methods that exploit additional resources.
 
-\nss{relevance to study of language learning, and to NLP applications}
-
-\mc{This task provides a promising framework for integrating lexical semantics in NLP applications. Until recently, it was unclear whether Word Sense Disambiguation could fullfil its goal of improving NLP applications \citep{resnik,carpuat-05}. Successful integrating Word Sense Disambiguation predictions in Machine Translation required reformulating the task: translations in a second language replaced abstract word senses, and the single-word disambiguation targets were replaced by the multiword phrases used by translation systems \citep{chan-07,carpuat-07,levefer-10}. The proposed task learns from these lessons by moving away from fine-grained sense inventories and word-based annotation, while defining a more general representation that can be useful for many NLP applications beyond machine translation.}
+This task provides a promising framework for integrating lexical semantics in NLP applications. 
+Until recently, it was unclear whether word sense disambiguation could contribute to applications 
+such as machine translation \citep{carpuat-05,resnik-06}; 
+subsequent work found that leveraging WSD predictions in MT required 
+reformulating the task to exploit the internals of an MT system
+%translations in a second language replaced abstract word senses, 
+%and the single-word disambiguation targets were replaced by the multiword phrases used 
+%by translation systems 
+\citep{chan-07,carpuat-07,lefever-10}. 
+In light of the lessons of these approaches, the proposed task moves away 
+from fine-grained sense inventories and lexicalized annotation, 
+while defining a more general representation that can be useful 
+for many NLP applications beyond machine translation.
 
 
 The proposed task will be limited to English. 
