@@ -704,17 +704,20 @@ We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset
 which is freely available for research use, as the unlabeled corpus for the semi-supervised closed track.
 All tracks will have access to the data we provide---annotated \textsc{Reviews} and \textsc{Tweets} sentences; 
 \longversion{PTB-style part-of-speech}\shortversion{POS} tags\longversion{ at train and test time}; 
-and a set of Brown clusters \citep{brown-92} computed from a large corpus---as well as the \longversion{English }WordNet lexicon.}
+and a set of Brown clusters \citep{brown-92} computed from a large corpus---as well as the \longversion{English }WordNet lexicon. 
+\shortversion{No sentence-level metadata will be provided at test time, 
+but the domain of the sentence will be marked in the training data.}}
 %(If the task proves popular, in a future incarnation we might consider additional tracks, 
 %such as an unsupervised track.)
 
 \longversion{The sentences provided for this task are tokenized. 
 For evaluation to be possible, system predictions must respect the input tokenization.}
 
-No sentence-level metadata will be provided at test time. 
+\longversion{
+No sentence-level metadata will be provided in the input at test time.
 The training data will mark the domain from which the sentence was drawn 
 (\textsc{Reviews} or \textsc{Tweets}); systems can make use of this information as they wish, 
-so long as it is not required as part of the input at test time.
+so long as it is not required as part of the input at test time.}
 
 
 % \nss{a few possibilities for tracks---
