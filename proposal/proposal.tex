@@ -300,9 +300,8 @@
 \hyphenation{de-ve-lop-ed}
 \hyphenation{comb-over}
 
-\title{Joint Tagging of Multiword Expressions and Supersenses}
+\title{Broad-Coverage Lexical Semantic Analysis}
 
-% Lingpeng Kong, Nathan Schneider, Swabha Swayamdipta, Archna Bhatia, Chris Dyer, and Noah A. Smith 
 \author{
 Nathan Schneider \\
 		School of Informatics\\
@@ -341,7 +340,7 @@ multiple subcommunities of computational semantics,
 and facilitate empirical comparison of methodologically diverse systems.}
 \end{abstract}
 
-\section{Introduction}
+\section{Introduction}\label{sec:intro}
 
 Broad-coverage NLP techniques have, thanks in part to previous CoNLL shared tasks, 
 become mainstream for several aspects of language---including morphology, syntax, 
@@ -403,6 +402,10 @@ previous evaluations of MWE identification systems were restricted to
 particular kinds of MWEs, such as English light verb constructions 
 or French compounds \citep[recent examples:][]{constant-11,green-12,ramisch-12,vincze-13},
 though the corpus and identification system of \citet{vincze-11} targets several specific kinds of MWEs.}
+Importantly, the MWEs in the corpus are not required to be contiguous, 
+but may contain \textbf{gaps} (viz.: \lex{made\ldots order}) 
+and are qualitatively labeled as either \textbf{strong} (somewhat noncompositional---e.g., proper names and idioms) 
+or \textbf{weak} (compositional but statistically idiomatic, as in \lex{highly recommend(ed)}).
 
 \textbf{Supersenses.}
 \longversion{
@@ -575,16 +578,16 @@ must not receive separate supersenses.}
 
 
 \longversion{To facilitate (but not require) joint sequence modeling, 
-the}\shortversion{The} lexical semantic analysis for each sentence will be represented as 
+the lexical semantic}\shortversion{The} analysis for each sentence will be represented as 
 a sequence of joint MWE+supersense tags. \Cref{fig:ex1} illustrates 
-the MWE part above the sentence and the supersense part below the sentence; 
+the MWE part above the sentence and the supersense part below\longversion{ the sentence}; 
 in practice, these will be hyphenated into a single tag per token.
 
 The MWE portion is a BIO-style \citep{ramshaw-95} 
 positional marker. We adopt the 8-tag scheme of \citet{schneider-14}, 
 which uses case to allow gaps in an MWE (lowercase tag variants mark 
 tokens within a gap) and adds to \texttt{I} tags 
-diacritics that encode the strength of the MWE being continued (a bar for strong or a tilde for weak; see~\cref{sec:data}).
+diacritics that encode the strength of the MWE being continued (a bar for strong or a tilde for weak; see~\cref{sec:intro}).
 The positions are thus \texttt{O}, \texttt{o}, \texttt{B}, \texttt{b},
 \texttt{Ī}, \texttt{ī}, \texttt{Ĩ}, and \texttt{ĩ}.
 Systems are expected to ensure that the full tag sequence for a sentence is valid: 
@@ -611,8 +614,8 @@ All file formats are UTF-8 encoded.
 
 \section{Data}\label{sec:data}
 
-The task will use two existing datasets for both training and evaluation. 
-These capture two genres of social web text:
+The task will use two existing datasets of social web text for both training and evaluation: 
+%These capture two genres of social web text:
 
 \textbf{\textsc{Reviews}.} This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
 consists of 723~online user reviews for services such as restaurants and beauticians.\longversion{\footnote{Each review is a separate document; 
@@ -626,11 +629,7 @@ Annotation was done by linguists, who took pains to establish conventions and re
 sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation.} 
 Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
 (\Cref{tbl:reviews} in the annex offers a more detailed breakdown.)
-15\% of MWEs contain a gap, e.g.~the light verb construction \lex{make\ldots order} in
-\emph{\textbf{made} a carry out \textbf{order}}.
-MWEs are further subdivided into \emph{strong} vs.~\emph{weak}, 
-where \textbf{strong} expressions are those deemed somewhat noncompositional (including proper names, idioms, etc.)~and 
-\textbf{weak} expressions are those considered to be compositional but statistically idiomatic (e.g., \lex{highly recommend(ed)}).
+\longversion{15\% of MWEs contain a gap. \nss{proportion strong/weak}} 
 
 \textbf{\textsc{Tweets}.} Two samples of Twitter messages (in total, 987, with 18,000 words) 
 were recently annotated with supersenses \citep{johannsen-14}\longversion{: 
