@@ -288,9 +288,9 @@
 
 %\newcommand{\finalversion}[1]{#1}
 \newcommand{\finalversion}[1]{}
-\newcommand{\shortversion}[1]{#1}
+\newcommand{\shortversion}[1]{}
 \newcommand{\considercutting}[1]{#1}
-\newcommand{\longversion}[1]{} % ...if only there were more space...
+\newcommand{\longversion}[1]{#1} % ...if only there were more space...
 
 \hyphenation{WordNet}
 \hyphenation{WordNets}
@@ -336,8 +336,8 @@ Ottawa, Ontario, Canada\\
 \maketitle
 
 \begin{abstract}
-We propose that the CoNLL~2015 Shared Task 
-consist of analyzing the lexical semantics of English sentences 
+We propose a SemEval~2016 Shared Task 
+of analyzing the lexical semantics of English sentences 
 in a broad-coverage fashion. 
 The task formulation consists of two steps which can be performed jointly:
 (a)~chunking tokens within sentences into \textbf{multiword expressions}, and 
@@ -350,7 +350,7 @@ and facilitate empirical comparison of methodologically diverse systems.}
 
 \section{Introduction}\label{sec:intro}
 
-Broad-coverage NLP techniques have, thanks in part to previous CoNLL shared tasks, 
+Broad-coverage NLP techniques have, thanks in part to previous SemEval shared tasks, 
 become mainstream for several aspects of language---including morphology, syntax, 
 and some areas of semantics (notably, named entity recognition, %\nss{2002/2003}
 semantic role labeling, %\nss{2004/2005/2008/2009} 
@@ -371,7 +371,7 @@ and restricts opportunities for linguistic studies of lexical semantics in corpo
 
 Here we propose a linguistic representation, annotated data, and evaluation measures 
 aimed at establishing a broad-coverage paradigm for lexical semantic analysis, 
-one which we believe is suitable for a CoNLL shared task. 
+one which we believe is suitable for a SemEval shared task. 
 We motivate the two components of the lexical representation---multiword expressions 
 and supersenses---before delving into the data and evaluation.
 
@@ -415,37 +415,38 @@ and are qualitatively labeled as either \textbf{strong} (somewhat noncomposition
 or \textbf{weak} (compositional but statistically idiomatic, as in \lex{highly recommend(ed)}).
 
 \textbf{Supersenses.}
-\longversion{
-Ideally, a lexical semantic representation would apply to a large number of word types 
-while being sufficiently fine-grained to disambiguate words with multiple meanings. 
-%A representation represents good coverage if it provides labels for most word classes. 
-%It offers sufficient distinction if it allows one to group words into clusters, 
-%in order to make generalizations about semantic classes. 
-A good meaning representation should also group together related meanings from different words. 
-%is typically anti-correlated with the number of available labels.
-These ideals are sometimes at odds:  \nss{\ldots}
-
-Popular representations are named-entity tags and WordNet \citep{wordnet} word senses. 
-However, both present a problem in one of the desired aspects. 
-Named entity tags have a reasonable distinction, and are thus frequently used to find entities of a certain type. 
-However, as the name already suggests, this representation is limited to (proper) nouns, and even though high-coverage gazetteers can be found for named entity recognition, the task has thus inherently poor coverage. 
-Word senses, on the other hand, cover all content word classes. 
-However, they are lemma-specific (i.e., sense number two of \emph{house} and \emph{building} are not the same), 
-and do not allow for generalization to larger groups.\nss{not true of WordNet, because the hierarchy allows generalization. 
-I think the problems with the WordNet-style approach are (a)~it is hard to agree on/annotate with fine-grained senses, 
-and (b)~it is hard to extend the lexicon to cover OOV words that might occur in new domains (let alone other languages).}
-}
+% \longversion{
+% Ideally, a lexical semantic representation would apply to a large number of word types 
+% while being sufficiently fine-grained to disambiguate words with multiple meanings. 
+% %A representation represents good coverage if it provides labels for most word classes. 
+% %It offers sufficient distinction if it allows one to group words into clusters, 
+% %in order to make generalizations about semantic classes. 
+% A good meaning representation should also group together related meanings from different words. 
+% %is typically anti-correlated with the number of available labels.
+% These ideals are sometimes at odds:  \nss{\ldots}
+% 
+% Popular representations are named-entity tags and WordNet \citep{wordnet} word senses. 
+% However, both present a problem in one of the desired aspects. 
+% Named entity tags have a reasonable distinction, and are thus frequently used to find entities of a certain type. 
+% However, as the name already suggests, this representation is limited to (proper) nouns, and even though high-coverage gazetteers can be found for named entity recognition, the task has thus inherently poor coverage. 
+% Word senses, on the other hand, cover all content word classes. 
+% However, they are lemma-specific (i.e., sense number two of \emph{house} and \emph{building} are not the same), 
+% and do not allow for generalization to larger groups.\nss{not true of WordNet, because the hierarchy allows generalization. 
+% I think the problems with the WordNet-style approach are (a)~it is hard to agree on/annotate with fine-grained senses, 
+% and (b)~it is hard to extend the lexicon to cover OOV words that might occur in new domains (let alone other languages).}
+% }
 As noted above, relying on a WordNet-like lexicon as an inventory of fine-grained, lexicalized senses 
 creates problems for scalability and extensibility to new domains and languages. 
 Named entity recognition (NER), which is formulated in terms of (a usually small number of) delexicalized coarse-grained classes, 
 does not suffer from these problems. However, because these classes are only designed to apply to named entities, 
 they provide far from complete coverage of lexical items in a corpus.
 
-Noun and verb \textbf{supersenses} offer a compromise approach: they can be seen as generalizing 
+Noun and verb \textbf{supersenses}
+offer a compromise approach: they can be seen as generalizing 
 named entity classes to cover all nouns (with 26~classes) as well as verbs (15~classes). 
-The inventory, \cref{tbl:supersenses}, originates with the top-level organization of Princeton WordNet, 
+The inventory, \cref{tbl:supersenses}, originates with the top-level organization of Princeton WordNet,
 but can be applied directly to annotate new data---including out-of-vocabulary words 
-in English or other languages \citep{schneider-12,johannsen-14}.
+in English or other languages \citep{schneider-12,johannsen-14}. 
 Following the lead of NER, techniques for supersense tagging have generally used statistical sequence models 
 and have been evaluated in English, Chinese, and Arabic.\footnote{Evaluations used 
 English SemCor \citep{ciaramita-06,paas-09}, 
@@ -478,32 +479,35 @@ n:location	&	v:body	&	v:weather\\
 n:motive	&	v:change	&	
 \end{tabular}
 }% resize
-\caption{The 41 noun and verb supersenses in WordNet.}
+\caption{The 41 noun and verb supersenses in WordNet.
+WordNet supersenses for adjectives and adverbs nominally exist, 
+but are based on morphosyntactic rather than semantic properties.  
+There is, however, recent work on developing a taxonomy for English adjective supersenses \citep{tsvetkov-14}.}
 \label{tbl:supersenses}
 \end{table}
 
-\longversion{
-The \textbf{supersense} categories for nouns and verbs, \cref{tbl:supersenses},
-are also derived from WordNet, but represent a higher level in the taxonomy. 
-They originated from a higher-level clustering of nouns and verbs into groups, 
-and thus have good coverage.\footnote{Supersenses for adjectives and adverbs nominally exist, 
-but are based on morphosyntactic rather than semantic properties. 
-There is, however, recent work on developing a taxonomy for English adjective supersenses \citep{tsvetkov-14}.}
-Since they group individual word senses into larger groups, they allow for distinction beyond the lemma level, 
-i.e., they assign the same supersense to words with different word senses. Supersenses thus provide 
-human-interpretable high-level clustering information, and have mostly been used as features in other tasks, 
-such as preposition sense disambiguation, noun compound interpretation, and metaphor detection 
-\cite{Ye:Baldwin:2007,Tratz:Hovy:2010,Tsvetkov:ea:2013}. 
-
-The task of supersense tagging was first introduced by \citep{Ciaramita:Altun:2006EMNLP}, 
-who used 5-fold cross validation on {\sc SemCor} to evaluate their model (structured 1st order discriminative). 
-Their evaluation also included a held-out development set on each fold that was used to estimate the number of epochs 
-and additional training data containing only verbs. Their overall $F_1$ score on {\sc SemCor} was 77.1.
-Reichartz and Paa\ss{} \citep{Reichartz:Paass:2008ECMLPKDD,Paass:Reichartz:2009SIAM} 
-reached an $F_1$ score of 80.2, using CRFs and additional features.
-
-There has been relatively little recent work on supersense tagging, and to the best of our knowledge, all of it has been mostly limited to standard English\footnote{With few exceptions such as \cite{schneider-12,schneider-13}.} ({\sc SemCor} and {\sc SensEval}). We are not aware of any previous work on word sense disambiguation for Twitter. Our hope is that this task makes the problem more attractive to a wider audience to reach more languages and domains.
-}
+% \longversion{
+% The \textbf{supersense} categories for nouns and verbs, \cref{tbl:supersenses},
+% are also derived from WordNet, but represent a higher level in the taxonomy. 
+% They originated from a higher-level clustering of nouns and verbs into groups, 
+% and thus have good coverage.\footnote{Supersenses for adjectives and adverbs nominally exist, 
+% but are based on morphosyntactic rather than semantic properties. 
+% There is, however, recent work on developing a taxonomy for English adjective supersenses \citep{tsvetkov-14}.}
+% Since they group individual word senses into larger groups, they allow for distinction beyond the lemma level, 
+% i.e., they assign the same supersense to words with different word senses. Supersenses thus provide 
+% human-interpretable high-level clustering information, and have mostly been used as features in other tasks, 
+% such as preposition sense disambiguation, noun compound interpretation, and metaphor detection 
+% \cite{Ye:Baldwin:2007,Tratz:Hovy:2010,Tsvetkov:ea:2013}. 
+% 
+% The task of supersense tagging was first introduced by \citep{Ciaramita:Altun:2006EMNLP}, 
+% who used 5-fold cross validation on {\sc SemCor} to evaluate their model (structured 1st order discriminative). 
+% Their evaluation also included a held-out development set on each fold that was used to estimate the number of epochs 
+% and additional training data containing only verbs. Their overall $F_1$ score on {\sc SemCor} was 77.1.
+% Reichartz and Paa\ss{} \citep{Reichartz:Paass:2008ECMLPKDD,Paass:Reichartz:2009SIAM} 
+% reached an $F_1$ score of 80.2, using CRFs and additional features.
+% 
+% There has been relatively little recent work on supersense tagging, and to the best of our knowledge, all of it has been mostly limited to standard English\footnote{With few exceptions such as \cite{schneider-12,schneider-13}.} ({\sc SemCor} and {\sc SensEval}). We are not aware of any previous work on word sense disambiguation for Twitter. Our hope is that this task makes the problem more attractive to a wider audience to reach more languages and domains.
+% }
 
 \textbf{Opportunities.} 
 To date, many of the analysis problems in computational lexical semantics are niche topics. 
@@ -582,268 +586,7 @@ must not receive separate supersenses.}
 % ewtb.r.329991.1 I googled restaurants in the area and Fuji_Sushi came_up and reviews were great so I made_ a carry_out _order of : L 17 .       {"labels": {"2": ["googled", "communication"], "3": ["restaurants", "GROUP"], "6": ["area", "LOCATION"], "8": ["Fuji", "GROUP"], "10": ["came", "communication"], "13": ["reviews", "COMMUNICATION"], "14": ["were", "stative"], "18": ["made", "communication"], "20": ["carry", "possession"]}, "_": [[8, 9], [10, 11], [18, 22], [20, 21]], "words": [["I", "PRP"], ["googled", "VBD"], ["restaurants", "NNS"], ["in", "IN"], ["the", "DT"], ["area", "NN"], ["and", "CC"], ["Fuji", "NNP"], ["Sushi", "NNP"], ["came", "VBD"], ["up", "RB"], ["and", "CC"], ["reviews", "NNS"], ["were", "VBD"], ["great", "JJ"], ["so", "RB"], ["I", "PRP"], ["made", "VBD"], ["a", "DT"], ["carry", "VB"], ["out", "RP"], ["order", "NN"], ["of", "IN"], [":", ":"], ["L", "$"], ["17", "CD"], [".", "."]], "~": []}
 
 
-
-
-\longversion{To facilitate (but not require) joint sequence modeling, 
-the lexical semantic}\shortversion{The} analysis for each sentence will be represented as 
-a sequence of joint MWE+supersense tags. \Cref{fig:ex1} illustrates 
-the MWE part above the sentence and the supersense part below\longversion{ the sentence}; 
-in practice, these will be hyphenated into a single tag per token.
-
-The MWE portion is a BIO-style \citep{ramshaw-95} 
-positional marker. We adopt the 8-tag scheme of \citet{schneider-14}, 
-which uses case to allow gaps in an MWE (lowercase tag variants mark 
-tokens within a gap) and adds to \texttt{I} tags 
-diacritics that encode the strength of the MWE being continued (a bar for strong or a tilde for weak; see~\cref{sec:intro}).
-The positions are thus \texttt{O}, \texttt{o}, \texttt{B}, \texttt{b},
-\texttt{Ī}, \texttt{ī}, \texttt{Ĩ}, and \texttt{ĩ}.
-Systems are expected to ensure that the full tag sequence for a sentence is valid: 
-global validity can be enforced with first-order constraints 
-to prohibit invalid bigrams such as \texttt{O~Ī} and \texttt{b~Ĩ} (see \citealp{schneider-14} for details).
-
-Most of the joint tags include a supersense label attached with a hyphen, 
-e.g., \texttt{O-communication}, \texttt{b-GROUP}.
-Because strong MWEs receive a supersense as a unit (if at all), 
-\texttt{Ī} and \texttt{ī} are never conjoined with a supersense label.
-\texttt{O} or \texttt{o} indicates that the token is not part of any MWE, 
-but many such tokens do bear a noun or verb supersense.
-\longversion{Of course, the supersenses in this task only cover noun and verb expressions, 
-so plain \texttt{O} will be frequent, as will plain \texttt{B} and \texttt{Ī} for (e.g.) PP idioms.}
-
-The main \textbf{file format} for this task will be the \texttt{.tags} format, 
-which consists of one line per token, each line having 9~tab-delimited columns, 
-as explained in \cref{fig:tagsformat} in the annex.
-Scripts to convert to and from the \texttt{.sst} format, which displays one sentence per line 
-and contains annotations in a JSON data structure, will also be provided.
-\longversion{All file formats are UTF-8 encoded.}
-
-\section{Data}\label{sec:data}
-
-The task will use two existing datasets of social web text for both training and evaluation: 
-%These capture two genres of social web text:
-
-\textbf{\textsc{Reviews}.} This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
-consists of 723~online user reviews for services such as restaurants and beauticians.\longversion{\footnote{Each review is a separate document; 
-no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
-syntactic parse of each sentence.}}
-It was recently manually annotated in full, first for heterogeneous MWEs \citep[released as the CMWE Corpus]{schneider-14-corpus}, 
-then for noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses.\footnote{Stand-off annotations 
-will be publicly released at \url{http://www.ark.cs.cmu.edu/LexSem/}. 
-We will seek permission from LDC to redistribute the source text from the EWTB.} 
-Annotation was done by linguists, who took pains to establish conventions and resolve disagreements.\footnote{Each 
-sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation.} 
-\longversion{Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
-(\Cref{tbl:reviews} in the annex offers a more detailed breakdown.)}\shortversion{\Cref{tbl:reviews} in the annex 
-offers a breakdown of the annotations.}
-\longversion{15\% of MWEs contain a gap. \nss{proportion strong/weak}} 
-
-\textbf{\textsc{Tweets}.} Two samples of Twitter messages (in total, 987, with 18,000 words) 
-were recently annotated with supersenses \citep{johannsen-14}\longversion{: 
-(a)~the POS+NER-annotated data set of \citet{Ritter:ea:11}, 
-and %which we use for training, development, and evaluation, and 
-(b)~\citeposs{Plank:ea:14} sample of 200~tweets}.\footnote{The supersense-annotated tweets 
-are available at \url{https://github.com/coastalcph/supersense-data-twitter}.}
-%, which we use for additional, out-of-sample evaluation. 
-%We call these data sets {\sc Ritter}-$\{${\sc Train,Dev,Eval}$\}$ and {\sc In-House-Eval}, respectively. 
-%The latter was downloaded in 2013 and was previously used (with part-of-speech annotation) in \citep{Plank:ea:14}.
-%For both data sets, 
-Annotators were shown pre-annotations from a heuristic supersense chunking\slash tagging system% 
-\longversion{ (based on the most frequent sense of each word)}
-and asked to correct the boundaries and supersense labels. 
-%The supersenses are annotated with spans defined by the BIO (Begin-Inside-Outside) notation. 
-Though there was no explicit MWE annotation phase, 
-many of the multiword chunks tagged with a \longversion{noun or verb }supersense would be considered MWEs. 
-%\nss{commented out agreement numbers---I don't think they're necessary for this proposal, given that the datasets are already published}
-% The average raw agreement on the data from Ritter was 0.86 (Cohen's $\kappa$ 0.77). 
-% The majority of tokens received the \emph{O} label by all annotators; this happended in 515 out of 841 cases. 
-% Excluding these instances to evaluate the performance on the more difficult content words, 
-% raw agreement dropped to 0.69 and Cohen's $\kappa$ to 0.69.
-% The second data had an average raw agreement of 0.65 and their Cohen's $\kappa$ 0.62. 
-%For this data set, we also compute $F_1$, defined as usual as the harmonic mean of recall and precision. To compute this, we set one of the annotators as gold data and the other as predicted data. However, since $F_{1}$ is symmetrical, the order does not matter. The annotation $F_{1}$ gives us another estimate of annotation difficulty. We present the figures in Table \ref{table:properties-of-dataset}.
-For the task we plan to revise the boundaries in the data with greater attention to MWE criteria.
-% (CPH should have resources to annotate a new Twitter test set with supersenses. possibly MWEs as well)
-% (participants should be banned from using the CMWE data lest they train on the test set.)
-% (is it OK if, e.g., supersense tagging conventions are different in different datasets?)
-% be as specific as possible about timeline}
-
-
-
-\section{Evaluation}
-\longversion{
-\subsection{System Submission Process}
-
-On May~5,~2015, teams will be furnished with the test data (minus the gold labels). 
-They will have until May~10 to submit up to 3~system predictions for evaluation. 
-The test data will include sentences from both evaluation domains, 
-in a random order: to encourage robust systems, 
-the domain of each sentence will not be marked at test time, 
-and the proportion of sentences from each domain is not guaranteed to be 
-the same in the trial, train, dev, and test sets.\nss{is this crazy?}
-
-\subsection{Splits}
-
-We adopt \citeposs{schneider-14} splits of the \textsc{Reviews} data: 
-101~documents (500~sentences, 7,171~words) are held out as a test set, 
-leaving 3,312~sentences\slash 48,408~words for training\slash development.
-
-For \textsc{Tweets}, 
-%splits proposed in \citep{Derczynski:ea:13}
-we follow \citeposs{johannsen-14} splits: 
-\nss{sizes of splits}.
-The data from Ritter is used as follows: 551 tweets (10,652 tokens) serve as training data, 118 (2242 tokens) as dev and another 118 (2291 tokens) as test set. Additionally, there is a second test set, drawn from a different sample of 200 tweets (3064 tokens).
-}
-
-\textbf{Inputs.}
-% \nss{open, closed track. if a team submits systems to the closed track and fewer than 3 systems to the open track, 
-% they will be encouraged to submit the closed track results to the open track as well.}
-The main goal of the task is to find new creative ways to improve the performance of lexical semantic annotation on various domains. 
-In keeping with conventions of past shared tasks at CoNLL and other venues, 
-we will invite systems in multiple data conditions.
-These tracks will be judged separately, and teams are welcome to submit systems under more than one.
-The \textbf{open} track will encourage participants to make 
-wide use of any and all available resources, including for 
-distant or direct supervision. 
-Two \textbf{closed} tracks will encourage controlled comparisons of algorithms 
-by limiting their training to specific resources: 
-a \textbf{supervised} closed track will have access only to resources distributed for the task, 
-and a \textbf{semi-supervised} closed track will further allow use of a specific unannotated corpus.\footnote{%
-We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset}), 
-which is freely available for research use, as the unlabeled corpus for the semi-supervised closed track.
-All tracks will have access to the annotated data we provide; 
-a set of Brown clusters \citep{brown-92} computed from a large corpus; and the \longversion{English }WordNet lexicon. 
-The input at test time will include \longversion{PTB-style part-of-speech}\shortversion{POS} tags. 
-\shortversion{No sentence-level metadata will be provided at test time, 
-but the domain of the sentence will be marked in the training data.}}
-%(If the task proves popular, in a future incarnation we might consider additional tracks, 
-%such as an unsupervised track.)
-
-\longversion{The sentences provided for this task are tokenized. 
-For evaluation to be possible, system predictions must respect the input tokenization.}
-
-\longversion{
-No sentence-level metadata will be provided in the input at test time.
-The training data will mark the domain from which the sentence was drawn 
-(\textsc{Reviews} or \textsc{Tweets}); systems can make use of this information as they wish, 
-so long as it is not required as part of the input at test time.}
-
-
-% \nss{a few possibilities for tracks---
-% \begin{description}
-% \item[closed track] provided training data; we'll allow WordNet and provide (auto?)~POS, Brown clusters as well? 
-% no other resources allowed \dirk{yes: this will give people an ``out-of-the-box'' task opportunity}
-% \item[semi-open track] we provide a large unlabeled corpus, in addition to closed track resources \dirk{would nix that: people should choose their own unlabeled data}
-% \item[unsupervised track] no token-level MWE or SST labels may be used \dirk{maybe for future iterations of the task?}
-% \item[open track] any data/resources (except the CMWE corpus, if that includes the test set) may be used
-% \end{description}
-% I feel like there are pluses and minuses to all 4 of these tracks. maybe we should just mention the possibilities 
-% and survey teams to ensure we only evaluate tracks that generate sufficient interest}
-
-\textbf{Measures.}
-The evaluation script will compute three kinds of scores.
-
-The \textbf{MWE} measure looks at precision, recall, and $F_1$ 
-of the identified MWEs. Tokens not involved in a predicted or gold MWE
-do not factor into this measure. 
-To award partial credit for partial overlap between a predicted MWE 
-and a gold MWE, these scores are computed based on \emph{links} between 
-consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.
-\Cref{fig:linkmeasure} in the annex defines this measure in detail and illustrates the calculations for an example.
-%\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
-%of a sentence. 
-
- The precision is the proportion of predicted links whose words 
- both belong to the same expression in the gold standard. 
- Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
- is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
- A weak link is treated as intermediate between a strong link and no link at all: 
- precision, recall, and $F_1$ computed on strong links only are averaged 
- with the respective calculations computed on all links without regard to strength. 
- \Cref{fig:linkmeasure} in the annex illustrates these calculations with an example.
-
-To isolate the \textbf{supersense} classification performance, 
-we compute $F_1$ of the supersense part of the joint tag.\longversion{
-Because the supersense of a strong MWE is marked on its first word, 
-this will have the effect of penalizing errors on the left boundary of an MWE, 
-but it is less sensitive to the MWE analysis than the link-based measure. 
-
-The third measure is a hybrid of the first two: it computes \textbf{overall} performance 
-in terms of link-based $F_1$, where for each supersense label, 
-a self-link encoding that label is added to the first word of the expression.
-Credit is only given for a self-link if in the other analysis, 
-a corresponding self-link occurs with the same supersense.\nss{short:}}
-Finally, a \textbf{combined} measure combines the MWE and supersense measures 
-to compute an overall precision, recall, and $F_1$
-for competitive ranking of systems.\footnote{All measures are micro-averages, 
-computed over all tokens in the corpus 
-(rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
-All measures will be reported separately for each of the two evaluation domains, 
-and combined with the two domains weighted equally.}
-
-% \nss{other possibilities that we should probably not mention in the interest of simplicity: 
-% weight MWE links according to supersense match;
-% full tag accuracy; 
-% giving less credit for supersense mismatches that disagree on POS}
-
-% \nss{At the discretion of the organizers, honorable mention awards may go to systems that place well on 
-% any of the measures, or that were especially creative in their approach?}
-
-\textbf{Baselines.}
-%
-The open source supersense tagging systems maintained by authors of this proposal 
-can serve as reference implementations for the task and baselines for the evaluation. 
-Both implement supervised discriminative first-order sequence models, one designed for the 
-\textsc{Reviews} domain \citep{schneider-14} and the other for the \textsc{Tweets} domain \citep{johannsen-14}.
-\longversion{
-\textbf{AMALGrAM}\footnote{\uline{A} \uline{M}achine \uline{A}nalyzer of \uline{L}exical \uline{Gr}oupings \uline{A}nd \uline{M}eanings}
-extends the discriminative MWE identification model of \citet{schneider-14}\footnote{Code and MWE-only model/training data at \url{http://www.ark.cs.cmu.edu/LexSem/}} 
-to also label supersenses. 
-It is trained on the \textsc{Reviews} data with the structured perceptron \citep{collins-02}. 
-The best performing model of \citet{johannsen-14}, which we label \textbf{COASTAL},\footnote{after the \uline{Co}penhagen \uline{A}pplied \uline{Sta}tistical \uline{L}earning group}
-is a supervised sequential model trained on \textsc{Tweets} via \textsc{Searn} \citep{Daume:ea:09}.\footnote{The models can be accessed via \url{https://github.com/coastalcph/supersense-data-twitter}.}
-\nss{to clarify: role of domain adaptation. I think there can be two COASTAL baselines, 
-one for the closed track and one for the open track (using SemCor)? 
-What additional resources are needed for features that we would want to allow for the closed track?}
-
-\Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
-using the measures described above (precision and recall are omitted for brevity).
-\nss{discussion? presumably: we see that the domain gap is huge---neither system is robust to the two domains.
-this in one of the challenges that systems in our task will have to face.}\nss{numbers far from 100\%; plenty of room to grow}
-}
-The respective evaluations show that there is substantial room for improvement 
-on the task.
-
-\longversion{
-\begin{table*}
-\centering\small
-\resizebox{ \textwidth }{!}{
-\begin{tabular}{lccccccc}
-           &  & \multicolumn{3}{c}{\textsc{Reviews}} & \multicolumn{3}{c}{\textsc{Tweets}} \\
-           \cmidrule(r){3-5}\cmidrule(l){6-8}
-\bfseries System     & \bfseries Train Domain & \bfseries MWE & \bfseries SST & \bfseries Full
-                                              & \bfseries ``MWE'' & \bfseries SST & \bfseries Full \\
-\midrule
-AMALGrAM (superv. 1st-order discr. w/ gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
-COASTAL (superv. 1st-order disc.) & \textsc{Tweets} & \# & \# & \#  & \# & 54.09 & \# \\
-\end{tabular}
-}
-\caption{Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes 
-because we have not yet systematically annotated the data for MWEs, so this preliminary evaluation 
-is against supersense annotators' chunking decisions for noun and verb expressions.}
-\label{tbl:baselines}
-\end{table*}
-}
-
-\section{Conclusion}
-We propose a broad-coverage lexical semantic analysis task that combines MWE identification and supersense tagging. 
-To guard against domain bias, we provide data sets from two different genres, namely online reviews and tweets. 
-We expect that this task would draw participation from several subcommunities of NLP 
-and that the resulting systems will contribute to a variety of applications.
-%While the task is designed for English, we hope to extend it to other languages as well in future editions.
-
-
-
-
-\begin{table*}[p]\small\centering
+\begin{table*}[t]\small\centering
 \begin{tabular}{@{}>{\textsc\bgroup}l<{\egroup}@{~~}r@{~~}r@{~~}c@{~~}|l@{~~}r@{~~}c@{~~}>{\smaller}Hl@{~~}r@{~~}c@{~~}>{\smaller}H@{}}
 \multicolumn{4}{c}{\textbf{MWE}} & \multicolumn{4}{c}{\textbf{Noun}} & \multicolumn{4}{c}{\textbf{Verb}} \\
 \cmidrule(r){1-4}\cmidrule(lr){5-8}\cmidrule(l){9-12}
@@ -923,6 +666,46 @@ Supersense counts do not distinguish single-word vs.~multiword expressions.
 \label{tbl:reviews}
 \end{table*}
 
+\longversion{To facilitate (but not require) joint sequence modeling, 
+the lexical semantic}\shortversion{The} analysis for each sentence will be represented as 
+a sequence of joint MWE+supersense tags. \Cref{fig:ex1} illustrates 
+the MWE part above the sentence and the supersense part below\longversion{ the sentence}; 
+in practice, these will be hyphenated into a single tag per token.
+
+The MWE portion is a BIO-style \citep{ramshaw-95} 
+positional marker. We adopt the 8-tag scheme of \citet{schneider-14}, 
+which uses case to allow gaps in an MWE (lowercase tag variants mark 
+tokens within a gap) and adds to \texttt{I} tags 
+diacritics that encode the strength of the MWE being continued (a bar for strong or a tilde for weak; see~\cref{sec:intro}).
+The positions are thus \texttt{O}, \texttt{o}, \texttt{B}, \texttt{b},
+\texttt{Ī}, \texttt{ī}, \texttt{Ĩ}, and \texttt{ĩ}.
+Systems are expected to ensure that the full tag sequence for a sentence is valid: 
+global validity can be enforced with first-order constraints 
+to prohibit invalid bigrams such as \texttt{O~Ī} and \texttt{b~Ĩ} (see \citealp{schneider-14} for details).
+
+Most of the joint tags include a supersense label attached with a hyphen, 
+e.g., \texttt{O-communication}, \texttt{b-GROUP}.
+Because strong MWEs receive a supersense as a unit (if at all), 
+\texttt{Ī} and \texttt{ī} are never conjoined with a supersense label.
+\texttt{O} or \texttt{o} indicates that the token is not part of any MWE, 
+but many such tokens do bear a noun or verb supersense.
+\longversion{Of course, the supersenses in this task only cover noun and verb expressions, 
+so plain \texttt{O} will be frequent, as will plain \texttt{B} and \texttt{Ī} for (e.g.) PP idioms.}
+
+The main \textbf{file format} for this task will be the \texttt{.tags} format, 
+which consists of one line per token, each line having 9~tab-delimited columns, 
+as explained in \cref{fig:tagsformat} in the annex.
+Scripts to convert to and from the \texttt{.sst} format, which displays one sentence per line 
+and contains annotations in a JSON data structure, will also be provided.
+\longversion{All file formats are UTF-8 encoded.}
+
+
+
+\section{Data}\label{sec:data}
+
+The task will use two existing datasets of social web text for both training and evaluation: 
+%These capture two genres of social web text:
+
 
 \begin{figure*} %\small
 % {"34": ["price", "POSSESSION"], "36": ["means", "cognition"], "26": ["was", "stative"], "29": ["budge", "change"]}
@@ -968,6 +751,238 @@ The respective recall values are $1/1$ and $3/3$.
 Overall $F_1$ is computed as the average of two $F_1$-scores, i.e.~$\tfrac{1}{3} \cdot \tfrac{1}{1}/(\tfrac{1}{3} + \tfrac{1}{1}) + \tfrac{2}{6}\cdot \tfrac{3}{3}/(\tfrac{2}{6}+\tfrac{3}{3}) = 0.50$.}
 \label{fig:linkmeasure}
 \end{figure*}
+
+\textbf{\textsc{Reviews}.} This 55,000-token portion of the English Web Treebank \citep[EWTB;][]{ewtb} 
+consists of 723~online user reviews for services such as restaurants and beauticians.\longversion{\footnote{Each review is a separate document; 
+no metadata about the reviews is available. EWTB provides sentence segmentation, word tokenization, and a Penn Treebank--style 
+syntactic parse of each sentence.}}
+It was recently manually annotated in full, first for heterogeneous MWEs \citep[released as the CMWE Corpus]{schneider-14-corpus}, 
+then for noun supersenses (following the conventions of \citealp{schneider-12}), then for verb supersenses.
+These annotations will be publicly released at \url{http://www.ark.cs.cmu.edu/LexSem/} 
+(we have been granted permission from Google and LDC 
+to redistribute the source text and gold POS tags from the EWTB reviews). 
+
+Annotation was done by linguists, who took pains to establish conventions and resolve disagreements.
+Each sentence was annotated independently by at least 2~annotators; disagreements were resolved by negotiation. 
+\longversion{Annotators found approximately 3,500~MWEs, 9,000~noun expressions, 8,000~main verb expressions, and 1,000~auxiliary verbs. 
+(\Cref{tbl:reviews} offers a more detailed breakdown.)}\shortversion{\Cref{tbl:reviews}  
+offers a breakdown of the annotations.}
+\longversion{15\% of MWEs contain a gap.\finalversion{\nss{proportion strong/weak}}} 
+
+\textbf{\textsc{Tweets}.} Two samples of Twitter messages (in total, 987, with 18,000 words) 
+were recently annotated with supersenses \citep{johannsen-14}\longversion{: 
+(a)~the POS+NER-annotated data set of \citet{Ritter:ea:11}, 
+and %which we use for training, development, and evaluation, and 
+(b)~\citeposs{Plank:ea:14} sample of 200~tweets}.\footnote{The supersense-annotated tweets 
+are available at \url{https://github.com/coastalcph/supersense-data-twitter}.}
+%, which we use for additional, out-of-sample evaluation. 
+%We call these data sets {\sc Ritter}-$\{${\sc Train,Dev,Eval}$\}$ and {\sc In-House-Eval}, respectively. 
+%The latter was downloaded in 2013 and was previously used (with part-of-speech annotation) in \citep{Plank:ea:14}.
+%For both data sets, 
+Annotators were shown pre-annotations from a heuristic supersense chunking\slash tagging system% 
+\longversion{ (based on the most frequent sense of each word)}
+and asked to correct the boundaries and supersense labels. 
+%The supersenses are annotated with spans defined by the BIO (Begin-Inside-Outside) notation. 
+Though there was no explicit MWE annotation phase, 
+many of the multiword chunks tagged with a \longversion{noun or verb }supersense would be considered MWEs. 
+%\nss{commented out agreement numbers---I don't think they're necessary for this proposal, given that the datasets are already published}
+% The average raw agreement on the data from Ritter was 0.86 (Cohen's $\kappa$ 0.77). 
+% The majority of tokens received the \emph{O} label by all annotators; this happended in 515 out of 841 cases. 
+% Excluding these instances to evaluate the performance on the more difficult content words, 
+% raw agreement dropped to 0.69 and Cohen's $\kappa$ to 0.69.
+% The second data had an average raw agreement of 0.65 and their Cohen's $\kappa$ 0.62. 
+%For this data set, we also compute $F_1$, defined as usual as the harmonic mean of recall and precision. To compute this, we set one of the annotators as gold data and the other as predicted data. However, since $F_{1}$ is symmetrical, the order does not matter. The annotation $F_{1}$ gives us another estimate of annotation difficulty. We present the figures in Table \ref{table:properties-of-dataset}.
+For the task we plan to revise the boundaries in the data with greater attention to MWE criteria.
+% (CPH should have resources to annotate a new Twitter test set with supersenses. possibly MWEs as well)
+% (participants should be banned from using the CMWE data lest they train on the test set.)
+% (is it OK if, e.g., supersense tagging conventions are different in different datasets?)
+% be as specific as possible about timeline}
+
+
+
+\section{Evaluation}
+\longversion{
+\finalversion{\subsection{\nss{TODO}System Submission Process}
+
+On May~5,~2015, teams will be furnished with the test data (minus the gold labels). 
+They will have until May~10 to submit up to 3~system predictions for evaluation. 
+The test data will include sentences from both evaluation domains, 
+in a random order: to encourage robust systems, 
+the domain of each sentence will not be marked at test time, 
+and the proportion of sentences from each domain is not guaranteed to be 
+the same in the trial, train, dev, and test sets.\nss{is this crazy?}}
+
+\subsection{Splits}
+
+We adopt \citeposs{schneider-14} splits of the \textsc{Reviews} data: 
+101~documents (500~sentences, 7,171~words) are held out as a test set, 
+leaving 3,312~sentences\slash 48,408~words for training\slash development.
+
+For \textsc{Tweets}, 
+%splits proposed in \citep{Derczynski:ea:13}
+we follow \citeposs{johannsen-14} splits\finalversion{: 
+\nss{sizes of splits}}.
+The data from Ritter is used as follows: 551 tweets (10,652 tokens) serve as training data, 118 (2242 tokens) as dev and another 118 (2291 tokens) as test set. Additionally, there is a second test set, drawn from a different sample of 200 tweets (3064 tokens).
+}
+
+
+
+\textbf{Inputs.}
+% \nss{open, closed track. if a team submits systems to the closed track and fewer than 3 systems to the open track, 
+% they will be encouraged to submit the closed track results to the open track as well.}
+The main goal of the task is to find new creative ways to improve the performance of lexical semantic annotation on various domains. 
+In keeping with conventions of past shared tasks at SemEval and other venues, 
+we will invite systems in multiple data conditions.
+These tracks will be judged separately, and teams are welcome to submit systems under more than one.
+The \textbf{open} track will encourage participants to make 
+wide use of any and all available resources, including for 
+distant or direct supervision. 
+Two \textbf{closed} tracks will encourage controlled comparisons of algorithms 
+by limiting their training to specific resources: 
+a \textbf{supervised} closed track will have access only to resources distributed for the task, 
+and a \textbf{semi-supervised} closed track will further allow use of a specific unannotated corpus.\footnote{%
+We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset}), 
+which is freely available for research use, as the unlabeled corpus for the semi-supervised closed track.
+All tracks will have access to the annotated data we provide; 
+a set of Brown clusters \citep{brown-92} computed from a large corpus; and the \longversion{English }WordNet lexicon. 
+The input at test time will include \longversion{PTB-style part-of-speech}\shortversion{POS} tags. 
+\shortversion{No sentence-level metadata will be provided at test time, 
+but the domain of the sentence will be marked in the training data.}}
+%(If the task proves popular, in a future incarnation we might consider additional tracks, 
+%such as an unsupervised track.)
+
+\longversion{The sentences provided for this task are tokenized. 
+For evaluation to be possible, system predictions must respect the input tokenization.}
+
+\longversion{
+No sentence-level metadata will be provided in the input at test time.
+The training data will mark the domain from which the sentence was drawn 
+(\textsc{Reviews} or \textsc{Tweets}); systems can make use of this information as they wish, 
+so long as it is not required as part of the input at test time.}
+
+
+% \nss{a few possibilities for tracks---
+% \begin{description}
+% \item[closed track] provided training data; we'll allow WordNet and provide (auto?)~POS, Brown clusters as well? 
+% no other resources allowed \dirk{yes: this will give people an ``out-of-the-box'' task opportunity}
+% \item[semi-open track] we provide a large unlabeled corpus, in addition to closed track resources \dirk{would nix that: people should choose their own unlabeled data}
+% \item[unsupervised track] no token-level MWE or SST labels may be used \dirk{maybe for future iterations of the task?}
+% \item[open track] any data/resources (except the CMWE corpus, if that includes the test set) may be used
+% \end{description}
+% I feel like there are pluses and minuses to all 4 of these tracks. maybe we should just mention the possibilities 
+% and survey teams to ensure we only evaluate tracks that generate sufficient interest}
+
+\textbf{Measures.}
+The evaluation script will compute three kinds of scores.
+
+
+
+The \textbf{MWE} measure looks at precision, recall, and $F_1$ 
+of the identified MWEs. Tokens not involved in a predicted or gold MWE
+do not factor into this measure. 
+To award partial credit for partial overlap between a predicted MWE 
+and a gold MWE, these scores are computed based on \emph{links} between 
+consecutive (but not necessarily adjacent) tokens in an expression \citep{schneider-14}.
+\Cref{fig:linkmeasure} defines this measure in detail and illustrates the calculations for an example.
+%\Cref{fig:linkmeasure} illustrates the links implied by two different annotations 
+%of a sentence. 
+
+ The precision is the proportion of predicted links whose words 
+ both belong to the same expression in the gold standard. 
+ Recall is the same as precision, but swapping the predicted and gold annotations.\longversion{\footnote{This computation on the basis of links 
+ is a slight simplification of the MUC coreference measure \citep{vilain-95}.}}
+ A weak link is treated as intermediate between a strong link and no link at all: 
+ precision, recall, and $F_1$ computed on strong links only are averaged 
+ with the respective calculations computed on all links without regard to strength. 
+ \Cref{fig:linkmeasure} illustrates these calculations with an example.
+
+To isolate the \textbf{supersense} classification performance, 
+we compute $F_1$ of the supersense part of the joint tag.\longversion{
+Because the supersense of a strong MWE is marked on its first word, 
+this will have the effect of penalizing errors on the left boundary of an MWE, 
+but it is less sensitive to the MWE analysis than the link-based measure.}
+
+\finalversion{\nss{consider alternate combined measure:}
+The third measure is a hybrid of the first two: it computes \textbf{overall} performance 
+in terms of link-based $F_1$, where for each supersense label, 
+a self-link encoding that label is added to the first word of the expression.
+Credit is only given for a self-link if in the other analysis, 
+a corresponding self-link occurs with the same supersense.\nss{short:}}
+Finally, a \textbf{combined} measure combines the MWE and supersense measures 
+to compute an overall precision, recall, and $F_1$
+for competitive ranking of systems.\footnote{All measures are micro-averages, 
+computed over all tokens in the corpus 
+(rather than normalized within each sentence and averaged across sentences, a.k.a.~a macro-average).
+All measures will be reported separately for each of the two evaluation domains, 
+and combined with the two domains weighted equally.}
+
+% \nss{other possibilities that we should probably not mention in the interest of simplicity: 
+% weight MWE links according to supersense match;
+% full tag accuracy; 
+% giving less credit for supersense mismatches that disagree on POS}
+
+% \nss{At the discretion of the organizers, honorable mention awards may go to systems that place well on 
+% any of the measures, or that were especially creative in their approach?}
+
+\textbf{Baselines.}
+%
+The open source supersense tagging systems maintained by authors of this proposal 
+can serve as reference implementations for the task and baselines for the evaluation. 
+Both implement supervised discriminative first-order sequence models, one designed for the 
+\textsc{Reviews} domain \citep{schneider-14} and the other for the \textsc{Tweets} domain \citep{johannsen-14}.
+\finalversion{\nss{TODO}
+\textbf{AMALGrAM}\footnote{\uline{A} \uline{M}achine \uline{A}nalyzer of \uline{L}exical \uline{Gr}oupings \uline{A}nd \uline{M}eanings}
+extends the discriminative MWE identification model of \citet{schneider-14}\footnote{Code and MWE-only model/training data at \url{http://www.ark.cs.cmu.edu/LexSem/}} 
+to also label supersenses. 
+It is trained on the \textsc{Reviews} data with the structured perceptron \citep{collins-02}. 
+The best performing model of \citet{johannsen-14}, which we label \textbf{COASTAL},\footnote{after the \uline{Co}penhagen \uline{A}pplied \uline{Sta}tistical \uline{L}earning group}
+is a supervised sequential model trained on \textsc{Tweets} via \textsc{Searn} \citep{Daume:ea:09}.\footnote{The models can be accessed via \url{https://github.com/coastalcph/supersense-data-twitter}.}
+\nss{to clarify: role of domain adaptation. I think there can be two COASTAL baselines, 
+one for the closed track and one for the open track (using SemCor)? 
+What additional resources are needed for features that we would want to allow for the closed track?}
+
+\Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
+using the measures described above (precision and recall are omitted for brevity).
+\nss{discussion? presumably: we see that the domain gap is huge---neither system is robust to the two domains.
+this in one of the challenges that systems in our task will have to face.}\nss{numbers far from 100\%; plenty of room to grow}
+}
+The respective evaluations show that there is substantial room for improvement 
+on the task.
+
+\finalversion{
+\begin{table*}
+\centering\small
+\resizebox{ \textwidth }{!}{
+\begin{tabular}{lccccccc}
+           &  & \multicolumn{3}{c}{\textsc{Reviews}} & \multicolumn{3}{c}{\textsc{Tweets}} \\
+           \cmidrule(r){3-5}\cmidrule(l){6-8}
+\bfseries System     & \bfseries Train Domain & \bfseries MWE & \bfseries SST & \bfseries Full
+                                              & \bfseries ``MWE'' & \bfseries SST & \bfseries Full \\
+\midrule
+AMALGrAM (superv. 1st-order discr. w/ gappy MWEs) & \textsc{Reviews} & \# & \# & \# & \# & \# & \# \\
+COASTAL (superv. 1st-order disc.) & \textsc{Tweets} & \# & \# & \#  & \# & 54.09 & \# \\
+\end{tabular}
+}
+\caption{\nss{TODO}Evaluation of baseline systems. For \textsc{Tweets}, ``MWE'' is placed in scare quotes 
+because we have not yet systematically annotated the data for MWEs, so this preliminary evaluation 
+is against supersense annotators' chunking decisions for noun and verb expressions.}
+\label{tbl:baselines}
+\end{table*}
+}
+
+\section{Conclusion}
+We propose a broad-coverage lexical semantic analysis task that combines MWE identification and supersense tagging. 
+To guard against domain bias, we provide data sets from two different genres, namely online reviews and tweets. 
+We expect that this task would draw participation from several subcommunities of NLP 
+and that the resulting systems will contribute to a variety of applications.
+%While the task is designed for English, we hope to extend it to other languages as well in future editions.
+
+
+
+
+
+
+
 
 
 \begin{figure*}\small
