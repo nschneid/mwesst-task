@@ -534,7 +534,15 @@ type supervision; word clustering\slash representation learning \citep{grave-13}
 collocation extraction \citep{pecina-10,ramisch-12}; 
 language modeling; or other methods that exploit additional resources.
 
-This task provides a promising framework for integrating lexical semantics in NLP applications. 
+\nss{added:}This is a new task. 
+We believe it will attract strong participation from researchers in lexical semantics, 
+structured prediction, (semi)supervised learning, domain adaptation, and social media NLP. 
+To gauge interest, we reached out informally to a number of leaders in the field, 
+asking for feedback on the idea. Several of them have indicated that they consider this 
+a worthwhile task and will consider participating if it is accepted.
+As a rough estimate, we think it would attract participation from about 15 teams.
+
+This task further provides a promising framework for integrating lexical semantics in NLP applications. 
 Until recently, it was unclear whether word sense disambiguation could contribute to applications 
 such as machine translation \citep{carpuat-05,resnik-06}; 
 subsequent work found that leveraging WSD predictions in MT required 
@@ -832,28 +840,28 @@ The data from Ritter is used as follows: 551 tweets (10,652 tokens) serve as tra
 
 
 \textbf{Inputs.}
-% \nss{open, closed track. if a team submits systems to the closed track and fewer than 3 systems to the open track, 
-% they will be encouraged to submit the closed track results to the open track as well.}
+% \nss{open, closed condition. if a team submits systems to the closed condition and fewer than 3 systems to the open condition, 
+% they will be encouraged to submit the closed condition results to the open condition as well.}
 The main goal of the task is to find new creative ways to improve the performance of lexical semantic annotation on various domains. 
 In keeping with conventions of past shared tasks at SemEval and other venues, 
 we will invite systems in multiple data conditions.
-These tracks will be judged separately, and teams are welcome to submit systems under more than one.
-The \textbf{open} track will encourage participants to make 
+These conditions will be judged separately, and teams are welcome to submit systems under more than one.
+The \textbf{open} condition will encourage participants to make 
 wide use of any and all available resources, including for 
 distant or direct supervision. 
-Two \textbf{closed} tracks will encourage controlled comparisons of algorithms 
+Two \textbf{closed} conditions will encourage controlled comparisons of algorithms 
 by limiting their training to specific resources: 
-a \textbf{supervised} closed track will have access only to resources distributed for the task, 
-and a \textbf{semi-supervised} closed track will further allow use of a specific unannotated corpus.\footnote{%
+a \textbf{supervised} closed condition will have access only to resources distributed for the task, 
+and a \textbf{semi-supervised} closed condition will further allow use of a specific unannotated corpus.\footnote{%
 We propose the Yelp Academic Dataset (\url{https://www.yelp.com/academic_dataset}), 
-which is freely available for research use, as the unlabeled corpus for the semi-supervised closed track.
-All tracks will have access to the annotated data we provide; 
+which is freely available for research use, as the unlabeled corpus for the semi-supervised closed condition.
+All conditions will have access to the annotated data we provide; 
 a set of Brown clusters \citep{brown-92} computed from a large corpus; and the \longversion{English }WordNet lexicon. 
 The input at test time will include \longversion{PTB-style part-of-speech}\shortversion{POS} tags. 
 \shortversion{No sentence-level metadata will be provided at test time, 
 but the domain of the sentence will be marked in the training data.}}
-%(If the task proves popular, in a future incarnation we might consider additional tracks, 
-%such as an unsupervised track.)
+%(If the task proves popular, in a future incarnation we might consider additional conditions, 
+%such as an unsupervised condition.)
 
 \longversion{The sentences provided for this task are tokenized. 
 For evaluation to be possible, system predictions must respect the input tokenization.}
@@ -865,19 +873,20 @@ The training data will mark the domain from which the sentence was drawn
 so long as it is not required as part of the input at test time.}
 
 
-% \nss{a few possibilities for tracks---
+% \nss{a few possibilities for conditions---
 % \begin{description}
-% \item[closed track] provided training data; we'll allow WordNet and provide (auto?)~POS, Brown clusters as well? 
+% \item[closed condition] provided training data; we'll allow WordNet and provide (auto?)~POS, Brown clusters as well? 
 % no other resources allowed \dirk{yes: this will give people an ``out-of-the-box'' task opportunity}
-% \item[semi-open track] we provide a large unlabeled corpus, in addition to closed track resources \dirk{would nix that: people should choose their own unlabeled data}
-% \item[unsupervised track] no token-level MWE or SST labels may be used \dirk{maybe for future iterations of the task?}
-% \item[open track] any data/resources (except the CMWE corpus, if that includes the test set) may be used
+% \item[semi-open condition] we provide a large unlabeled corpus, in addition to closed condition resources \dirk{would nix that: people should choose their own unlabeled data}
+% \item[unsupervised condition] no token-level MWE or SST labels may be used \dirk{maybe for future iterations of the task?}
+% \item[open condition] any data/resources (except the CMWE corpus, if that includes the test set) may be used
 % \end{description}
-% I feel like there are pluses and minuses to all 4 of these tracks. maybe we should just mention the possibilities 
-% and survey teams to ensure we only evaluate tracks that generate sufficient interest}
+% I feel like there are pluses and minuses to all 4 of these conditions. maybe we should just mention the possibilities 
+% and survey teams to ensure we only evaluate conditions that generate sufficient interest}
 
 \textbf{Measures.}
-The evaluation script will compute three kinds of scores.
+We will provide an evaluation script to check the format of system output and
+compute three kinds of scores.
 
 
 
@@ -942,8 +951,8 @@ It is trained on the \textsc{Reviews} data with the structured perceptron \citep
 The best performing model of \citet{johannsen-14}, which we label \textbf{COASTAL},\footnote{after the \uline{Co}penhagen \uline{A}pplied \uline{Sta}tistical \uline{L}earning group}
 is a supervised sequential model trained on \textsc{Tweets} via \textsc{Searn} \citep{Daume:ea:09}.\footnote{The models can be accessed via \url{https://github.com/coastalcph/supersense-data-twitter}.}
 \nss{to clarify: role of domain adaptation. I think there can be two COASTAL baselines, 
-one for the closed track and one for the open track (using SemCor)? 
-What additional resources are needed for features that we would want to allow for the closed track?}
+one for the closed condition and one for the open condition (using SemCor)? 
+What additional resources are needed for features that we would want to allow for the closed condition?}
 
 \Cref{tbl:baselines} reports preliminary results on the current versions of the two evaluation datasets, 
 using the measures described above (precision and recall are omitted for brevity).
