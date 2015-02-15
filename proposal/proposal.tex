@@ -514,6 +514,15 @@ There is, however, recent work on developing a taxonomy for English adjective su
 % There has been relatively little recent work on supersense tagging, and to the best of our knowledge, all of it has been mostly limited to standard English\footnote{With few exceptions such as \cite{schneider-12,schneider-13}.} ({\sc SemCor} and {\sc SensEval}). We are not aware of any previous work on word sense disambiguation for Twitter. Our hope is that this task makes the problem more attractive to a wider audience to reach more languages and domains.
 % }
 
+\textbf{Relationship between MWEs and supersenses.}
+In our view, the representation of MWEs and supersenses ought to be tightly coupled: 
+idiomatic combinations (MWEs) are best supersense-tagged holistically, 
+and this supersense category will often not be one that is normally expected based on the individual words. 
+For example, \lex{spill the beans} in its literal interpretation 
+would receive supersenses \sst{v:contact} and \sst{n:food},
+whereas the idiomatic interpretation meaning `divulge a secret' is represented as 
+an MWE holistically tagged as \sst{v:communication}.
+
 \textbf{Opportunities.} 
 To date, many of the analysis problems in computational lexical semantics are niche topics. 
 By integrating broad-coverage MWE identification together with supersense tagging 
@@ -535,7 +544,7 @@ type supervision; word clustering\slash representation learning \citep{grave-13}
 collocation extraction \citep{pecina-10,ramisch-12}; 
 language modeling; or other methods that exploit additional resources.
 
-\nss{added:}This is a new task. 
+This is a new task. 
 We believe it will attract strong participation from researchers in lexical semantics, 
 structured prediction, (semi)supervised learning, domain adaptation, and social media NLP. 
 To gauge interest, we reached out informally to a number of leaders in the field, 
@@ -807,6 +816,8 @@ many of the multiword chunks tagged with a \longversion{noun or verb }supersense
 % The second data had an average raw agreement of 0.65 and their Cohen's $\kappa$ 0.62. 
 %For this data set, we also compute $F_1$, defined as usual as the harmonic mean of recall and precision. To compute this, we set one of the annotators as gold data and the other as predicted data. However, since $F_{1}$ is symmetrical, the order does not matter. The annotation $F_{1}$ gives us another estimate of annotation difficulty. We present the figures in Table \ref{table:properties-of-dataset}.
 For the task we plan to revise the boundaries in the data with greater attention to MWE criteria.
+This will be the only new annotation required, and we anticipate that it will be feasible to complete it 
+well before the July~30, 2015 release of the training data.
 % (CPH should have resources to annotate a new Twitter test set with supersenses. possibly MWEs as well)
 % (participants should be banned from using the CMWE data lest they train on the test set.)
 % (is it OK if, e.g., supersense tagging conventions are different in different datasets?)
